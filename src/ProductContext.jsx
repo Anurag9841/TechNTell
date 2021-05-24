@@ -18,7 +18,7 @@ const ProductContextProvider=(props)=>{
         {id:5,name:'SamsungS10+' ,price:99999 ,image:samsung2,status:'Hot'},
         {id:6,name:'SamsungA50s' ,price:50000 ,image:samsung4,status:'New'},
         {id:7,name:'SmartTV3' ,price:59999 ,image:SmartTV3,status:'Hot'},
-        {id:8,name:'Vivo watch' ,price:25000 ,image:Vivo,status:'Hot'},
+        {id:8,name:'VivoWatch' ,price:25000 ,image:Vivo,status:'Hot'},
        
     ])
 

@@ -1,4 +1,4 @@
-import { FadeIn } from 'react-scroll-motion';
+// import { FadeIn } from 'react-scroll-motion';
 import * as ActionTypes from './ActionTypes';
 
 export const AuthReducer = (state = {

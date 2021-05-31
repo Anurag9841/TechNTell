@@ -21,7 +21,7 @@ const Cart=()=>{
                     <span className="delete-product"><i className="fas fa-trash-alt"></i></span>
                 </div>
                 ))
-                :'sorry your cart is currently empty'}
+                :'sorry your cart is currently empty sorry '}
             </div>
         </div>
     )

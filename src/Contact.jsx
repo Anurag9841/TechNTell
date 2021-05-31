@@ -42,7 +42,6 @@ const Contact = () => {
                                     class="form-control"
                                     id="exampleFormControlInput1"
                                     name="fullname"
-                                    required="true"
                                     value={data.fullname}
                                     onChange={InputEvent}
                                     placeholder="enter your name" />
@@ -52,7 +51,6 @@ const Contact = () => {
                                 <input
                                     type="number"
                                     class="form-control"
-                                    required='true'
                                     id="exampleFormControlInput1"
                                     name="phone"
                                     value={data.phone}
@@ -66,7 +64,6 @@ const Contact = () => {
                                     class="form-control"
                                     id="exampleFormControlInput1"
                                     name="email"
-                                    required="true"
                                     value={data.email}
                                     onChange={InputEvent}
                                     placeholder="yourName@example.com" />
@@ -78,7 +75,6 @@ const Contact = () => {
                                     rows="3"
                                     name="msg"
                                     value={data.msg}
-                                    required="true"
                                     onChange={InputEvent}
                                 ></textarea>
                             </div>

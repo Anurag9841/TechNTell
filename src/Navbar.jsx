@@ -1,14 +1,18 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { NavLink } from "react-router-dom"
+import { CartContext} from "./CartContext"
+import styles from "./App.css"
 const Navbar = () => {
+    const {qty}=useContext(CartContext)
     return (
         <nav>
+            <div className="main">
             <div className="container-fluid nav_bg">
                 <div className="row">
                     <div className="col-10 mx-auto">
 
-
-                        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                
+                        <nav className="navbar navbar-expand-lg navbar-light bg-light" data-spy="affix" data-offset-top="197">
                             <div className="container-fluid">
                                 <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
                                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +59,7 @@ const Navbar = () => {
 
                                         <li ><NavLink to="/cart">
                                             <span className="shoppingcart"> <i class="fas fa-cart-plus"></i><span className="
-                                      cartcount">0</span> </span> </NavLink></li>
+                                      cartcount">{qty}</span> </span> </NavLink></li>
                                     </ul>
 
 
@@ -63,12 +67,13 @@ const Navbar = () => {
                                 </div>
                             </div>
                         </nav>
+                
                     </div>
                 </div>
             </div>
-
+            </div>
         </nav>
-
+      
 
     )
 }

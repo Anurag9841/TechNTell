@@ -18,8 +18,11 @@ import systembuild from './systembuild';
 const App=()=>{
     return(
        <> 
+       
+        
        <CartContextProvider>
        <Navbar/>
+       <div className="main">
         <Switch>
             <Route  exact path="/"component={Home}>
           
@@ -36,7 +39,8 @@ const App=()=>{
             <Route  exact path="/cart" component={Cart}></Route>
 
         </Switch>
-        
+        </div>
+    
         </CartContextProvider>
         
         </>

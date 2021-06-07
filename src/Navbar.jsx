@@ -28,7 +28,10 @@ const Navbar = () => {
                                             <NavLink activeClassName='menu_active' className="nav-link" to="/contact">Contact</NavLink>
                                         </li>
                                         <li className="nav-item">
-                                            <NavLink activeClassName='menu_active' className="nav-link" to="/login">Login</NavLink>
+                                            <NavLink activeClassName='menu_active' className="nav-link" to="/signin">Sign In</NavLink>
+                                        </li>
+                                        <li className="nav-item">
+                                            <NavLink activeClassName='menu_active' className="nav-link" to="/signup">Sign Up</NavLink>
                                         </li>
                                         <li className="nav-item">
                                             <NavLink activeClassName='menu_active' className="nav-link" to="/ourservice">OurService</NavLink>

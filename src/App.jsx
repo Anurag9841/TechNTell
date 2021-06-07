@@ -3,7 +3,8 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
 import { Route, Switch } from 'react-router-dom'
 import Home from "./Home"
-import Login from "./Login"
+import Signin from "./components/login/Signin";
+import Signup from "./components/login/Signup";
 import Contact from './Contact'
 import OurService from './OurService'
 import Phone from "./Phone"
@@ -28,7 +29,8 @@ const App=()=>{
           
             </Route>
             <Route  exact path="/contact"component={Contact}></Route>
-            <Route  exact path="/login"component={Login}></Route>
+            <Route  exact path="/signin"component={Signin}></Route>
+            <Route  exact path="/signup"component={Signup}></Route>
             <Route  exact path="/ourservice"component={OurService}></Route>
             <Route  exact path="/systembuilt"component={systembuild}></Route>
             <Route  exact path="/phone"component={Phone}></Route>

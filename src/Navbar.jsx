@@ -39,6 +39,20 @@ const Navbar = () => {
                                         <li className="nav-item">
                                             <NavLink activeClassName='menu_active' className="nav-link" to="/systembuilt">SystemBuild</NavLink>
                                         </li>
+                                        <li className="nav-item dropdown">
+                                        <NavLink  className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                AdminPanel
+                                        </NavLink>
+                                        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/PostCategory">New category</NavLink></li>
+                                                <li><hr className="dropdown-divider" /></li>
+                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/UpdateProduct">Update Product</NavLink></li>
+                                                <li><hr className="dropdown-divider" /></li>
+                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/Order">Order</NavLink></li>
+                                                <li><hr className="dropdown-divider" /></li>
+                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/PostProduct">New Product</NavLink></li>
+                                        </ul>
+                                        </li>
 
                                         <li className="nav-item dropdown">
                                             <NavLink className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

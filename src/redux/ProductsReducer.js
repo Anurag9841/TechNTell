@@ -6,13 +6,15 @@ export const productReducer = (state={
     product:[]
 },action)=>{
     switch(action.type){
-        case (ActionTypes.PRODUCT_FAILED):
+        case ActionTypes.PRODUCTS_LOADING:
+            return{...state,isLoading: true}
+        
+        case (ActionTypes.PRODUCTS_FAILURE):
             return {...state,isLoading: false, errMess:action.message,product:[]};
-        case(ActionTypes.PRODUCT_SUCCESS):
-            return{...state,isLoading:false,errMess:null,product:[]};
+        
         case(ActionTypes.ADD_PRODUCT):
             return{...state,isLoading:false,errMess:null,product:action.payload}
         default:
             return state;
     }
-}
+};

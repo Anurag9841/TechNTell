@@ -137,12 +137,13 @@ export const loginFailure = (errMess) => (
     }
 );
 //////////////////////SIGNUPTHUNK/////////////////////////////////
-export const signUp = (fname,lname,username,email)=>(dispatch)=>{
+export const signUp = (fname,lname,username,email,password)=>(dispatch)=>{
   const newUser = {
     fname: fname,
 	  lname: lname,
 	  username: username,
-	  email: email
+	  email: email,
+    password:password
   }
   const bearer = 'Bearer' + localStorage.getItem('token');
   
@@ -169,7 +170,7 @@ export const signUp = (fname,lname,username,email)=>(dispatch)=>{
     throw errmsg
   })
   .then(response => response.json())
-  .then(user=>usersSuccess(user))
+  .then(user=>dispatch(usersSuccess(user)))
   .catch(error => { console.log('User SIGNUP', error.message);
         alert('Sign up \nError: '+ error.message); })
 

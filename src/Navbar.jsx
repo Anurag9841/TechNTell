@@ -2,8 +2,23 @@ import React,{useContext} from 'react'
 import { NavLink } from "react-router-dom"
 import { CartContext} from "./CartContext"
 import styles from "./App.css"
-const Navbar = () => {
+// import { useHistory } from 'react-router'
+import showProduct from './showProduct'
+const Navbar = (props) => {
+//    const history=useHistory();
+
     const {qty}=useContext(CartContext)
+    const categories = []; 
+    {props.category.category.map((category)=>(categories.push(category.categoryName)))}
+    
+    const makeItem =(X)=>{
+        return <li onClick={()=>(handleClick(X))}><NavLink activeClassName='menu_active' className="dropdown-item" to="/showProduct">{X}</NavLink></li>
+    }
+
+    const handleClick=(X)=>{
+        return(<showProduct/>)
+        //history.push('/showProduct')
+    }
     return (
         <nav>
             <div className="main">
@@ -28,7 +43,7 @@ const Navbar = () => {
                                             <NavLink activeClassName='menu_active' className="nav-link" to="/contact">Contact</NavLink>
                                         </li>
                                         <li className="nav-item">
-                                            <NavLink activeClassName='menu_active' className="nav-link" to="/signin">Sign In</NavLink>
+                                            <NavLink activeClassName='menu_active' className="nav-link" to="/login">Sign In</NavLink>
                                         </li>
                                         <li className="nav-item">
                                             <NavLink activeClassName='menu_active' className="nav-link" to="/signup">Sign Up</NavLink>
@@ -59,18 +74,7 @@ const Navbar = () => {
                                                 Category
           </NavLink>
                                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/phone">Phone</NavLink></li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/TV"> Smart Tv and Watch</NavLink></li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/controller">Games and Controller</NavLink></li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/printer">Printer</NavLink></li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                                <li><NavLink activeClassName='menu_active' className="dropdown-item" to="/computer">Computer Components</NavLink></li>
-                                                <li><hr className="dropdown-divider" /></li>
-                                              
-
+                                                {categories.map(makeItem)}
                                             </ul>
                                         </li>
 

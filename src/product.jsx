@@ -1,18 +1,24 @@
 import React,{useContext} from "react";
 import {ProductContext} from "./ProductContext"
 import {CartContext} from "./CartContext"
-const Products=()=>{
-    const {products}=useContext(ProductContext);
+import {baseUrl} from './shared/baseUrl'
+import { useHistory } from "react-router-dom";
+const Products=(props)=>{
+    //const {products}=useContext(ProductContext);
     const {dispatch}=useContext(CartContext);
-    
+    const products = props.productsFeatured;
+    const history = useHistory();
 
+    const handleClick=()=>{
+        history.push('/showProduct')
+    }
     return(
         <div className="products">
             {products.map((product)=>(
-                <div className="product" key={product.id}>
+                <div className="product" key={product._id}>
                     
                     <div className="product-img">
-                        <img src={product.image} alt="not found"/>
+                        <img src={baseUrl+product.image} alt="not found" onClick={handleClick}/>
                     </div>
                     <div className="product-details">
                         <div className="product-name">{product.name}</div>

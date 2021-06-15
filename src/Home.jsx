@@ -3,7 +3,7 @@ import Banner from "../src/Banner"
 import ProductContextProvider from './ProductContext';
 import CartContextProvider from './CartContext';
 import Products from "./product";
-const Home=()=>{
+const Home=(props)=>{
     return(
         <>
         <Banner/>
@@ -12,7 +12,7 @@ const Home=()=>{
         < ProductContextProvider>
         
         <div className="container">
-        <Products/>
+        <Products productsFeatured={props.productsFeatured}/>
         </div>
         
         </ProductContextProvider>

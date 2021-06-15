@@ -20,13 +20,16 @@ import {authUser,getUser,logoutUser, getProducts, postProduct, getCategories,
     postCategory, getOrders, postOrder, deleteOrder, getOrderDetails, 
     updateProduct, getcategory , getProduct, deleteProduct
     ,delCategory,getproductsFromCategory,deleteproductsFromCategory
-    ,updateOrder} from './redux/ActionCreators';
+    ,updateOrder,
+    signUp} from './redux/ActionCreators';
 import { connect } from 'react-redux'
 import PostCategory from './postCategory'
 import PostProduct from './postProduct'
 import UpdateProduct from './updateProduct'
-import Order from './order'
-
+import Order from './order';
+import Login from "./Login";
+import ShowProduct from './showProduct';
+import Register from './register'
 const mapStateToProps = (state) => {
     return {
         authState: state.auth,
@@ -40,7 +43,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
         authUser: (creds) => dispatch(authUser(creds)), 
         logoutUser: () => dispatch(logoutUser()),
-        getUser: () => dispatch(getUser()), 
+        getUser: () => dispatch(getUser()),
+        signup:(fname,lname,username,email,password)=>dispatch(signUp(fname,lname,username,email,password)), 
         //
         getProducts: () => dispatch(getProducts()),
         getProduct: (productId) => dispatch(getProduct(productId)),
@@ -77,12 +81,12 @@ class Main extends Component{
         return(
        <div>
        <CartContextProvider>
-       <Navbar/>
+       <Navbar category={this.props.category}/>
        <div className="main">
         <Switch>
-            <Route  exact path="/"component={Home}>
-          
-            </Route>
+        <Route exact path="/"component={() => <Home productsFeatured={this.props.products.product.filter((prod) => prod.featured)}/>}>            
+        </Route>
+        
             <Route exact path="/Order" component={()=><Order getProduct={this.props.getProduct} products={this.props.products} PostOrder={this.props.postOrder} />}></Route>
             <Route exact path="/PostCategory" component={()=><PostCategory postCategory= {this.props.postCategory} />}></Route>
             <Route exact path="/PostProduct" component={()=><PostProduct postProduct={this.props.postProduct}
@@ -91,8 +95,13 @@ class Main extends Component{
             products={this.props.products}/>}></Route>
             //////////////////////////
             <Route  exact path="/contact"component={Contact}></Route>
-            <Route  exact path="/signin"component={Signin}></Route>
-            <Route  exact path="/signup"component={Signup}></Route>
+            <Route exact path="/login" component={
+                () => 
+                <Login auth={this.props.authState} authUser={this.props.authUser} logoutUser={this.props.logoutUser}/>
+                
+            }></Route>
+            <Route  exact path="/signup"component={()=><Register signup={this.props.signup}/>}></Route>
+            <Route  exact path="/showProduct" component={()=><ShowProduct/>}></Route>
             <Route  exact path="/ourservice"component={OurService}></Route>
             <Route  exact path="/systembuilt"component={systembuild}></Route>
             <Route  exact path="/phone"component={Phone}></Route>

@@ -28,16 +28,19 @@ import PostProduct from './postProduct'
 import UpdateProduct from './updateProduct'
 import Order from './order';
 import Login from "./Login";
+import ViewProduct from "./viewProduct"
 import ShowProduct from './showProduct';
 import Register from './register'
 const mapStateToProps = (state) => {
     return {
+        product: state.product,
         authState: state.auth,
         usersState: state.users, 
         products: state.products,
-        category: state.category,
+        categorys: state.categorys,
         orderState: state.order,
-        orderDetailsState: state.orderDetails
+        orderDetailsState: state.orderDetails,
+        category: state.category
     }
 }
 const mapDispatchToProps = (dispatch) => ({
@@ -81,7 +84,7 @@ class Main extends Component{
         return(
        <div>
        <CartContextProvider>
-       <Navbar category={this.props.category}/>
+       <Navbar product={this.props.product} getcategory={this.props.getcategory} category={this.props.categorys} categorys={this.props.category}/>
        <div className="main">
         <Switch>
         <Route exact path="/"component={() => <Home productsFeatured={this.props.products.product.filter((prod) => prod.featured)}/>}>            
@@ -90,7 +93,7 @@ class Main extends Component{
             <Route exact path="/Order" component={()=><Order getProduct={this.props.getProduct} products={this.props.products} PostOrder={this.props.postOrder} />}></Route>
             <Route exact path="/PostCategory" component={()=><PostCategory postCategory= {this.props.postCategory} />}></Route>
             <Route exact path="/PostProduct" component={()=><PostProduct postProduct={this.props.postProduct}
-            category={this.props.category}/>}></Route>
+            category={this.props.categorys}/>}></Route>
             <Route exact path="/UpdateProduct" component={()=><UpdateProduct updateProduct = {this.props.updateProduct}
             products={this.props.products}/>}></Route>
             //////////////////////////
@@ -101,7 +104,8 @@ class Main extends Component{
                 
             }></Route>
             <Route  exact path="/signup"component={()=><Register signup={this.props.signup}/>}></Route>
-            <Route  exact path="/showProduct" component={()=><ShowProduct/>}></Route>
+            <Route  exact path="/showProduct" component={(props)=><ShowProduct {...props} category={this.props.category} getcategory={this.props.getcategory}/>}></Route>
+            <Route  exact path="/viewProduct" component={(props)=><ViewProduct {...props} product={this.props.product} getProduct={this.props.getProduct}/>}></Route>
             <Route  exact path="/ourservice"component={OurService}></Route>
             <Route  exact path="/systembuilt"component={systembuild}></Route>
             <Route  exact path="/phone"component={Phone}></Route>

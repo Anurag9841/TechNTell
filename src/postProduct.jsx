@@ -171,7 +171,7 @@ const PostProduct = (props) => {
                             </div>
 
                             <div class="col-12 py-2">
-                                <button class="btn btn-outline-primary" type="submit">Submit form</button>
+                                <button class="btn btn-outline-primary" type="submit">Add Product</button>
                             </div>
                         </form>
                     </div>

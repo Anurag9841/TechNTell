@@ -48,7 +48,7 @@ const PostCategory = (props) =>{
                             </div>
                             
                             <div class="col-12 py-2">
-                                <button class="btn btn-outline-primary" type="submit">Submit form</button>
+                                <button class="btn btn-outline-primary" type="submit">Create</button>
                             </div>
                         </form>
                     </div>

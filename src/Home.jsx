@@ -9,13 +9,10 @@ const Home=(props)=>{
         <Banner/>
         <h1 className="top_product">Our Top Products</h1>
         <span></span>
-        < ProductContextProvider>
-        
         <div className="container">
         <Products productsFeatured={props.productsFeatured}/>
         </div>
         
-        </ProductContextProvider>
         </>
     )
 }

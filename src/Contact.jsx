@@ -8,7 +8,6 @@ const Contact = () => {
         email: " ",
         msg: " ",
     });
-
     const InputEvent = (event) => {
         const { name, value } = event.target;
 

@@ -238,7 +238,7 @@ export const postProduct = (categId,productName,description,unitPrice,unitsInSto
       throw error
   })
   .then(response => response.json())
-  .then(product=>dispatch(addProduct(product)))
+  .then(product=>dispatch(addProducts(product)))
   .catch(error => { console.log('Post product ', error.message);
         alert('Your product could not be posted\nError: '+ error.message); })
 };
@@ -247,7 +247,6 @@ export const postProduct = (categId,productName,description,unitPrice,unitsInSto
 
 
 export const getProduct = (productId) => (dispatch) => {
-  dispatch(productsLoading());
   return fetch(baseUrl+'products/' + productId)
   .then(response => {
     if(response.ok){
@@ -306,7 +305,7 @@ export const updateProduct = (productId,productName,description,unitPrice,unitsI
       throw error
   })
   .then(response => response.json())
-  .then(product=>addProduct(product))
+  .then(product=>addProducts(product))
   .catch(error => { console.log('PUT product ', error.message);
         alert('Your product could not be posted\nError: '+ error.message); })
 };
@@ -358,10 +357,15 @@ export const getProducts = () => (dispatch) => {
   })
   .then(respone => respone.json())
   .then(products => {
-    dispatch(addProduct(products))
+    dispatch(addProducts(products))
   })
   .catch((error) => dispatch(productsFailure(error.message)));
 }
+
+export const addProducts=(products)=>({
+  type:ActionTypes.ADD_PRODUCTS,
+  payload:products
+});
 
 export const addProduct=(products)=>({
   type:ActionTypes.ADD_PRODUCT,
@@ -437,13 +441,13 @@ export const postCategory = (categoryName)=>(dispatch)=>{
 
 export const getcategory = (categId)=>(dispatch)=>{
   return fetch(baseUrl+"categories/"+categId)
-  .then(respone=>{
-    if(respone.ok){
-      return respone;
+  .then(response=>{
+    if(response.ok){
+      return response;
     }
     else{
-      var err = new Error("Error" + respone.status + ":" + respone.statusText)
-      err.respone = respone
+      var err = new Error("Error" + response.status + ":" + response.statusText)
+      err.response = response
       throw err
     }
   },err =>{
@@ -451,7 +455,7 @@ export const getcategory = (categId)=>(dispatch)=>{
     throw errmsg;
   })
   .then(response=>response.json())
-  .then(category=>addCategory(category))
+  .then(category=>dispatch(addCategorys(category)))
   .catch(err=>dispatch(categoryFailure(err.message)))
 }
 export const delCategory = (categId)=>(dispatch)=>{
@@ -497,7 +501,7 @@ export const getproductsFromCategory = (categId)=>(dispatch)=>{
     throw errmsg;
   })
   .then(response=>response.json())
-  .then(product=>addProduct(product))
+  .then(product=>addProducts(product))
   .catch(err=>dispatch(categoryFailure(err.message)))
 }
 export const deleteproductsFromCategory = (categId)=>(dispatch)=>{
@@ -534,7 +538,10 @@ export const addCategory=(category)=>({
   type:ActionTypes.ADD_CATEGORY,
   payload:category
 })
-
+export const addCategorys=(category)=>({
+  type:ActionTypes.ADD_CATEGORYS,
+  payload:category
+})
 export const categoryFailure = (errmsg)=>({
   type:ActionTypes.CATEGORY_FAILURE,
   payload:errmsg

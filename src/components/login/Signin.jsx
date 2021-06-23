@@ -9,9 +9,17 @@ export class Login extends React.Component {
       errors: {},
       forgot: false,
     };
+    this.handleLogin = this.handleLogin.bind(this);
+
     this.handleChange = this.handleChange.bind(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleLogin(event) {
+    // console.log(this.username.value);
+    // console.log(this.password.value);
+    this.props.authUser({ username: this.username.value, password: this.password.value });
+    event.preventDefault();
   }
 
   handleChange(event) {
@@ -88,7 +96,7 @@ export class Login extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}  onSubmit={this.handleLogin}>
           {this.state.forgot === false && (
             <div>
               <div className="base-container" ref={this.props.containerRef}>
@@ -96,20 +104,21 @@ export class Login extends React.Component {
                 <div className="content">
                   <div className="form">
                     <div class="form-group">
-                      <label for="email">Email Address:</label>
+                      <label for="email">Username</label>
 
                       <input
                         type="text"
-                        name="email"
-                        value={this.state.input.email}
+                        name="name"
+                        value={this.state.input.name}
                         onChange={this.handleChange}
                         class="form-control"
-                        placeholder="Enter email"
-                        id="email"
+                        placeholder="Your username"
+                        id="name"
+                        ref={(input) => this.username = input}
                       />
 
                       <div className="text-danger">
-                        {this.state.errors.email}
+                        {this.state.errors.name}
                       </div>
                     </div>
 
@@ -119,6 +128,7 @@ export class Login extends React.Component {
                         type="password"
                         name="password"
                         placeholder="Enter Password"
+                        ref={(input) => this.password = input}
                       />
                     </div>
                   </div>

@@ -23,7 +23,7 @@ const Contact = () => {
 
     const formSubmit = (e) => {
         e.preventDefault();
-        alert(`My name is ${data.fullname}.my phone number is ${data.phone}.my email is ${data.email}. i want to say that: ${data.msg}`);
+        alert(`My name is ${data.fullname}.My phone number is ${data.phone}.My email is ${data.email}. i want to say that: ${data.msg}`);
     };
 
     return (
@@ -55,7 +55,7 @@ const Contact = () => {
                                     name="phone"
                                     value={data.phone}
                                     onChange={InputEvent}
-                                    placeholder="mobile number" />
+                                    placeholder="Mobile number" />
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Email Address</label>

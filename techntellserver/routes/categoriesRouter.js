@@ -41,7 +41,6 @@ CategoriesRouter.route('/:categId')
     Categories.findOne({categoryName:(req.params.categId)})
     .populate('products')
     .then((category) => {
-        console.log(category.products[0].name)
         res.statusCode = 200;
         res.setHeader('content-type', 'application/json');
         res.json(category);
@@ -53,7 +52,7 @@ CategoriesRouter.route('/:categId')
 CategoriesRouter.route('/:categId/products')
 .get((req,res,next)=>{
     Categories.findOne({categoryName:(req.params.categId)})
-    .populate(products)
+    .populate("products")
     .then((category)=>{
         if(category!=null){
             Products.find({})

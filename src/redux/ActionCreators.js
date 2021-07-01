@@ -23,8 +23,7 @@ export const usersFailure = (errMess) => (
 
 //////////////GetUser Thunk//////////////////////////
 export const getUser = () => (dispatch) =>{
-  dispatch(usersRequest());
-  return fetch(baseUrl+"users/", {
+  return fetch(baseUrl+"users/currentuser", {
     headers:{
       "Authorization": localStorage.getItem('token'), 
     }, 
@@ -47,9 +46,6 @@ export const getUser = () => (dispatch) =>{
   })
   .then(response => response.json())
   .then((response) => {
-    
-      //check the login response
-        
         console.log("This is from action creators: " + response);
         dispatch(usersSuccess(response));
   })

@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser=require("body-parser");
 var User=require("../models/userSchema");
 var router = express.Router();
-
 router.use(bodyParser.json());
 
 const passport = require('passport');
@@ -67,6 +66,15 @@ router.post('/login', passport.authenticate('local'),(req, res, next) => {
   })
 })
 */
+
+router.get("/currentUser",authenticate.verifyJson,(req,res,next)=>{
+  User.findById(req.user._id)
+  .then((user)=>{
+    res.statusCode=200;
+    res.setHeader("content-type","application/json");
+    res.json(user);
+  })
+})
 
 router.get('/logout', (req,res,next) => {
 	req.logout();

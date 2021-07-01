@@ -11,6 +11,7 @@ var productsRouter = require("./routes/products");
 var orderRouter = require("./routes/Order");
 var OrderDetailRouter=require("./routes/orderDetails");
 var categoryRouter = require("./routes/categoriesRouter");
+var CommentRouter = require("./routes/commentRouter");
 var cors = require('cors');
 
 var app = express();
@@ -35,6 +36,7 @@ app.use('/products',productsRouter);
 app.use('/orders',orderRouter);
 app.use('/categories',categoryRouter);
 app.use('/orderdetails',OrderDetailRouter);
+app.use('/comments',CommentRouter);
 const mongoose=require('mongoose');
 const { RequestHeaderFieldsTooLarge } = require('http-errors');
 

@@ -1,32 +1,24 @@
 import React,{useContext} from "react";
-import {ProductContext} from "./ProductContext";
 import {CartContext} from "./CartContext";
 import {baseUrl} from './shared/baseUrl';
-import { Redirect,useHistory, Route, Link } from "react-router-dom";
-import { NavLink } from "react-bootstrap";
-import ViewProduct from "./viewProduct";
+import {useHistory} from "react-router-dom";
+
 const Products=(props)=>{
     const history = useHistory();
-    //const {products}=useContext(ProductContext);
     const {dispatch}=useContext(CartContext);
     const products = props.productsFeatured;
     
-
-    const handleClick=(id)=>{
-{/* <Link
-  to={{
-    pathname: "/viewProduct",
-    state: { id }
-  }}
-/>     */}  history.replace({pathname:"/viewProduct",state:id});
+    const handleClick=(product)=>{
+        history.replace({pathname:"/viewProduct",state:product});
     }
     return(
+        <>
         <div className="products">
-            
-            {products.map((product)=>(
+                       
+                {products.map((product)=>(
                 <div className="product" key={product._id}>
                     <div className="product-img">
-                        <img src={baseUrl+product.image} alt="not found" key={product._id} onClick={()=>handleClick(product._id)}/>
+                        <img src={baseUrl+product.image} alt="not found" key={product._id} onClick={()=>handleClick(product)}/>
                     </div>
                     <div className="product-details">
                         <div className="product-name">{product.name}</div>
@@ -39,6 +31,7 @@ const Products=(props)=>{
                 </div>
             ))}
         </div>
+        </>
     )
 }
 export default Products;

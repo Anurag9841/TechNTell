@@ -2,7 +2,8 @@ const express=require('express');
 const bodyParser= require('body-parser');
 const mongoose=require('mongoose');
 
-const Orders = require("../models/OrderSchema")
+const Comments = require("../models/comment");
+const Orders = require("../models/OrderSchema");
 const Products = require('../models/productSchema');
 const OrderDetails = require("../models/OrderDetailsSchema");
 const productsRouter=express.Router();
@@ -17,8 +18,8 @@ const capitalizeFirst = (text) => {
 productsRouter.route('/')
 .get((req,res,next)=>{
     Products.find({})
+    .populate("comments")
     .then((products)=>{
-        
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(products);
@@ -31,7 +32,7 @@ productsRouter.route('/')
 })
 productsRouter.route("/:productId")
 .get((req,res,next)=>{
-    Products.findOne(req.params.productId)
+    Products.findById(req.params.productId)
     .then((product)=>{
         res.statusCode=200;
         res.setHeader('Content-Type',"application/json");
@@ -84,5 +85,109 @@ productsRouter.route("/:productId")
         },(err)=>next(err))
     })
     .catch((err)=>next(err))
+})
+
+productsRouter.route("/:productId/comments")
+.post(authenticate.verifyJson,(req,res,next)=>{
+    Products.findById(req.params.productId)
+    .then((product)=>{
+        if(product!=null){
+            var comment = new Comments({
+                rating:req.body.rating,
+                comment:req.body.comment,
+            })
+            comment.author.push(req.user._id);
+            comment.save()
+            .then((comment)=>{
+            product.comments.push(comment._id)
+            product.save()
+            .then((product)=>{
+                res.statuscode=200;
+                res.setHeader("content-type","application/json")
+                res.json(product)
+            })
+            .catch((err) => next(err))
+        },(err) => next(err))
+        .catch((err) => next(err));
+        }
+        else{
+            res.statusCode = 403;
+            const err = new Error('Product with id:'+req.params.productId+' doesnot exist');
+            next(err);
+
+        }
+    }, (err) => next(err))
+    .catch((err) => next(err))
+})
+
+.delete(authenticate.verifyJson, isAdmin,(req,res, next) => {
+    Products.findById(req.params.productId)
+    .then((product) => {
+        if(product!=null){
+            for(i=0;i<product.comments.length;i++){
+                Comments.findOneAndDelete({_id:product.comments[i]})
+                .then((comment)=>{
+                    if(comment!=null){
+                        res.json("Successfully deleted!!!"+ comment)
+                    }
+                    else{
+                        res.statusCode = 404;
+                        var err = new Error('Error: no product available to delete');
+                        next(err);
+                    }
+                })
+            }
+            product.comments=(product.comments.splice(0,product.comments.length))
+            product.save()
+            .then((product)=>{
+            res.statusCode = 200;
+            res.setHeader('content-type', 'application/json');
+            res.json(product);
+            },(err)=>next(err))
+        }
+        else{
+            res.statusCode = 404;
+            var err = new Error('Error: no such product available ');
+            next(err);
+        }
+    }, (err) => next(err))
+    .catch((err) => next(err))
+})
+
+productsRouter.route("/:productId/comments/:commentId")
+.delete((req,res, next) => {
+    Products.findById(req.params.productId)
+    .then((product) => {
+        if(product != null){
+            console.log(product)
+            const index = product.comments.indexOf(req.params.commentId);
+            if (index > -1){
+                Comments.findByIdAndRemove(req.params.commentId)
+                .then((resp) => {
+                    product.comments.splice(index, 1)
+                    product.save()
+                    .then((prodcut)=>{
+                        res.statusCode = 200;
+                        res.setHeader('content-type', 'application/json');
+                        res.json("Deletion Successful");
+                    },(err)=>next(err))
+                    .catch((err)=>next(err))
+                })
+                .catch((err) => next(err));
+            }
+            else{
+                res.statusCode = 404;
+                var err = new Error('Error: no such product id in the category ' + category.categoryName);
+                next(err);
+            }
+        }
+        else{
+            //category is null
+            res.statusCode = 404;
+            var err = new Error('Error: no such product id in the ');
+            next(err);
+        }
+    }, (err) => next(err))
+    .catch((err) => next(err)) 
 })
 module.exports= productsRouter;

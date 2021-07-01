@@ -3,19 +3,10 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
 import { Route, Switch, withRouter } from 'react-router-dom'
 import Home from "./Home"
-import Signin from "./components/login/Signin";
-import Signup from "./components/login/Signup";
 import Contact from './Contact'
-import OurService from './OurService'
-import Phone from "./Phone"
 import Navbar from "./Navbar"
-import TV from "./TV"
-import controller from "./controller"
-import computercomp from "./computercomp"
-import Printer from "./Printer"
 import Cart from "./Cart"
 import CartContextProvider from './CartContext'
-import systembuild from './systembuild';
 import {authUser,getUser,logoutUser, getProducts, postProduct, getCategories, 
     postCategory, getOrders, postOrder, deleteOrder, getOrderDetails, 
     updateProduct, getcategory , getProduct, deleteProduct
@@ -83,11 +74,12 @@ class Main extends Component{
     render(){
         return(
        <div>
-       <CartContextProvider>
-       <Navbar product={this.props.product} getcategory={this.props.getcategory} category={this.props.categorys} categorys={this.props.category}/>
+        <CartContextProvider>
+        <Navbar user={this.props.usersState} auth={this.props.authState} product={this.props.product} user={this.props.usersState} getcategory={this.props.getcategory} category={this.props.categorys} categorys={this.props.category}/>
+            
        <div className="main">
         <Switch>
-        <Route exact path="/"component={() => <Home productsFeatured={this.props.products.product.filter((prod) => prod.featured)}/>}>            
+        <Route exact path="/"component={() => <Home auth={this.props.authState} productsFeatured={this.props.products.product.filter((prod) => prod.featured)}/>}>            
         </Route>
         
             <Route exact path="/Order" component={()=><Order getProduct={this.props.getProduct} products={this.props.products} PostOrder={this.props.postOrder} />}></Route>
@@ -106,18 +98,9 @@ class Main extends Component{
             <Route  exact path="/signup"component={()=><Register signup={this.props.signup}/>}></Route>
             <Route  exact path="/showProduct" component={(props)=><ShowProduct {...props} category={this.props.category} getcategory={this.props.getcategory}/>}></Route>
             <Route  exact path="/viewProduct" component={(props)=><ViewProduct {...props} product={this.props.product} getProduct={this.props.getProduct}/>}></Route>
-            <Route  exact path="/ourservice"component={OurService}></Route>
-            <Route  exact path="/systembuilt"component={systembuild}></Route>
-            <Route  exact path="/phone"component={Phone}></Route>
-            <Route  exact path="/TV"component={TV}></Route>
-            <Route  exact path="/controller"component={controller}></Route>
-            <Route  exact path="/computer"component={computercomp}></Route>
-            <Route  exact path="/printer"component={Printer}></Route>
             <Route  exact path="/cart" component={Cart}></Route>
-
         </Switch>
         </div>
-    
         </CartContextProvider>
         </div>
     )

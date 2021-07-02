@@ -141,15 +141,13 @@ export const signUp = (fname,lname,username,email,password)=>(dispatch)=>{
 	  email: email,
     password:password
   }
-  const bearer = 'Bearer' + localStorage.getItem('token');
   
   return fetch(baseUrl+ 'users/signup',{
     method: 'POST',
     body:JSON.stringify(newUser),
     headers:{
       'Content-Type': 'application/json',
-      'Authorization': bearer
-    },
+      },
     credentials: 'same-origin'
   })
   .then(response =>{
@@ -733,5 +731,144 @@ export const addOrderDetails = (orderDet)=>({
 
 export const OrderdetailsFailure = (errmsg) =>({
   type:ActionTypes.ORDERDETAILS_FALURE,
+  payload:errmsg
+})
+
+///////////////////////////COMMENT////////////////////////////////////
+export const getComments = ()=>(dispatch)=>{
+  return fetch(baseUrl+"comments")
+  .then(response=>{
+    if(response.ok){
+      return response;
+    }
+    else{
+      var error = new Error(
+        "Error " + response.status + ": " + response.statusText
+      );
+      error.response = response;
+      throw error;
+    }
+  },(error) => {
+    var errmess = new Error(error.message);
+    throw errmess;
+  })
+  .then(response=>response.json())
+  .then(comment=>dispatch(addComment(comment)))
+  .catch((error)=>dispatch(commentFailure(error.message)))
+}
+export const postComment = (comment,rating,productId)=>(dispatch)=>{
+  const newComment = {
+    comment:comment,
+    rating:rating
+  }
+  const bearer = localStorage.getItem('token');
+  return fetch(baseUrl + "products/"+ productId +"/comments" ,{
+    method:"POST",
+    body:JSON.stringify(newComment),
+    headers:{
+      'Content-Type': 'application/json',
+      'Authorization': bearer
+    },
+    credentials: 'same-origin'
+  })
+  .then(response=>{
+    if(response.ok){
+      return response
+    }
+    else{
+      var err = new Error('Error ' + response.status + ': ' + response.statusText);
+      err.response=response;
+      throw err;
+    }
+  },error =>{
+    throw error
+  })
+  .then(response=>response.json())
+  .then(comment=>dispatch(addComment(comment)))
+  .catch(err => { console.log('Post comment ', err.message);
+  alert('comment could not be posted\nError: '+ err.message); })
+};
+
+// export const delCategory = (categId)=>(dispatch)=>{
+//   const bearer = localStorage.getItem('token');
+
+//   return fetch(baseUrl+"categories/"+categId,{
+//     method:'DEL',
+//     headers:{
+//       'Content-Type': 'application/json',
+//       'Authorization': bearer
+//     },credentials: "same-origin"
+//   })
+//   .then(respone=>{
+//     if(respone.ok)  {return respone;}
+//     else{
+//       var err = new Error("Error" + respone.status + ":" + respone.statusText)
+//       err.respone = respone
+//       throw err
+//     }
+//   },err =>{
+//     var errmsg = new Error(err.message);
+//     throw errmsg;
+//   })
+//   .then(response=>response.json())
+//   .catch(err => { console.log('Delete category ', err.message);
+//   alert('Category could not be deleted\nError: '+ err.message); })
+// }
+
+// export const getproductsFromCategory = (categId)=>(dispatch)=>{
+//   return fetch(baseUrl+"categories/"+categId+"/products")
+//   .then(respone=>{
+//     if(respone.ok){
+//       return respone;
+//     }
+//     else{
+//       var err = new Error("Error" + respone.status + ":" + respone.statusText)
+//       err.respone = respone
+//       throw err
+//     }
+//   },err =>{
+//     var errmsg = new Error(err.message);
+//     throw errmsg;
+//   })
+//   .then(response=>response.json())
+//   .then(product=>addProducts(product))
+//   .catch(err=>dispatch(categoryFailure(err.message)))
+// }
+
+// export const deleteproductsFromCategory = (categId)=>(dispatch)=>{
+//   const bearer = localStorage.getItem('token');
+
+//   return fetch(baseUrl+"categories/"+categId+"/products",{
+//     method:'DEL',
+//     headers:{
+//       'Content-Type': 'application/json',
+//       'Authorization': bearer
+//     },credentials: "same-origin"
+//   })
+//   .then(respone=>{
+//     if(respone.ok){
+//       return respone;
+//     }
+//     else{
+//       var err = new Error("Error" + respone.status + ":" + respone.statusText)
+//       err.respone = respone
+//       throw err
+//     }
+//   },err =>{
+//     var errmsg = new Error(err.message);
+//     throw errmsg;
+//   })
+//   .then(response=>response.json())
+//   .catch(err => { console.log('Delete category ', err.message);
+//   alert('Category could not be deleted\nError: '+ err.message); })
+// }
+
+export const addComment=(comment)=>({
+  type:ActionTypes.ADD_COMMENT,
+  payload:comment
+})
+
+export const commentFailure = (errmsg)=>({
+  type:ActionTypes.COMMENT_FAILURE,
   payload:errmsg
 })

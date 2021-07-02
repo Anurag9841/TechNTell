@@ -11,7 +11,6 @@ CommentRouter.use(bodyParser.json())
 CommentRouter.route('/')
 .get((req,res,next)=>{
     Comment.find({})
-    .populate("author")
     .then((comment)=>{
         res.statusCode=200;
         res.setHeader("content-type","application/json");

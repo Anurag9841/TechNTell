@@ -21,6 +21,7 @@ const Register = (props) => {
     };
 
     const formSubmit = (e) => {
+        console.log(data)
         props.signup(data.fname,data.lname,data.username,data.email,data.password)
         e.preventDefault();
         alert(`fname  ${data.fname}.lname is ${data.lname}.username is ${data.username}. email: ${data.email}`);

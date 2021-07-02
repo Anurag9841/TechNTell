@@ -12,7 +12,9 @@ import {authUser,getUser,logoutUser, getProducts, postProduct, getCategories,
     updateProduct, getcategory , getProduct, deleteProduct
     ,delCategory,getproductsFromCategory,deleteproductsFromCategory
     ,updateOrder,
-    signUp} from './redux/ActionCreators';
+    signUp,
+    getComments,
+    postComment} from './redux/ActionCreators';
 import { connect } from 'react-redux'
 import PostCategory from './postCategory'
 import PostProduct from './postProduct'
@@ -24,6 +26,7 @@ import ShowProduct from './showProduct';
 import Register from './register'
 const mapStateToProps = (state) => {
     return {
+        comments:state.comments,
         product: state.product,
         authState: state.auth,
         usersState: state.users, 
@@ -57,7 +60,11 @@ const mapDispatchToProps = (dispatch) => ({
         postOrder: (productId,quantity, to_be_suppliedDate,shippedDate) => dispatch(postOrder(productId,quantity, to_be_suppliedDate,shippedDate)),
         deleteOrder: (orderId) => dispatch(deleteOrder(orderId)),
         updateOrder : (orderId,orderDetailsId,quantity, to_be_suppliedDate,shippedDate)=> dispatch( updateOrder(orderId,orderDetailsId,quantity, to_be_suppliedDate,shippedDate)),
-        getOrderDetails: ()=> dispatch(getOrderDetails())
+        getOrderDetails: ()=> dispatch(getOrderDetails()),
+        //
+        getComments: () => dispatch(getComments()),
+        postComment: (comment,rating,productId) => dispatch(postComment(comment,rating,productId))
+        //deleteComment: ()
     }
 )
 class Main extends Component{
@@ -67,6 +74,7 @@ class Main extends Component{
         this.props.getCategories();
         this.props.getOrders();
         this.props.getOrderDetails();
+        this.props.getComments();
     }
     
     
@@ -97,7 +105,7 @@ class Main extends Component{
             }></Route>
             <Route  exact path="/signup"component={()=><Register signup={this.props.signup}/>}></Route>
             <Route  exact path="/showProduct" component={(props)=><ShowProduct {...props} category={this.props.category} getcategory={this.props.getcategory}/>}></Route>
-            <Route  exact path="/viewProduct" component={(props)=><ViewProduct {...props} product={this.props.product} getProduct={this.props.getProduct}/>}></Route>
+            <Route  exact path="/viewProduct" component={(props)=><ViewProduct {...props} comments={this.props.comments} product={this.props.product} postComment={this.props.postComment} getProduct={this.props.getProduct}/>}></Route>
             <Route  exact path="/cart" component={Cart}></Route>
         </Switch>
         </div>

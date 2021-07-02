@@ -94,8 +94,9 @@ CategoriesRouter.route('/:categId/products')
                     }
                 })
             }
-            category.products=(category.products.splice(0,category.products.length))
-            category.save()
+            //category.products=(category.products.splice(0,category.products.length))
+            console.log(category.products.length)
+            category.save((category.products.splice(0,category.products.length)))
             .then((category)=>{
             res.statusCode = 200;
             res.setHeader('content-type', 'application/json');

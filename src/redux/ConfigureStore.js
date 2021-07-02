@@ -9,7 +9,8 @@ import {OrderReducer} from "./OrderReducer";
 import {OrderDetailsReducer} from "./OrderDetailsReducer"
 import {CategoryReducer} from "./CategoryReducer";
 import {productReducer} from "./productReducer";
-import {categoryOnlyReducer} from "./categoryOnlyReducer"
+import {categoryOnlyReducer} from "./categoryOnlyReducer";
+import {CommentReducer} from "./commentReducer";
 export const configureStore =  () => {
     const store = createStore(
         combineReducers({
@@ -20,7 +21,8 @@ export const configureStore =  () => {
             orderDetails: OrderDetailsReducer,
             categorys: CategoryReducer,
             product: productReducer,
-            category: categoryOnlyReducer
+            category: categoryOnlyReducer,
+            comments: CommentReducer
         }),
         applyMiddleware(thunk, logger)
     );

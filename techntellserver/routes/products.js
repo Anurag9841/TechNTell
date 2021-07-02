@@ -6,6 +6,7 @@ const Comments = require("../models/comment");
 const Orders = require("../models/OrderSchema");
 const Products = require('../models/productSchema');
 const OrderDetails = require("../models/OrderDetailsSchema");
+const Users = require("../models/userSchema");
 const productsRouter=express.Router();
 const authenticate = require("../Authentication/authenticate");
 const { isAdmin } = require('../Authentication/adminAuth');
@@ -92,29 +93,31 @@ productsRouter.route("/:productId/comments")
     Products.findById(req.params.productId)
     .then((product)=>{
         if(product!=null){
-            var comment = new Comments({
-                rating:req.body.rating,
-                comment:req.body.comment,
-            })
-            comment.author.push(req.user._id);
-            comment.save()
-            .then((comment)=>{
-            product.comments.push(comment._id)
-            product.save()
-            .then((product)=>{
-                res.statuscode=200;
-                res.setHeader("content-type","application/json")
-                res.json(product)
-            })
+            Users.findById(req.user._id)
+            .then((user)=>{
+                var comment = new Comments({
+                    rating:req.body.rating,
+                    comment:req.body.comment,
+                    author:user.fname
+                })
+                comment.save()
+                .then((comment)=>{
+                product.comments.push(comment._id)
+                product.save()
+                .then((product)=>{
+                    res.statuscode=200;
+                    res.setHeader("content-type","application/json")
+                    res.json(product)
+                })
             .catch((err) => next(err))
         },(err) => next(err))
+    })
         .catch((err) => next(err));
         }
         else{
             res.statusCode = 403;
             const err = new Error('Product with id:'+req.params.productId+' doesnot exist');
             next(err);
-
         }
     }, (err) => next(err))
     .catch((err) => next(err))
@@ -137,8 +140,7 @@ productsRouter.route("/:productId/comments")
                     }
                 })
             }
-            product.comments=(product.comments.splice(0,product.comments.length))
-            product.save()
+            product.save((product.comments.splice(0,product.comments.length)))
             .then((product)=>{
             res.statusCode = 200;
             res.setHeader('content-type', 'application/json');

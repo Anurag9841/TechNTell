@@ -38,22 +38,22 @@ const Register = (props) => {
                     
                         <form onSubmit={formSubmit}>
                             
-                        <div class="mb-3">
-                                <label for="exampleFormControlInput6" class="form-label">First name</label>
+                        <div className="mb-3">
+                                <label for="exampleFormControlInput6" className="form-label">First name</label>
                                 <input
                                     type="string"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput6"
                                     name="fname"
                                     value={data.fname}
                                     onChange={InputEvent}
                                     placeholder="firstname" />
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput3" class="form-label">Last name</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput3" className="form-label">Last name</label>
                                 <input
                                     type="string"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput3"
                                     name="lname"
                                     required="true"
@@ -61,23 +61,23 @@ const Register = (props) => {
                                     onChange={InputEvent}
                                     placeholder="Last name" />
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput4" class="form-label">Username</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput4" className="form-label">Username</label>
                                 <input
                                     type="string"
                                     required="true"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput4"
                                     name="username"
                                     value={data.username}
                                     onChange={InputEvent}
                                     placeholder="Username" />
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput5" class="form-label">Email</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput5" className="form-label">Email</label>
                                 <input
                                     type="email"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput5"
                                     name="email"
                                     required="true"
@@ -86,11 +86,11 @@ const Register = (props) => {
                                     placeholder="Email" />
                             </div>
 
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput6" class="form-label">Password</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput6" className="form-label">Password</label>
                                 <input
                                     type="password"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput6"
                                     name="password"
                                     value={data.password}
@@ -98,8 +98,8 @@ const Register = (props) => {
                                     placeholder="password" />
                             </div>
 
-                            <div class="col-12 py-2">
-                                <button class="btn btn-outline-primary" type="submit">Submit form</button>
+                            <div className="col-12 py-2">
+                                <button className="btn btn-outline-primary" type="submit">Submit form</button>
                             </div>
                         </form>
                     </div>

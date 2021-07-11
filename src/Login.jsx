@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Form,  Button} from 'react-bootstrap';
-
+import { useHistory } from 'react-router-dom';
 
 class Login extends Component {
     
 constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
-
   }
 
   handleLogin(event) {
@@ -15,6 +14,7 @@ constructor(props) {
     // console.log(this.password.value);
     this.props.authUser({ username: this.username.value, password: this.password.value });
     event.preventDefault();
+
   }
 
   render() {

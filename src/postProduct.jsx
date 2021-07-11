@@ -95,11 +95,11 @@ const PostProduct = (props) => {
                             </select>
                         <form onSubmit={formSubmit}>
                             
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput2" class="form-label">product name</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput2" className="form-label">product name</label>
                                 <input
                                     type="string"
-                                    class="form-control"
+                                    className="form-control"
                                     required="true"
                                     id="exampleFormControlInput2"
                                     name="productname"
@@ -107,11 +107,11 @@ const PostProduct = (props) => {
                                     onChange={InputEvent}
                                     placeholder="enter product name" />
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput3" class="form-label">description</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput3" className="form-label">description</label>
                                 <input
                                     type="string"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput3"
                                     name="description"
                                     required="true"
@@ -119,23 +119,23 @@ const PostProduct = (props) => {
                                     onChange={InputEvent}
                                     placeholder="description" />
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput4" class="form-label">price</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput4" className="form-label">price</label>
                                 <input
                                     type="number"
                                     required="true"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput4"
                                     name="price"
                                     value={data.price}
                                     onChange={InputEvent}
                                     placeholder=" " />
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput5" class="form-label">noof item</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput5" className="form-label">noof item</label>
                                 <input
                                     type="number"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput5"
                                     name="noofitem"
                                     required="true"
@@ -144,11 +144,11 @@ const PostProduct = (props) => {
                                     placeholder=" " />
                             </div>
 
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput6" class="form-label">featured</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput6" className="form-label">featured</label>
                                 <input
                                     type={Boolean}
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput6"
                                     name="featured"
                                     value={data.featured}
@@ -156,8 +156,8 @@ const PostProduct = (props) => {
                                     placeholder="featured" />
                             </div>
 
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput7" class="form-label">Images</label>
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput7" className="form-label">Images</label>
                                 <input 
                                     type="string"
                                     className="form-control"
@@ -170,8 +170,8 @@ const PostProduct = (props) => {
 
                             </div>
 
-                            <div class="col-12 py-2">
-                                <button class="btn btn-outline-primary" type="submit">Add Product</button>
+                            <div className="col-12 py-2">
+                                <button className="btn btn-outline-primary" type="submit">Add Product</button>
                             </div>
                         </form>
                     </div>

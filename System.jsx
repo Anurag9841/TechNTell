@@ -1,8 +1,7 @@
 import React,{useContext} from "react";
-import {ProductContext5} from "./ProductContext5"
+
 import {CartContext} from "./CartContext"
 const System=()=>{
-    const {products}=useContext(ProductContext5);
     const {dispatch}=useContext(CartContext);
     
 

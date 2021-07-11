@@ -552,14 +552,13 @@ export const orderFailure = (errmsg)=>({
   payload:errmsg
 })
 
-export const getOrders = ()=>(dispatch)=>{
+export const getOrders=()=>(dispatch)=>{
   const bearer = localStorage.getItem("token")
-  return fetch(baseUrl + "orders",{
+  return fetch(baseUrl+"orders",{
     headers:{
-      'Content-Type': 'application/json',
-      'Authorization': bearer
-    },
-    credentials:'same-origin'
+      "content-type":"app;ication/json",
+      "Authorization":bearer
+    },credentials:"same-origin"
   })
   .then(response=>{
     if(response.ok){
@@ -579,11 +578,10 @@ export const getOrders = ()=>(dispatch)=>{
   .catch(err=>dispatch(orderFailure(err.errmsg)))
 }
 
-export const postOrder = (productId,quantity, to_be_suppliedDate,shippedDate) => (dispatch) =>{
+export const postOrder = (productId,quantity,totalPrice) => (dispatch) =>{
   const newOrder = {
     quantity:quantity,
-    to_be_suppliedDate:to_be_suppliedDate,
-    shippedDate:shippedDate
+    totalPrice:totalPrice
   }
 
   const bearer = localStorage.getItem('token');
@@ -615,10 +613,10 @@ export const postOrder = (productId,quantity, to_be_suppliedDate,shippedDate) =>
   alert('Order could not be posted\nError: '+ err.message); })
 }
 
-export const deleteOrder = (orderId) => (dispatch) =>{
+export const deleteOrder = (orderId,orderDetailsId) => (dispatch) =>{
   const bearer = localStorage.getItem('token');
 
-  return fetch(baseUrl + "orders/"+orderId+"/orderDetailsId",{
+  return fetch(baseUrl + "orders/"+orderId+"/"+orderDetailsId,{
     method:'DELETE',
     headers:{
       'Content-Type': 'application/json',
@@ -639,8 +637,7 @@ export const deleteOrder = (orderId) => (dispatch) =>{
     throw error
   })
   .then(respone=>respone.json())
-  .catch(err => { console.log('Delete Order ', err.message);
-  alert('Order could not be deleted\nError: '+ err.message); })
+  .catch(err => { console.log('Delete Order ', err.message);})
 }
 
 export const updateOrder = (orderId,orderDetailsId,quantity, to_be_suppliedDate,shippedDate)=> (dispatch)=>{
@@ -678,9 +675,9 @@ export const updateOrder = (orderId,orderDetailsId,quantity, to_be_suppliedDate,
 }
 //////////////////////////ORDERDETAILS///////////////////////////////////////////////////
 
-export const getOrderDetails = ()=>(dispatch)=>{
+export const getOrderDetails = (Id)=>(dispatch)=>{
   const bearer = localStorage.getItem('token');
-  return fetch(baseUrl+"orderdetails",{
+  return fetch(baseUrl+"orderdetails/"+Id,{
     headers:{
       'Content-Type': 'application/json',
       'Authorization': bearer

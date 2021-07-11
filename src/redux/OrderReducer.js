@@ -5,11 +5,11 @@ export const OrderReducer = (state={
     errmsg : null,
     order:[]
 },action) =>{
-    switch(action.types){
+    switch(action.type){
         case(ActionTypes.ORDER_FALURE):
             return {...state,isLoading :false, errmsg : action.payload, order : []};
         case(ActionTypes.ADD_ORDER):
-            return {...state,isLoading : false, errmsg :null, order : action.payload};
+            return {...state,isLoading : false, errmsg :action.errmsg, order:action.payload};
         case(ActionTypes.DELETE_ORDER):
             return {...state,isLoading : false, errmsg : null, order:[] };
         default:

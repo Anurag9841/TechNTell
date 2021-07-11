@@ -6,18 +6,22 @@ const OrderSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-    orderDate:{
-        type: Date,
-        required: true
+    products:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'products'
     },
-    to_be_suppliedDate:{
-        type: Date,
-        default:""
-    },
-    shippedDate:{
-        type: Date,
-        default:"",
-    },
+    // orderDate:{
+    //     type: Date,
+    //     required: true
+    // },
+    // supplied:{
+    //     type: Boolean,
+    //     default:false
+    // },
+    // shippedDate:{
+    //     type: Date,
+    //     default:"",
+    // },
     // shipperId:{
     //     type: mongoose.Types.ObjectId,
     //     ref: ''

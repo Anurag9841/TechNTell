@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
         usersState: state.users, 
         products: state.products,
         categorys: state.categorys,
-        orderState: state.order,
+        order: state.order,
         orderDetailsState: state.orderDetails,
         category: state.category
     }
@@ -57,10 +57,10 @@ const mapDispatchToProps = (dispatch) => ({
         postCategory: (categoryName) => dispatch(postCategory(categoryName)),
         //
         getOrders: () => dispatch(getOrders()),
-        postOrder: (productId,quantity, to_be_suppliedDate,shippedDate) => dispatch(postOrder(productId,quantity, to_be_suppliedDate,shippedDate)),
-        deleteOrder: (orderId) => dispatch(deleteOrder(orderId)),
+        postOrder: (productId,quantity,totalPrice) => dispatch(postOrder(productId,quantity,totalPrice)),
+        deleteOrder: (orderId,orderDetailsId) => dispatch(deleteOrder(orderId,orderDetailsId)),
         updateOrder : (orderId,orderDetailsId,quantity, to_be_suppliedDate,shippedDate)=> dispatch( updateOrder(orderId,orderDetailsId,quantity, to_be_suppliedDate,shippedDate)),
-        getOrderDetails: ()=> dispatch(getOrderDetails()),
+        getOrderDetails: (Id)=> dispatch(getOrderDetails(Id)),
         //
         getComments: () => dispatch(getComments()),
         postComment: (comment,rating,productId) => dispatch(postComment(comment,rating,productId))
@@ -72,9 +72,9 @@ class Main extends Component{
         this.props.getUser();
         this.props.getProducts();
         this.props.getCategories();
-        this.props.getOrders();
         this.props.getOrderDetails();
         this.props.getComments();
+        this.props.getOrders();
     }
     
     
@@ -83,14 +83,15 @@ class Main extends Component{
         return(
        <div>
         <CartContextProvider>
-        <Navbar user={this.props.usersState} auth={this.props.authState} product={this.props.product} user={this.props.usersState} getcategory={this.props.getcategory} category={this.props.categorys} categorys={this.props.category}/>
+        <Navbar logout={this.props.logoutUser} user={this.props.usersState} auth={this.props.authState} product={this.props.product} user={this.props.usersState} getcategory={this.props.getcategory} category={this.props.category} categorys={this.props.categorys}/>
             
        <div className="main">
         <Switch>
         <Route exact path="/"component={() => <Home auth={this.props.authState} productsFeatured={this.props.products.product.filter((prod) => prod.featured)}/>}>            
         </Route>
         
-            <Route exact path="/Order" component={()=><Order getProduct={this.props.getProduct} products={this.props.products} PostOrder={this.props.postOrder} />}></Route>
+            <Route exact path="/order" component={()=><Order getOdetails={this.props.getOrderDetails} orders={this.props.order} deleteOrder={this.props.deleteOrder}/>}></Route>
+            {/* <Route exact path="/Orderad" component={()=><Orderad getOdetails={this.props.getOrderDetails} orders={this.props.order} deleteOrder={this.props.deleteOrder}/>}></Route> */}
             <Route exact path="/PostCategory" component={()=><PostCategory postCategory= {this.props.postCategory} />}></Route>
             <Route exact path="/PostProduct" component={()=><PostProduct postProduct={this.props.postProduct}
             category={this.props.categorys}/>}></Route>
@@ -104,9 +105,9 @@ class Main extends Component{
                 
             }></Route>
             <Route  exact path="/signup"component={()=><Register signup={this.props.signup}/>}></Route>
-            <Route  exact path="/showProduct" component={(props)=><ShowProduct {...props} category={this.props.category} getcategory={this.props.getcategory}/>}></Route>
-            <Route  exact path="/viewProduct" component={(props)=><ViewProduct {...props} comments={this.props.comments} product={this.props.product} postComment={this.props.postComment} getProduct={this.props.getProduct}/>}></Route>
-            <Route  exact path="/cart" component={Cart}></Route>
+            <Route  exact path="/showProduct" component={(props)=><ShowProduct {...props} auth={this.props.authState} category={this.props.category} getcategory={this.props.getcategory}/>}></Route>
+            <Route  exact path="/viewProduct" component={(props)=><ViewProduct {...props} auth={this.props.authState} comments={this.props.comments} product={this.props.product} postComment={this.props.postComment} getProduct={this.props.getProduct}/>}></Route>
+            <Route  exact path="/cart" component={()=><Cart order={this.props.postOrder}/>}></Route>
         </Switch>
         </div>
         </CartContextProvider>

@@ -3,9 +3,9 @@ import { baseUrl } from './shared/baseUrl'
 import {CartContext} from "./CartContext"
 import { Button, Form, FormGroup, Label, Input,Card, CardImg,
     CardText, CardBody, CardTitle, CardSubtitle, } from "reactstrap";
-import { FadeTransform, Fade, Stagger } from 'react-animation-components';
-// import logo from "./image/images (1).png"
+
 const ViewProduct=(props)=>{
+    const auth=props.auth.isAuthenticated;
     const [data, setData] = useState({
         comment: "",
         rating: 0,
@@ -28,7 +28,14 @@ const ViewProduct=(props)=>{
         alert(`Comment is ${data.comment}.and the rating is ${data.rating}`);
     };
     const product = props.location.state;
-    
+    const cartShow=(productId,auth)=>{
+        if(auth){
+            return <Button className="add-to-cart" onClick={()=>dispatch({type:'ADD_TO_CART',id:productId,product})}>Add to cart</Button>
+         }
+         else{
+             return(<div></div>)
+         }
+    }
     const {dispatch}=useContext(CartContext);
     return(
         <>
@@ -38,7 +45,7 @@ const ViewProduct=(props)=>{
                                 <CardImg top width="100%" src={baseUrl+props.location.state.image} alt="Card image cap" />
                                 <CardBody>
                                     <CardTitle tag="h5">{props.location.state.name}</CardTitle>
-                                    <Button className="add-to-cart" onClick={()=>dispatch({type:'ADD_TO_CART',id:props.location.state._id,product})}>Add to cart</Button>
+                                    {cartShow(props.location.state._id,auth)}
                                 </CardBody>
                             </Card>
                     
@@ -53,6 +60,8 @@ const ViewProduct=(props)=>{
                                     <FormGroup>
                                         <Label for="exampleText">Comment</Label>
                                         <Input type="textarea" value={data.comment} name="comment" onChange={ChangeEvent} id="exampleText" />
+                                    </FormGroup>    
+                                    <FormGroup>    
                                         <Label for="exampleSelect">Rating</Label>
                                         <Input type="select" value={data.rating} onChange={ChangeEvent} name="rating" id="exampleSelect">
                                             <option>0</option>
@@ -62,6 +71,8 @@ const ViewProduct=(props)=>{
                                             <option>4</option>
                                             <option>5</option>
                                         </Input>
+                                    </FormGroup>
+                                    <FormGroup>                                    
                                         <Button type="submit">Submit</Button>
                                     </FormGroup>                            
                                 </Form>

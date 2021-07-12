@@ -1,54 +1,59 @@
-import React,{useContext} from "react";
+import React, {useState} from "react";
+import { Table, Button } from "react-bootstrap";
 
-import {CartContext} from "./CartContext"
-const System=()=>{
-    const {dispatch}=useContext(CartContext);
-    
+const TableData = (props) => {
+  const sz = props.cols.length;
+  const colsChanged = props.cols;
+  colsChanged.pop();
+  return(
+    <>
+      {props.indices.map((index) => {
+        return (<tr>
+          <th>
+            {index}
+          </th>
+          {
+            colsChanged.map((col) => {
+              return(<td></td>)
+            })
+          }
 
-    return(
-      
-        <div>
-      
-        <div className="container-fluid text-center">
-            <div className="row">
-                <div className="col-10 col-lg-3">
-                    <div className="head">Product</div>
-                </div>
-                <div className="col-10 col-lg-3">
-                    <div className="head">Name</div>
-                </div>
-                <div className="col-10 col-lg-3">
-                    <div className="head">Price</div>
-                     </div>
-            </div>
-        </div>
-        
-        {products.map((product)=>(
-        <div className="container-fluid text-center">
-            
-            <div className="row">
-             <div className="col-10 col-lg-3">
-                 <span className="cart-image"><img src={product.image} alt="not found"/></span>
-             
-                </div>
-                <div className="col-10 col-lg-3">
-             <div className="product-name1">{product.name} </div>
-                </div>
-                <div className="col-10 col-lg-3">
-            Rs. {product.price} 
-                </div>
-                <div className="col-10 col-lg-3">
-                <div className="add" onClick={()=>dispatch({type:'ADD_TO_CART',id:product.id,product})} > add</div>
-                </div>
-                 </div> 
-                 
-            
-        
-        </div>
-))}
+        </tr>)
 
-    </div>
-
-    )
+      })}
+    </>
+  )
 }
+
+const System = (props) => {
+
+  // Colulmn names are Here
+  const cols = ["Component","Selection","Base","Promo","Shipping","Tax","Price","Where"];
+
+  // Component names are here
+  const indices = ["CPU", "CPU Cooler","Motherboard","Memory", "Storage", "Video Card", "Case", "Power Supply", "Operating System", "Monitor" ];
+
+
+  // variable for storing key for td
+  let count = 0;
+  return(
+    <Table responsive="sm">
+      <thead>
+      <tr>
+        {
+          cols.map((col) => {
+            count++;
+            return(<td key={count}>{col}</td>)
+          })
+        }
+      </tr>
+      </thead>
+        
+      <tbody>
+        <TableData indices={indices} cols={cols}/>
+      </tbody>
+    </Table>
+  )
+}
+
 export default System;

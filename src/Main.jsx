@@ -24,6 +24,8 @@ import Login from "./Login";
 import ViewProduct from "./viewProduct"
 import ShowProduct from './showProduct';
 import Register from './register'
+import systembuild from './system_build/systembuild'
+
 const mapStateToProps = (state) => {
     return {
         comments:state.comments,
@@ -108,6 +110,8 @@ class Main extends Component{
             <Route  exact path="/showProduct" component={(props)=><ShowProduct {...props} auth={this.props.authState} category={this.props.category} getcategory={this.props.getcategory}/>}></Route>
             <Route  exact path="/viewProduct" component={(props)=><ViewProduct {...props} auth={this.props.authState} comments={this.props.comments} product={this.props.product} postComment={this.props.postComment} getProduct={this.props.getProduct}/>}></Route>
             <Route  exact path="/cart" component={()=><Cart order={this.props.postOrder}/>}></Route>
+
+            <Route exact path="/systembuilt" component={systembuild} />
         </Switch>
         </div>
         </CartContextProvider>

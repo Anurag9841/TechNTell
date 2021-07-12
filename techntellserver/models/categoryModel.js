@@ -1,14 +1,15 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-require('mongoose-currency').loadType(mongoose);
+require("mongoose-currency").loadType(mongoose);
 
 const Currency = mongoose.Types.Currency;
 
-const CategorySchema = new Schema({
-    categoryName:{
-        type: String,
-        required: true,
-        unique: true
+const CategorySchema = new Schema(
+  {
+    categoryName: {
+      type: String,
+      required: true,
+      unique: true,
     },
     // description:{
     //     type: String,
@@ -17,16 +18,19 @@ const CategorySchema = new Schema({
     // image:{
     //     type: String,
     //     required: true,
-    // },    
-    products:[{
+    // },
+    products: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'products'
-    }]
-}, 
-{
-    timestamps: true
-})
+        ref: "products",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-var Categories = mongoose.model('Category', CategorySchema)
-module.exports = Categories;
-
+var Categories = mongoose.model("Category", CategorySchema);
+var ComponentCategories = mongoose.model('CompCateg', CategorySchema, "components");
+module.exports = { Categories, ComponentCategories };

@@ -56,6 +56,7 @@ export const getUser = () => (dispatch) =>{
 ///////////////////////LOGOUT Thunk/////////////////////////
 export const logoutUser = () => (dispatch) => {
   dispatch(logoutRequest());
+  localStorage.removeItem('prodChosen');
   localStorage.removeItem('token');
   localStorage.removeItem('creds');
   dispatch(logoutSuccess());
@@ -868,4 +869,56 @@ export const addComment=(comment)=>({
 export const commentFailure = (errmsg)=>({
   type:ActionTypes.COMMENT_FAILURE,
   payload:errmsg
+})
+
+
+export const getCompProducts = (index) => (dispatch) => {
+  dispatch(compProductsLoading());
+  
+  const bearer = localStorage.getItem('token');
+  return fetch(baseUrl+'components/'+index+'/products',{
+    headers: {
+      'Content-Type':'application/json', 
+      'Authroization':bearer
+    },
+    credentials:'same-origin'
+  })
+  .then(response => {
+    
+    if(response.ok){
+      
+      return response;
+    }else {
+      var error = new Error(
+        "Error " + response.status + ": " + response.statusText
+      );
+      error.response = response;
+      throw error;
+    }
+  }, 
+  (error) => {
+    var errmess = new Error(error.message);
+    throw errmess;
+  })
+  .then(respone => respone.json())
+  .then(compProducts => {
+    dispatch(addCompProducts(compProducts))
+  })
+  .catch((error) => dispatch(compProductsFailure(error.message)));
+}
+
+export const addCompProducts = (compProducts) => (
+  {
+    type: ActionTypes.ADD_COMPONENT_PRODUCTS,
+    payload: compProducts
+  }
+)
+
+export const compProductsLoading = () => ({
+  type: ActionTypes.COMPONENT_PRODUCTS_LOADING
+})
+
+export const compProductsFailure = (errMess) => ({
+  type:ActionTypes.COMPONENT_PRODUCTS_FAILURE,
+  payload: errMess
 })

@@ -80,7 +80,7 @@ ComponentsRouter.route("/:categId").get((req, res, next) => {
 ComponentsRouter.route("/:categId/products")
 .get((req, res, next) => {
 
-    Categories.findOne({ categoryName: req.params.categId })
+    ComponentCategories.findOne({ categoryName: req.params.categId })
       .populate("products")
       .then(
         (category) => {
@@ -136,7 +136,6 @@ ComponentsRouter.route("/:categId/products")
     )
     .catch((err) => next(err));
 });
-
 
 
 module.exports = ComponentsRouter;

@@ -1,15 +1,16 @@
 import React from 'react'
 
 import System from "./System"
-const systembuild = () => {
-    return (
-        <>
-            <div className="container">
-                <System />
-            </div>
 
-        </>
 
-    )
+const Systembuild = (props) => {
+    return(
+        <div className="container">
+
+            <System getCompProducts={props.getCompProducts} compProducts={props.compProducts}/>
+        </div>
+    ) 
+
+    
 }
-export default systembuild;
+export default Systembuild;

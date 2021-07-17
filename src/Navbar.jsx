@@ -87,7 +87,7 @@ const Navbar = (props) => {
                                             </ul>
                                         </li>
                                         <li ><NavLink to="/cart">
-                                            <span className="shoppingcart"> <i class="fas fa-cart-plus"></i><span className="
+                                            <span className="shoppingcart"> <i className="fas fa-cart-plus"></i><span className="
                                       cartcount">{qty}</span> </span> </NavLink></li>
                                     </ul>
                                 </div>
@@ -147,7 +147,7 @@ const Navbar = (props) => {
                                             </li>
     
                                             <li ><NavLink to="/cart">
-                                                <span className="shoppingcart"> <i class="fas fa-cart-plus"></i><span className="
+                                                <span className="shoppingcart"> <i className="fas fa-cart-plus"></i><span className="
                                           cartcount">{qty}</span> </span> </NavLink></li>
                                         </ul>
                                     </div>

@@ -20,7 +20,7 @@ const System=()=>{
                 </div>
                 <div className="col-10 col-lg-3">
                     <div className="head">Price</div>
-                </div>
+                     </div>
             </div>
         </div>
         

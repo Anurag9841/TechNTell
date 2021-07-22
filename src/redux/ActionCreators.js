@@ -864,11 +864,11 @@ export const commentFailure = (errmsg)=>({
 })
 
 
-export const getCompProducts = (index) => (dispatch) => {
+export const getCompProducts = () => (dispatch) => {
   dispatch(compProductsLoading());
   
   const bearer = localStorage.getItem('token');
-  return fetch(baseUrl+'components/'+index+'/products',{
+  return fetch(baseUrl+'components/',{
     headers: {
       'Content-Type':'application/json', 
       'Authroization':bearer

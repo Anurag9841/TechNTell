@@ -17,12 +17,18 @@ const TableData = (props) => {
 
 
   function handleClick(val) {
+    console.log("props.compProducts.compProducts: ", props.compProducts.compProducts.filter((val_obj) =>{
+      return val_obj.categoryName == val; 
+    })[0].products
+    );
+
+    let specific_products_of_val = props.compProducts.compProducts.filter((val_obj) =>{
+      return val_obj.categoryName == val; 
+    })[0].products;
 
     // get component products
-    props.getCompProducts(val);
-
     if (props.compProducts.compProducts.length != 0)
-      props.getData(props.compProducts.compProducts, val);
+      props.getData(specific_products_of_val, val);
     // send value of index here
   }
 
@@ -40,17 +46,17 @@ const TableData = (props) => {
   }
 
   console.log("priceState Total: ", priceState)
-  
+
   // get the total prices 
   let total_base_price = 0;
   let total_discount_price = 0;
   let total_tax_price = 0;
-  
-  priceState.total_base.forEach(val => total_base_price+=val)
-  priceState.total_discount.forEach(val => total_discount_price+=val)
-  priceState.total_tax.forEach(val => total_tax_price+=val)
-  
-  
+
+  priceState.total_base.forEach(val => total_base_price += val)
+  priceState.total_discount.forEach(val => total_discount_price += val)
+  priceState.total_tax.forEach(val => total_tax_price += val)
+
+
   const chosen_indices = Object.keys(props.prodClicked);
 
   let counta = 0;
@@ -123,7 +129,6 @@ const TableData = (props) => {
 
 const System = (props) => {
   const history = useHistory();
-
   // Colulmn names are Here
   const cols = ["Component", "Selection", "Base", "Promo", "Tax", "Price"];
 
@@ -233,7 +238,7 @@ const System = (props) => {
         </thead>
 
         <tbody>
-          <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} />
+          <TableData indices={indices} cols={cols} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} />
 
         </tbody>
       </Table>

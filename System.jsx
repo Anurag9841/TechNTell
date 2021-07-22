@@ -1,7 +1,8 @@
 import React,{useContext} from "react";
-
+import {ProductContext5} from "./ProductContext5"
 import {CartContext} from "./CartContext"
 const System=()=>{
+    const {products}=useContext(ProductContext5);
     const {dispatch}=useContext(CartContext);
     
 
@@ -19,7 +20,7 @@ const System=()=>{
                 </div>
                 <div className="col-10 col-lg-3">
                     <div className="head">Price</div>
-                </div>
+                     </div>
             </div>
         </div>
         

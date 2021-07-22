@@ -29,7 +29,6 @@ import { baseUrl } from './shared/baseUrl'
 // }
 const Order= (props)=>{
     const handleClick=(oId,odId)=>{
-        console.log(oId,odId);
         props.deleteOrder(oId,odId);
         window.location.reload(false);
     }

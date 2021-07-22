@@ -4,8 +4,6 @@ import { CartContext} from "./CartContext"
 import { getcategory } from './redux/ActionCreators'
 const Navbar = (props) => {
     var i=0;
-    console.log(props.auth.isAuthenticated)
-    console.log(props.user.users.admin)
     const {qty}=useContext(CartContext)
     const history = useHistory();
     const categories = []; 
@@ -29,7 +27,6 @@ const Navbar = (props) => {
                 break;
             }
         }
-        console.log(props.category.category);
     }
 
     if(props.auth.isAuthenticated && props.user.users.admin){

@@ -5,7 +5,6 @@ import { baseUrl } from './shared/baseUrl';
 const Cart=(props)=>{
     const {shoppingCart,totalPrice,qty,dispatch} = useContext(CartContext);
     const handleClick=(order,qty,id,price)=>{
-        console.log(shoppingCart);
         order(id,qty,price);
     }
     

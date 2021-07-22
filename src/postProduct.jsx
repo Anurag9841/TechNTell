@@ -53,14 +53,11 @@ const PostProduct = (props) => {
         const { value } = event.target;
         
         data2.categoryname=value
-        console.log(value)
     };
     const InputEvent = (event) => {
         
         const { name, value } = event.target;
         
-       // console.log(value)
-        //console.log(name)
         setData((preVal) => {
             return {
                 ...preVal,
@@ -68,11 +65,9 @@ const PostProduct = (props) => {
                 
             };
         });
-        //console.log(name)
     };
 
     const formSubmit = (e) => {
-        console.log(data2.categoryname)
         props.postProduct(data2.categoryname,data.productname,data.description,data.price,data.noofitem,data.image,data.featured)
         e.preventDefault();
         alert(`category  ${data2.categoryname}.product name is ${data.productname}.description is ${data.description}. price: ${data.price}`);

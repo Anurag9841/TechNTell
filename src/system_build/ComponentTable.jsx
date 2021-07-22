@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 
 const ComponentTable = (props) => {
-
+console.log("props is: ", props.compProducts.compProducts);
 
     const colsToRemove = ["comments",
         "createdAt",

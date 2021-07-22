@@ -6,8 +6,17 @@ import TableRow from "./TableRow";
 
 const TableData = (props) => {
 
-  // history
-  const handleClick = (val) => {
+  let price_obj = {
+    total_base: new Set(),
+    total_discount: new Set(),
+    total_tax: new Set()
+  };
+
+  let [priceState, setPriceState] = useState(() => price_obj);
+
+
+
+  function handleClick(val) {
 
     // get component products
     props.getCompProducts(val);
@@ -16,55 +25,95 @@ const TableData = (props) => {
       props.getData(props.compProducts.compProducts, val);
     // send value of index here
   }
-  if (props.prodClicked != null) {
-    console.log("prodClicked: ", props.prodClicked.prodClicked);
+
+  const getPriceInfo = (received_obj) => {
+    useEffect(() => {
+      setPriceState((preVal) => {
+        return {
+          ...preVal,
+          total_base: [...new Set([...preVal.total_base, received_obj.base])],
+          total_discount: [...new Set([...preVal.total_discount, received_obj.discount])],
+          total_tax: [...new Set([...preVal.total_tax, received_obj.tax])]
+        }
+      });
+    }, [received_obj])
   }
 
-  const colsChanged = props.cols;
-  colsChanged.pop();
-  colsChanged.pop();
+  console.log("priceState Total: ", priceState)
+  
+  // get the total prices 
+  let total_base_price = 0;
+  let total_discount_price = 0;
+  let total_tax_price = 0;
+  
+  priceState.total_base.forEach(val => total_base_price+=val)
+  priceState.total_discount.forEach(val => total_discount_price+=val)
+  priceState.total_tax.forEach(val => total_tax_price+=val)
+  
+  
+  const chosen_indices = Object.keys(props.prodClicked);
 
   let counta = 0;
 
   return (
     <>
       {props.indices.map((index) => {
+
+        const checkChosen = chosen_indices.includes(index);
         counta++;
         return (
+          // only one index go here which is in the chosen prop
+          // the whole of the index goes here
           <>
             {
               (() => {
-                if (props.prodClicked != null) {
+                if (checkChosen) {
                   return (
-                    <TableRow prodClicked={props.prodClicked} index={index} handleClick={handleClick} colsChanged={colsChanged} />);
+                    <TableRow prodClicked={props.prodClicked[index]} index={index} getPriceInfo={getPriceInfo} />
+                  );
                 }
-                else {
-                  return (
 
-                    <tr>
-                      <th>
-                        {index}
-                      </th>
-
-                      <td>
-                        <Button size="sm" onClick={() => handleClick(index)}>+ Click to add {index}</Button>
-                      </td>
-                      {
-                        colsChanged.map((col) => {
-                          counta++;
-                          return (<td key={counta}></td>)
-                        })
-                      }
-                    </tr>
-                  )
-                }
               })()
             }
+
+
+            <tr>
+              <th>
+                {(() => {
+                  if (checkChosen)
+                    return (<></>)
+                  else
+                    return (<>{index}</>)
+                })()}
+              </th>
+
+              <td>
+                <Button size="sm" onClick={() => handleClick(index)}>+ Click to add {index}</Button>
+              </td>
+              <td colSpan={4}></td>
+
+            </tr>
           </>
+
         )
 
       })
       }
+      <tr>
+        <td colSpan={4} rowSpan={3}></td>
+        <td align='right'>Base Total:</td>
+        <td align='right'>Rs. {total_base_price}</td>
+      </tr>
+      <tr>
+
+        <td align='right'>Rebates:</td>
+        <td align='right'>- Rs. {total_discount_price}</td>
+      </tr>
+      <tr>
+
+        <td style={{ fontSize: 20 }} align='right'>Total:</td>
+        <td style={{ fontSize: 20 }} align='right'><b>Rs. {total_base_price + total_tax_price - total_discount_price}</b></td>
+      </tr>
     </>
 
   )
@@ -88,10 +137,44 @@ const System = (props) => {
 
   // State config
   var [prodReceived, setProdReceived] = useState(() => []);
-  
+
   const prodChosen = localStorage.getItem("prodChosen");
   let init_obj = {};
 
+  const state_configure_for_change = (prodChosen_again) => {
+
+    // -- start of making arrays of each componenet in state unique 
+    const array_of_indices1 = Object.keys(prodChosen_again);
+
+    array_of_indices1.map((indx) => {
+
+      prodChosen_again[indx] = prodChosen_again[indx].filter(
+        (val) => {
+          const curr_index = prodChosen_again[indx].indexOf(val);
+          if (curr_index > 0) {
+            return !(val._id.toString() == prodChosen_again[indx][curr_index - 1]._id.toString())
+          }
+          else {
+            return true;
+          }
+        }
+      )
+    })
+    // -- end of making array of each component unique
+
+    //-- start of storing in local Storage
+    localStorage.setItem(
+      "prodChosen",
+      JSON.stringify(
+        prodChosen_again
+      )
+    );
+    //-- end of storing in local Storage
+
+    // update state
+    setProdReceived(JSON.parse(localStorage.getItem("prodChosen")));
+
+  }
 
   useEffect(() => {
 
@@ -118,92 +201,44 @@ const System = (props) => {
 
           prodChosen_again[history.location.state.indexClicked.toString()].push(history.location.state.prodClicked);
 
-          const array_of_indices1 = Object.keys(prodChosen_again);
+          state_configure_for_change(prodChosen_again);
 
-          array_of_indices1.map((indx) => {
-
-            prodChosen_again[indx] = prodChosen_again[indx].filter(
-              (val) => {
-                const curr_index = prodChosen_again[indx].indexOf(val);
-                if (curr_index > 0) {
-                  console.log("id comparison is: ", val._id.toString() == prodChosen_again[indx][curr_index - 1]._id.toString(), val._id.toString(), prodChosen_again[indx][curr_index - 1]._id.toString());
-                  return !(val._id.toString() == prodChosen_again[indx][curr_index - 1]._id.toString())
-                }
-                else {
-                  return true;
-                }
-              }
-            )
-          })
-
-          localStorage.setItem(
-            "prodChosen",
-            JSON.stringify(
-              prodChosen_again
-            )
-          );
-
-          setProdReceived(JSON.parse(localStorage.getItem("prodChosen")));
-
-          // unique values are left to be set
         }
         else {
           prodChosen_again[history.location.state.indexClicked.toString()] = [history.location.state.prodClicked];
-          const array_of_indices1 = Object.keys(prodChosen_again);
 
-          array_of_indices1.map((indx) => {
-
-            prodChosen_again[indx] = prodChosen_again[indx].filter(
-              (val) => {
-                const curr_index = prodChosen_again[indx].indexOf(val);
-                if (curr_index > 0) {
-                  console.log("id comparison is: ", val._id.toString() == prodChosen_again[indx][curr_index - 1]._id.toString(), val._id.toString(), prodChosen_again[indx][curr_index - 1]._id.toString());
-                  return !(val._id.toString() == prodChosen_again[indx][curr_index - 1]._id.toString())
-                }
-                else {
-                  return true;
-                }
-              }
-            )
-          })
-
-          localStorage.setItem(
-            "prodChosen",
-            JSON.stringify(
-              prodChosen_again
-            )
-          );
-          setProdReceived(JSON.parse(localStorage.getItem("prodChosen")));
-
-
+          state_configure_for_change(prodChosen_again);
         }
 
       }
     }
   }, [history.location.state]);
-  console.log("prodReceived [state] is: ", prodReceived);
   //
 
 
   // variable for storing key for td
   let count = 0;
   return (
-    <Table responsive="sm">
-      <thead>
-        <tr>
-          {
-            cols.map((col) => {
-              count++;
-              return (<td key={count}>{col}</td>)
-            })
-          }
-        </tr>
-      </thead>
+    <div>
+      <Table responsive="sm">
+        <thead>
+          <tr>
+            {
+              cols.map((col) => {
+                count++;
+                return (<td key={count}>{col}</td>)
+              })
+            }
+          </tr>
+        </thead>
 
-      <tbody>
-        <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={history.location.state} />
-      </tbody>
-    </Table>
+        <tbody>
+          <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} />
+
+        </tbody>
+      </Table>
+
+    </div>
   )
 }
 

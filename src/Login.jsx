@@ -9,8 +9,6 @@ constructor(props) {
   }
 
   handleLogin(event) {
-    // console.log(this.username.value);
-    // console.log(this.password.value);
     this.props.authUser({ username: this.username.value, password: this.password.value });
     event.preventDefault();
 

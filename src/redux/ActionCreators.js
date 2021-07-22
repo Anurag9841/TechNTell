@@ -46,7 +46,6 @@ export const getUser = () => (dispatch) =>{
   })
   .then(response => response.json())
   .then((response) => {
-        console.log("This is from action creators: " + response);
         dispatch(usersSuccess(response));
   })
   .catch((error)=> dispatch(usersFailure(error.message)))
@@ -64,7 +63,6 @@ export const logoutUser = () => (dispatch) => {
 
 //////////////////////////LOGIN Thunk/////////////////////////////
 export const authUser = (creds) => (dispatch) => {
-  console.log('here are the creds \n', creds);
   dispatch(loginRequest(creds));
 
   return fetch(baseUrl+"users/login", {
@@ -75,7 +73,6 @@ export const authUser = (creds) => (dispatch) => {
     body: JSON.stringify(creds),
   })
   .then((response) => {
-    console.log('here is the response \n', response);
     if (response.ok) {
       return response;
     } else {
@@ -93,17 +90,14 @@ export const authUser = (creds) => (dispatch) => {
   })
   .then(response => response.json())
   .then((response) => {
-    console.log('respone after json\n', response);
       //check the login response
       if (response.token){
         localStorage.setItem('token', response.token);
         localStorage.setItem('creds', JSON.stringify(creds));
-        console.log('response is working')
         //dispatch login success
         dispatch(loginSuccess(response));
     }
     else{
-      console.log('third error')
         var error = new Error('Error '+ response.status);
         error.response = response;
         throw error;
@@ -209,7 +203,6 @@ export const postProduct = (categId,productName,description,unitPrice,unitsInSto
     image: image,
     price:unitPrice
   }
-  console.log('Product',newProduct);
   const bearer =  localStorage.getItem('token');
   return fetch(baseUrl + "categories/" +categId+"/products",{
     method: 'POST',
@@ -276,7 +269,6 @@ export const updateProduct = (productId,productName,description,unitPrice,unitsI
     featured: featured
   }
   
-  console.log('Product',updatedProduct);
   const bearer =  localStorage.getItem('token');
   return fetch(baseUrl+ 'products/'+productId,{
     method: 'PUT',

@@ -46,7 +46,20 @@ const get_model = (value_received) => {
   else if (value_received == "Monitor") model = MonitorModel;
 };
 
-
+ComponentsRouter.route("/")
+.get((req,res,next) => {
+  ComponentCategories.find({})
+  .populate("products")
+  .then(
+    (category) => {
+      res.statusCode = 200;
+      res.setHeader("content-type", "application/json");
+      res.json(category);
+    },
+    (err) => next(err)
+  )
+  .catch((err) => next(err));
+});
 ComponentsRouter.route("/categories/").post(isAdmin, (req, res, next) => {
   ComponentCategories.create(req.body)
     .then(

@@ -11,7 +11,6 @@ const ShowProduct=(props)=>{
     const handleClick=(product)=>{
         history.replace({pathname:"/viewProduct",state:product});
     }
-    console.log(props.location.state)
     const cartShow=(product,auth)=>{
         if(auth){
             return <Button className="add-to-cart" onClick={()=>dispatch({type:'ADD_TO_CART',id:product._id,product})}>Add to cart</Button>

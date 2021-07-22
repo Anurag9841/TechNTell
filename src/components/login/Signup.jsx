@@ -27,7 +27,6 @@ export class Register extends React.Component {
     event.preventDefault();
 
     if (this.validate()) {
-      console.log(this.state);
 
       let input = {};
 

@@ -10,35 +10,14 @@ const TableRow = (props) => {
     };
 
 
-
-    let price_obj = {
-        base: 0,
-        discount: 0,
-        tax: 0
-    };
-
-    let [priceState, setPriceState] = useState(() => price_obj);
     
-
 
     return (
         <>
             {
                 props.prodClicked.map((prodClicked) => {
                     counta++;
-                    useEffect(() => {
-                        setPriceState((preVal) => {
-                            return {
-                                ...preVal,
-                                base: preVal.base + prodClicked.price,
-                                discount: preVal.discount + prodClicked.discount,
-                                tax: preVal.tax + prodClicked.tax
-                            }
-                        })
-                    }, [prodClicked]);
-
-
-                    props.getPriceInfo(priceState);
+                    
                     return (
                         <tr key={counta}>
 

@@ -7,9 +7,9 @@ import TableRow from "./TableRow";
 const TableData = (props) => {
 
   let price_obj = {
-    total_base: new Set(),
-    total_discount: new Set(),
-    total_tax: new Set()
+    total_base: [],
+    total_discount: [],
+    total_tax: []
   };
 
   let [priceState, setPriceState] = useState(() => price_obj);
@@ -17,13 +17,10 @@ const TableData = (props) => {
 
 
   function handleClick(val) {
-    console.log("props.compProducts.compProducts: ", props.compProducts.compProducts.filter((val_obj) =>{
-      return val_obj.categoryName == val; 
-    })[0].products
-    );
 
-    let specific_products_of_val = props.compProducts.compProducts.filter((val_obj) =>{
-      return val_obj.categoryName == val; 
+
+    let specific_products_of_val = props.compProducts.compProducts.filter((val_obj) => {
+      return val_obj.categoryName == val;
     })[0].products;
 
     // get component products
@@ -32,29 +29,16 @@ const TableData = (props) => {
     // send value of index here
   }
 
-  const getPriceInfo = (received_obj) => {
-    useEffect(() => {
-      setPriceState((preVal) => {
-        return {
-          ...preVal,
-          total_base: [...new Set([...preVal.total_base, received_obj.base])],
-          total_discount: [...new Set([...preVal.total_discount, received_obj.discount])],
-          total_tax: [...new Set([...preVal.total_tax, received_obj.tax])]
-        }
-      });
-    }, [received_obj])
-  }
 
-  console.log("priceState Total: ", priceState)
+
+  console.log("priceState(dis, tax, base) Total: ", priceState)
 
   // get the total prices 
   let total_base_price = 0;
   let total_discount_price = 0;
   let total_tax_price = 0;
 
-  priceState.total_base.forEach(val => total_base_price += val)
-  priceState.total_discount.forEach(val => total_discount_price += val)
-  priceState.total_tax.forEach(val => total_tax_price += val)
+
 
 
   const chosen_indices = Object.keys(props.prodClicked);
@@ -74,8 +58,20 @@ const TableData = (props) => {
             {
               (() => {
                 if (checkChosen) {
+                  console.log("props.prodClicked[index]: ", index, props.prodClicked[index]);
+
+                  props.prodClicked[index].map((prodClicked) => {
+
+                    console.log("prodClicked: ", prodClicked);
+                    price_obj["total_base"].push(prodClicked.price);
+                    price_obj["total_discount"].push(prodClicked.discount);
+                    price_obj["total_tax"].push(prodClicked.tax);
+
+                  });
+
                   return (
-                    <TableRow prodClicked={props.prodClicked[index]} index={index} getPriceInfo={getPriceInfo} />
+                    <TableRow prodClicked={props.prodClicked[index]} index={index} />
+
                   );
                 }
 
@@ -105,6 +101,12 @@ const TableData = (props) => {
 
       })
       }
+
+      {(() => {
+        price_obj.total_base.forEach(val => total_base_price += val)
+        price_obj.total_discount.forEach(val => total_discount_price += val)
+        price_obj.total_tax.forEach(val => total_tax_price += val)
+      })()}
       <tr>
         <td colSpan={4} rowSpan={3}></td>
         <td align='right'>Base Total:</td>

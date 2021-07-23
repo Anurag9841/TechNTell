@@ -5,8 +5,16 @@ import { useHistory } from 'react-router-dom';
 
 
 const ComponentTable = (props) => {
-console.log("props is: ", props.compProducts.compProducts);
+const config_head = (val)=>{
+    
+    let temp = val.replace(/_/g, " ");
 
+    
+    val = temp[0].toUpperCase();
+    let final_res = val.concat(temp.substr(1));
+
+    return final_res;
+};
     const colsToRemove = ["comments",
         "createdAt",
         "discount",
@@ -41,13 +49,13 @@ console.log("props is: ", props.compProducts.compProducts);
         return (
             <div className="container">
                 <h2><i style={{color:"GrayText"}}>{index}</i></h2>
-                <Table responsive="sm">
+                <Table responsive="sm" style={{textAlign:"center"}}>
                     <thead>
                         <tr>
                             {
                                 cols.map((col) => {
                                     count++;
-                                    return (<th key={count}>{col}</th>)
+                                    return (<th key={count}>{config_head(col)}</th>)
                                 })
                                 
                             }

@@ -225,21 +225,21 @@ const System = (props) => {
   //
 const remove_obj = (param, indx) => {
   console.log("param:", param);
-  if (param._id == history.location.state.prodClicked._id){
+  // if (param._id == history.location.state.prodClicked._id){
     // history.location.state["prodClicked"] = {};
     
-    const temp = prodReceived[indx].filter(
-     (obj) => {
-       return obj._id != param._id
-     }
-    );
+    // const temp = prodReceived[indx].filter(
+    //  (obj) => {
+    //    return obj._id != param._id
+    //  }
+    // );
     
-    setProdReceived(preVal => {
-       return {
-         ...preVal,
-         indx: [...temp]
-        }
-    })
+    // setProdReceived(preVal => {
+    //    return {
+    //      ...preVal,
+    //      indx: [...temp]
+    //     }
+    // })
     
     
   }

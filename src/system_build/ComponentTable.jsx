@@ -48,13 +48,13 @@ const ComponentTable = (props) => {
         e.preventDefault();
 
         let newProd = prodList.sort(
-                (a, b) => {
-                    return a[str_val] - b[str_val]
-                }
-            );
-        
-            setProd([...newProd]);
-            console.log("newProd", newProd);
+            (a, b) => {
+                return a[str_val] - b[str_val]
+            }
+        );
+
+        setProd([...newProd]);
+        console.log("newProd", newProd);
     }
     if (prodList.length != 0) {
         let colsRaw = Object.keys(prodList[0]);
@@ -85,38 +85,36 @@ const ComponentTable = (props) => {
                     </thead>
                     <tbody>
                         {/* get all the values printed in the table */}
-                            {
-                                // useEffect(() => {
-                                    prodList.map((prod) => { // iterate through each product
-                                    console.log("prodList: ", prodList);
-                                    cols = colsRaw.filter(filterOutCol);
-                                    counta++;
-                                    counta = counta % 5;
-        
-                                    return (
-                                        <tr>
-                                            <td>
-                                                {/* in case images are necessary */}
-                                                {/* <img src={baseUrl + '/images/components/' + index+'/CPU'+counta+'.jpg'} style={{width:40}} alt="pic" /> */}
-                                                {prod[cols.shift()]}
-                                            </td>
-                                            {
-                                                cols.map((col) => { // iterate through each head 
-        
-                                                    return (
-                                                        <td>
-                                                            {prod[col]}
-                                                        </td>) // print the val of json
-                                                })
-                                            }
-                                            <td>
-                                                <Button size="sm" onClick={() => getProductClicked(prod, index, counta)}>Add</Button>
-                                            </td>
-                                        </tr>)
-                                })}
-                                {/* ,[prodList]) */}
-                            
-                        
+                        {
+                            prodList.map((prod) => { // iterate through each product
+                                console.log("prodList: ", prodList);
+                                cols = colsRaw.filter(filterOutCol);
+                                counta++;
+                                counta = counta % 5;
+
+                                return (
+                                    <tr>
+                                        <td>
+                                            {/* in case images are necessary */}
+                                            {/* <img src={baseUrl + '/images/components/' + index+'/CPU'+counta+'.jpg'} style={{width:40}} alt="pic" /> */}
+                                            {prod[cols.shift()]}
+                                        </td>
+                                        {
+                                            cols.map((col) => { // iterate through each head 
+
+                                                return (
+                                                    <td>
+                                                        {prod[col]}
+                                                    </td>) // print the val of json
+                                            })
+                                        }
+                                        <td>
+                                            <Button size="sm" onClick={() => getProductClicked(prod, index, counta)}>Add</Button>
+                                        </td>
+                                    </tr>)
+                            })}
+
+
                     </tbody>
                 </Table>
             </div>

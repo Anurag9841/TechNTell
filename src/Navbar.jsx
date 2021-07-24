@@ -59,7 +59,7 @@ const Navbar = (props) => {
                                             <NavLink activeClassName='menu_active' className="nav-link" to="/systembuilt">SystemBuild</NavLink>
                                         </li>
                                         <li className="nav-item">
-                                            <NavLink activeClassName='menu_active' className="nav-link" to="#" onClick={props.logout}>logout</NavLink>
+                                            <NavLink activeClassName='menu_active' className="nav-link" to="/" onClick={props.logout}>logout</NavLink>
                                         </li>
                                         <li className="nav-item dropdown">
                                         <NavLink  className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -131,7 +131,7 @@ const Navbar = (props) => {
                                                 <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/order">Order</NavLink>
                                             </li>
                                             <li className="nav-item">
-                                            <NavLink activeClassName='menu_active' className="nav-link" to="#" onClick={props.logout}>logout</NavLink>
+                                            <NavLink activeClassName='menu_active' className="nav-link" to="/" onClick={props.logout}>logout</NavLink>
                                         </li>
     
                                             <li className="nav-item dropdown">

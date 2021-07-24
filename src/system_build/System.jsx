@@ -15,6 +15,11 @@ const TableData = (props) => {
   let [priceState, setPriceState] = useState(() => price_obj);
 
 
+  let prodClicked_for_tableRow = (props.prodClicked.length == 0) ?
+   (
+     (localStorage.getItem("prodChosen") == null)?{}:JSON.parse(localStorage.getItem("prodChosen")) 
+    )
+   :props.prodClicked;
 
   function handleClick(val) {
 
@@ -41,7 +46,7 @@ const TableData = (props) => {
 
 
 
-  const chosen_indices = Object.keys(props.prodClicked);
+  const chosen_indices = Object.keys(prodClicked_for_tableRow);
 
   let counta = 0;
 
@@ -58,9 +63,9 @@ const TableData = (props) => {
             {
               (() => {
                 if (checkChosen) {
-                  console.log("props.prodClicked[index]: ", index, props.prodClicked[index]);
+                  console.log("prodClicked_for_tableRow[index]: ", index, prodClicked_for_tableRow[index]);
 
-                  props.prodClicked[index].map((prodClicked) => {
+                  prodClicked_for_tableRow[index].map((prodClicked) => {
 
                     console.log("prodClicked: ", prodClicked);
                     price_obj["total_base"].push(prodClicked.price);
@@ -70,7 +75,7 @@ const TableData = (props) => {
                   });
 
                   return (
-                    <TableRow prodClicked={props.prodClicked[index]} index={index} />
+                    <TableRow prodClicked={prodClicked_for_tableRow[index]} index={index} />
 
                   );
                 }

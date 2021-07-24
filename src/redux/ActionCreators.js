@@ -1,5 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
+import { useHistory } from "react-router-dom";
 
 export const usersRequest = () => (
   {
@@ -58,6 +59,7 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('prodChosen');
   localStorage.removeItem('token');
   localStorage.removeItem('creds');
+  
   dispatch(logoutSuccess());
 }
 

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
-import System from './System';
 import { useHistory, Link } from 'react-router-dom';
-import { baseUrl } from '../shared/baseUrl';
 
 const ComponentTable = (props) => {
 

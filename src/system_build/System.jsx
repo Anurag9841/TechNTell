@@ -36,7 +36,6 @@ const TableData = (props) => {
 
 
 
-  console.log("priceState(dis, tax, base) Total: ", priceState)
 
   // get the total prices 
   let total_base_price = 0;
@@ -63,11 +62,9 @@ const TableData = (props) => {
             {
               (() => {
                 if (checkChosen) {
-                  console.log("prodClicked_for_tableRow[index]: ", index, prodClicked_for_tableRow[index]);
 
                   prodClicked_for_tableRow[index].map((prodClicked) => {
 
-                    console.log("prodClicked: ", prodClicked);
                     price_obj["total_base"].push(prodClicked.price);
                     price_obj["total_discount"].push(prodClicked.discount);
                     price_obj["total_tax"].push(prodClicked.tax);
@@ -75,7 +72,7 @@ const TableData = (props) => {
                   });
 
                   return (
-                    <TableRow prodClicked={prodClicked_for_tableRow[index]} index={index} />
+                    <TableRow prodClicked={prodClicked_for_tableRow} index={index} setProdReceived={props.setProdReceived} remove_obj={props.remove_obj}/>
 
                   );
                 }
@@ -224,10 +221,30 @@ const System = (props) => {
 
       }
     }
-  }, [history.location.state]);
+  }, [history.location.state, localStorage.getItem("prodChosen")]);
   //
-
-
+const remove_obj = (param, indx) => {
+  console.log("param:", param);
+  if (param._id == history.location.state.prodClicked._id){
+    // history.location.state["prodClicked"] = {};
+    
+    const temp = prodReceived[indx].filter(
+     (obj) => {
+       return obj._id != param._id
+     }
+    );
+    
+    setProdReceived(preVal => {
+       return {
+         ...preVal,
+         indx: [...temp]
+        }
+    })
+    
+    
+  }
+  
+}
   // variable for storing key for td
   let count = 0;
   return (
@@ -245,7 +262,7 @@ const System = (props) => {
         </thead>
 
         <tbody>
-          <TableData indices={indices} cols={cols} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} />
+          <TableData indices={indices} cols={cols} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} remove_obj={remove_obj} setProdReceived={setProdReceived}/>
 
         </tbody>
       </Table>

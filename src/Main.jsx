@@ -25,7 +25,9 @@ import { connect } from 'react-redux'
 import PostCategory from './postCategory'
 import PostProduct from './postProduct'
 import UpdateProduct from './updateProduct'
+
 import Order from './order'
+
 
 const mapStateToProps = (state) => {
     return {
@@ -91,6 +93,7 @@ class Main extends Component{
             products={this.props.products}/>}></Route>
             //////////////////////////
             <Route  exact path="/contact"component={Contact}></Route>
+            
             <Route  exact path="/signin"component={Signin}></Route>
             <Route  exact path="/signup"component={Signup}></Route>
             <Route  exact path="/ourservice"component={OurService}></Route>

@@ -44,11 +44,11 @@ const PostCategory = (props) =>{
                                     name="categoryname"
                                     value={data.categoryname}
                                     onChange={InputEvent}
-                                    placeholder="Enter category name" />
+                                    placeholder="enter category name" />
                             </div>
                             
                             <div class="col-12 py-2">
-                               <center> <button class="btn btn-outline-primary" type="submit">Submi</button></center>
+                                <button class="btn btn-outline-primary" type="submit">Submit form</button>
                             </div>
                         </form>
                     </div>

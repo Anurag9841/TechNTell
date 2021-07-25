@@ -23,8 +23,7 @@ export const usersFailure = (errMess) => (
 
 //////////////GetUser Thunk//////////////////////////
 export const getUser = () => (dispatch) =>{
-  dispatch(usersRequest());
-  return fetch(baseUrl+"users/", {
+  return fetch(baseUrl+"users/currentuser", {
     headers:{
       "Authorization": localStorage.getItem('token'), 
     }, 
@@ -47,10 +46,6 @@ export const getUser = () => (dispatch) =>{
   })
   .then(response => response.json())
   .then((response) => {
-    
-      //check the login response
-        
-        console.log("This is from action creators: " + response);
         dispatch(usersSuccess(response));
   })
   .catch((error)=> dispatch(usersFailure(error.message)))
@@ -60,6 +55,7 @@ export const getUser = () => (dispatch) =>{
 ///////////////////////LOGOUT Thunk/////////////////////////
 export const logoutUser = () => (dispatch) => {
   dispatch(logoutRequest());
+  localStorage.removeItem('prodChosen');
   localStorage.removeItem('token');
   localStorage.removeItem('creds');
   dispatch(logoutSuccess());
@@ -67,7 +63,6 @@ export const logoutUser = () => (dispatch) => {
 
 //////////////////////////LOGIN Thunk/////////////////////////////
 export const authUser = (creds) => (dispatch) => {
-  console.log('here are the creds \n', creds);
   dispatch(loginRequest(creds));
 
   return fetch(baseUrl+"users/login", {
@@ -78,7 +73,6 @@ export const authUser = (creds) => (dispatch) => {
     body: JSON.stringify(creds),
   })
   .then((response) => {
-    console.log('here is the response \n', response);
     if (response.ok) {
       return response;
     } else {
@@ -96,17 +90,14 @@ export const authUser = (creds) => (dispatch) => {
   })
   .then(response => response.json())
   .then((response) => {
-    console.log('respone after json\n', response);
       //check the login response
       if (response.token){
         localStorage.setItem('token', response.token);
         localStorage.setItem('creds', JSON.stringify(creds));
-        console.log('response is working')
         //dispatch login success
         dispatch(loginSuccess(response));
     }
     else{
-      console.log('third error')
         var error = new Error('Error '+ response.status);
         error.response = response;
         throw error;
@@ -137,22 +128,21 @@ export const loginFailure = (errMess) => (
     }
 );
 //////////////////////SIGNUPTHUNK/////////////////////////////////
-export const signUp = (fname,lname,username,email)=>(dispatch)=>{
+export const signUp = (fname,lname,username,email,password)=>(dispatch)=>{
   const newUser = {
     fname: fname,
 	  lname: lname,
 	  username: username,
-	  email: email
+	  email: email,
+    password:password
   }
-  const bearer = 'Bearer' + localStorage.getItem('token');
   
   return fetch(baseUrl+ 'users/signup',{
     method: 'POST',
     body:JSON.stringify(newUser),
     headers:{
       'Content-Type': 'application/json',
-      'Authorization': bearer
-    },
+      },
     credentials: 'same-origin'
   })
   .then(response =>{
@@ -169,7 +159,7 @@ export const signUp = (fname,lname,username,email)=>(dispatch)=>{
     throw errmsg
   })
   .then(response => response.json())
-  .then(user=>usersSuccess(user))
+  .then(user=>dispatch(usersSuccess(user)))
   .catch(error => { console.log('User SIGNUP', error.message);
         alert('Sign up \nError: '+ error.message); })
 
@@ -213,7 +203,6 @@ export const postProduct = (categId,productName,description,unitPrice,unitsInSto
     image: image,
     price:unitPrice
   }
-  console.log('Product',newProduct);
   const bearer =  localStorage.getItem('token');
   return fetch(baseUrl + "categories/" +categId+"/products",{
     method: 'POST',
@@ -237,7 +226,7 @@ export const postProduct = (categId,productName,description,unitPrice,unitsInSto
       throw error
   })
   .then(response => response.json())
-  .then(product=>dispatch(addProduct(product)))
+  .then(product=>dispatch(addProducts(product)))
   .catch(error => { console.log('Post product ', error.message);
         alert('Your product could not be posted\nError: '+ error.message); })
 };
@@ -246,7 +235,6 @@ export const postProduct = (categId,productName,description,unitPrice,unitsInSto
 
 
 export const getProduct = (productId) => (dispatch) => {
-  dispatch(productsLoading());
   return fetch(baseUrl+'products/' + productId)
   .then(response => {
     if(response.ok){
@@ -281,7 +269,6 @@ export const updateProduct = (productId,productName,description,unitPrice,unitsI
     featured: featured
   }
   
-  console.log('Product',updatedProduct);
   const bearer =  localStorage.getItem('token');
   return fetch(baseUrl+ 'products/'+productId,{
     method: 'PUT',
@@ -305,7 +292,7 @@ export const updateProduct = (productId,productName,description,unitPrice,unitsI
       throw error
   })
   .then(response => response.json())
-  .then(product=>addProduct(product))
+  .then(product=>addProducts(product))
   .catch(error => { console.log('PUT product ', error.message);
         alert('Your product could not be posted\nError: '+ error.message); })
 };
@@ -357,10 +344,15 @@ export const getProducts = () => (dispatch) => {
   })
   .then(respone => respone.json())
   .then(products => {
-    dispatch(addProduct(products))
+    dispatch(addProducts(products))
   })
   .catch((error) => dispatch(productsFailure(error.message)));
 }
+
+export const addProducts=(products)=>({
+  type:ActionTypes.ADD_PRODUCTS,
+  payload:products
+});
 
 export const addProduct=(products)=>({
   type:ActionTypes.ADD_PRODUCT,
@@ -436,13 +428,13 @@ export const postCategory = (categoryName)=>(dispatch)=>{
 
 export const getcategory = (categId)=>(dispatch)=>{
   return fetch(baseUrl+"categories/"+categId)
-  .then(respone=>{
-    if(respone.ok){
-      return respone;
+  .then(response=>{
+    if(response.ok){
+      return response;
     }
     else{
-      var err = new Error("Error" + respone.status + ":" + respone.statusText)
-      err.respone = respone
+      var err = new Error("Error" + response.status + ":" + response.statusText)
+      err.response = response
       throw err
     }
   },err =>{
@@ -450,7 +442,7 @@ export const getcategory = (categId)=>(dispatch)=>{
     throw errmsg;
   })
   .then(response=>response.json())
-  .then(category=>addCategory(category))
+  .then(category=>dispatch(addCategorys(category)))
   .catch(err=>dispatch(categoryFailure(err.message)))
 }
 export const delCategory = (categId)=>(dispatch)=>{
@@ -496,7 +488,7 @@ export const getproductsFromCategory = (categId)=>(dispatch)=>{
     throw errmsg;
   })
   .then(response=>response.json())
-  .then(product=>addProduct(product))
+  .then(product=>addProducts(product))
   .catch(err=>dispatch(categoryFailure(err.message)))
 }
 export const deleteproductsFromCategory = (categId)=>(dispatch)=>{
@@ -533,7 +525,10 @@ export const addCategory=(category)=>({
   type:ActionTypes.ADD_CATEGORY,
   payload:category
 })
-
+export const addCategorys=(category)=>({
+  type:ActionTypes.ADD_CATEGORYS,
+  payload:category
+})
 export const categoryFailure = (errmsg)=>({
   type:ActionTypes.CATEGORY_FAILURE,
   payload:errmsg
@@ -550,14 +545,13 @@ export const orderFailure = (errmsg)=>({
   payload:errmsg
 })
 
-export const getOrders = ()=>(dispatch)=>{
+export const getOrders=()=>(dispatch)=>{
   const bearer = localStorage.getItem("token")
-  return fetch(baseUrl + "orders",{
+  return fetch(baseUrl+"orders",{
     headers:{
-      'Content-Type': 'application/json',
-      'Authorization': bearer
-    },
-    credentials:'same-origin'
+      "content-type":"app;ication/json",
+      "Authorization":bearer
+    },credentials:"same-origin"
   })
   .then(response=>{
     if(response.ok){
@@ -577,11 +571,10 @@ export const getOrders = ()=>(dispatch)=>{
   .catch(err=>dispatch(orderFailure(err.errmsg)))
 }
 
-export const postOrder = (productId,quantity, to_be_suppliedDate,shippedDate) => (dispatch) =>{
+export const postOrder = (productId,quantity,totalPrice) => (dispatch) =>{
   const newOrder = {
     quantity:quantity,
-    to_be_suppliedDate:to_be_suppliedDate,
-    shippedDate:shippedDate
+    totalPrice:totalPrice
   }
 
   const bearer = localStorage.getItem('token');
@@ -613,10 +606,10 @@ export const postOrder = (productId,quantity, to_be_suppliedDate,shippedDate) =>
   alert('Order could not be posted\nError: '+ err.message); })
 }
 
-export const deleteOrder = (orderId) => (dispatch) =>{
+export const deleteOrder = (orderId,orderDetailsId) => (dispatch) =>{
   const bearer = localStorage.getItem('token');
 
-  return fetch(baseUrl + "orders/"+orderId+"/orderDetailsId",{
+  return fetch(baseUrl + "orders/"+orderId+"/"+orderDetailsId,{
     method:'DELETE',
     headers:{
       'Content-Type': 'application/json',
@@ -637,8 +630,7 @@ export const deleteOrder = (orderId) => (dispatch) =>{
     throw error
   })
   .then(respone=>respone.json())
-  .catch(err => { console.log('Delete Order ', err.message);
-  alert('Order could not be deleted\nError: '+ err.message); })
+  .catch(err => { console.log('Delete Order ', err.message);})
 }
 
 export const updateOrder = (orderId,orderDetailsId,quantity, to_be_suppliedDate,shippedDate)=> (dispatch)=>{
@@ -676,9 +668,9 @@ export const updateOrder = (orderId,orderDetailsId,quantity, to_be_suppliedDate,
 }
 //////////////////////////ORDERDETAILS///////////////////////////////////////////////////
 
-export const getOrderDetails = ()=>(dispatch)=>{
+export const getOrderDetails = (Id)=>(dispatch)=>{
   const bearer = localStorage.getItem('token');
-  return fetch(baseUrl+"orderdetails",{
+  return fetch(baseUrl+"orderdetails/"+Id,{
     headers:{
       'Content-Type': 'application/json',
       'Authorization': bearer
@@ -730,4 +722,195 @@ export const addOrderDetails = (orderDet)=>({
 export const OrderdetailsFailure = (errmsg) =>({
   type:ActionTypes.ORDERDETAILS_FALURE,
   payload:errmsg
+})
+
+///////////////////////////COMMENT////////////////////////////////////
+export const getComments = ()=>(dispatch)=>{
+  return fetch(baseUrl+"comments")
+  .then(response=>{
+    if(response.ok){
+      return response;
+    }
+    else{
+      var error = new Error(
+        "Error " + response.status + ": " + response.statusText
+      );
+      error.response = response;
+      throw error;
+    }
+  },(error) => {
+    var errmess = new Error(error.message);
+    throw errmess;
+  })
+  .then(response=>response.json())
+  .then(comment=>dispatch(addComment(comment)))
+  .catch((error)=>dispatch(commentFailure(error.message)))
+}
+export const postComment = (comment,rating,productId)=>(dispatch)=>{
+  const newComment = {
+    comment:comment,
+    rating:rating
+  }
+  const bearer = localStorage.getItem('token');
+  return fetch(baseUrl + "products/"+ productId +"/comments" ,{
+    method:"POST",
+    body:JSON.stringify(newComment),
+    headers:{
+      'Content-Type': 'application/json',
+      'Authorization': bearer
+    },
+    credentials: 'same-origin'
+  })
+  .then(response=>{
+    if(response.ok){
+      return response
+    }
+    else{
+      var err = new Error('Error ' + response.status + ': ' + response.statusText);
+      err.response=response;
+      throw err;
+    }
+  },error =>{
+    throw error
+  })
+  .then(response=>response.json())
+  .then(comment=>dispatch(addComment(comment)))
+  .catch(err => { console.log('Post comment ', err.message);
+  alert('comment could not be posted\nError: '+ err.message); })
+};
+
+// export const delCategory = (categId)=>(dispatch)=>{
+//   const bearer = localStorage.getItem('token');
+
+//   return fetch(baseUrl+"categories/"+categId,{
+//     method:'DEL',
+//     headers:{
+//       'Content-Type': 'application/json',
+//       'Authorization': bearer
+//     },credentials: "same-origin"
+//   })
+//   .then(respone=>{
+//     if(respone.ok)  {return respone;}
+//     else{
+//       var err = new Error("Error" + respone.status + ":" + respone.statusText)
+//       err.respone = respone
+//       throw err
+//     }
+//   },err =>{
+//     var errmsg = new Error(err.message);
+//     throw errmsg;
+//   })
+//   .then(response=>response.json())
+//   .catch(err => { console.log('Delete category ', err.message);
+//   alert('Category could not be deleted\nError: '+ err.message); })
+// }
+
+// export const getproductsFromCategory = (categId)=>(dispatch)=>{
+//   return fetch(baseUrl+"categories/"+categId+"/products")
+//   .then(respone=>{
+//     if(respone.ok){
+//       return respone;
+//     }
+//     else{
+//       var err = new Error("Error" + respone.status + ":" + respone.statusText)
+//       err.respone = respone
+//       throw err
+//     }
+//   },err =>{
+//     var errmsg = new Error(err.message);
+//     throw errmsg;
+//   })
+//   .then(response=>response.json())
+//   .then(product=>addProducts(product))
+//   .catch(err=>dispatch(categoryFailure(err.message)))
+// }
+
+// export const deleteproductsFromCategory = (categId)=>(dispatch)=>{
+//   const bearer = localStorage.getItem('token');
+
+//   return fetch(baseUrl+"categories/"+categId+"/products",{
+//     method:'DEL',
+//     headers:{
+//       'Content-Type': 'application/json',
+//       'Authorization': bearer
+//     },credentials: "same-origin"
+//   })
+//   .then(respone=>{
+//     if(respone.ok){
+//       return respone;
+//     }
+//     else{
+//       var err = new Error("Error" + respone.status + ":" + respone.statusText)
+//       err.respone = respone
+//       throw err
+//     }
+//   },err =>{
+//     var errmsg = new Error(err.message);
+//     throw errmsg;
+//   })
+//   .then(response=>response.json())
+//   .catch(err => { console.log('Delete category ', err.message);
+//   alert('Category could not be deleted\nError: '+ err.message); })
+// }
+
+export const addComment=(comment)=>({
+  type:ActionTypes.ADD_COMMENT,
+  payload:comment
+})
+
+export const commentFailure = (errmsg)=>({
+  type:ActionTypes.COMMENT_FAILURE,
+  payload:errmsg
+})
+
+
+export const getCompProducts = (index) => (dispatch) => {
+  dispatch(compProductsLoading());
+  
+  const bearer = localStorage.getItem('token');
+  return fetch(baseUrl+'components/'+index+'/products',{
+    headers: {
+      'Content-Type':'application/json', 
+      'Authroization':bearer
+    },
+    credentials:'same-origin'
+  })
+  .then(response => {
+    
+    if(response.ok){
+      
+      return response;
+    }else {
+      var error = new Error(
+        "Error " + response.status + ": " + response.statusText
+      );
+      error.response = response;
+      throw error;
+    }
+  }, 
+  (error) => {
+    var errmess = new Error(error.message);
+    throw errmess;
+  })
+  .then(respone => respone.json())
+  .then(compProducts => {
+    dispatch(addCompProducts(compProducts))
+  })
+  .catch((error) => dispatch(compProductsFailure(error.message)));
+}
+
+export const addCompProducts = (compProducts) => (
+  {
+    type: ActionTypes.ADD_COMPONENT_PRODUCTS,
+    payload: compProducts
+  }
+)
+
+export const compProductsLoading = () => ({
+  type: ActionTypes.COMPONENT_PRODUCTS_LOADING
+})
+
+export const compProductsFailure = (errMess) => ({
+  type:ActionTypes.COMPONENT_PRODUCTS_FAILURE,
+  payload: errMess
 })

@@ -1,7 +1,7 @@
 import React from 'react'
 const Banner=()=>{
     return(
-        <div className="container">
+        <div className="container-col-10 mx-auto">
         <header>
         <div className="headertext">
             <div>

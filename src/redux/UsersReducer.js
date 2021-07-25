@@ -17,7 +17,6 @@ export const UsersReducer = (
       };
 
     case ActionTypes.USERS_SUCCESS:
-      console.log('users_success action called');
       return {
         ...state,
         isLoading: false,

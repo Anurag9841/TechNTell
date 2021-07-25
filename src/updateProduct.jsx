@@ -56,12 +56,12 @@ const UpdateProduct = (props) =>{
                 <div className="row">
                     <div className="col-md-6 col-10 mx-auto">
                     <select onChange={InputEvent2}>
-                        <option>Select product</option>
+                        <option>select product</option>
                                 {Products.map(makeItem)}
                             </select>
                         <form onSubmit={formSubmit}>
                             <div className="mb-3">
-                                <label htmlFor="exampleFormControlInput1" className="form-label">Description</label>
+                                <label htmlFor="exampleFormControlInput1" className="form-label">description</label>
                                 <input
                                     type="string"
                                     className="form-control"
@@ -69,11 +69,10 @@ const UpdateProduct = (props) =>{
                                     name="description"
                                     value={data.description}
                                     onChange={InputEvent}
-                                    placeholder=" "
-                                 />
+                                    placeholder="description" />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="exampleFormControlInput1" className="form-label">Price</label>
+                                <label htmlFor="exampleFormControlInput1" className="form-label">price</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -84,7 +83,7 @@ const UpdateProduct = (props) =>{
                                     placeholder=" " />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="exampleFormControlInput1" className="form-label">Noof Item</label>
+                                <label htmlFor="exampleFormControlInput1" className="form-label">noof item</label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -92,12 +91,11 @@ const UpdateProduct = (props) =>{
                                     name="noofitem"
                                     value={data.noofitem}
                                     onChange={InputEvent}
-                                    placeholder=" " 
-                                />
+                                    placeholder=" " />
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="exampleFormControlInput1" className="form-label">Featured</label>
+                                <label htmlFor="exampleFormControlInput1" className="form-label">featured</label>
                                 <input
                                     type="bool"
                                     className="form-control"
@@ -105,8 +103,7 @@ const UpdateProduct = (props) =>{
                                     name="featured"
                                     value={data.featured}
                                     onChange={InputEvent}
-                                    placeholder="" 
-                                />
+                                    placeholder="featured" />
                             </div>
 
                             <div className="mb-3">
@@ -116,7 +113,7 @@ const UpdateProduct = (props) =>{
                             id="exampleFormControlInput1" 
                             value={data.image}
                             onChange={InputEvent}
-                            placeholder=""
+                            placeholder="image"
                              />
                         {/* <label for="file">
                         choose a photo
@@ -124,7 +121,7 @@ const UpdateProduct = (props) =>{
                             </div>
 
                             <div className="col-12 py-2">
-                                <center><button className="btn btn-outline-primary" type="submit">Submit</button></center>
+                                <button className="btn btn-outline-primary" type="submit">Submit form</button>
                             </div>
                         </form>
                     </div>

@@ -84,7 +84,7 @@ const PostProduct = (props) => {
     return (
         <>
             <div className="my-5">
-                <h1 className="text-center">Create a new product</h1>
+                <h1 className="text-center">Create a new Product</h1>
             </div>
 
             <div className="container customise_div">
@@ -96,7 +96,7 @@ const PostProduct = (props) => {
                         <form onSubmit={formSubmit}>
                             
                             <div class="mb-3">
-                                <label for="exampleFormControlInput2" class="form-label">Product name</label>
+                                <label for="exampleFormControlInput2" class="form-label">product name</label>
                                 <input
                                     type="string"
                                     class="form-control"
@@ -105,10 +105,10 @@ const PostProduct = (props) => {
                                     name="productname"
                                     value={data.productname}
                                     onChange={InputEvent}
-                                    placeholder="" />
+                                    placeholder="enter product name" />
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlInput3" class="form-label">Description</label>
+                                <label for="exampleFormControlInput3" class="form-label">description</label>
                                 <input
                                     type="string"
                                     class="form-control"
@@ -117,10 +117,10 @@ const PostProduct = (props) => {
                                     required="true"
                                     value={data.description}
                                     onChange={InputEvent}
-                                    placeholder="" />
+                                    placeholder="description" />
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlInput4" class="form-label">Price</label>
+                                <label for="exampleFormControlInput4" class="form-label">price</label>
                                 <input
                                     type="number"
                                     required="true"
@@ -132,7 +132,7 @@ const PostProduct = (props) => {
                                     placeholder=" " />
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlInput5" class="form-label">Noof item</label>
+                                <label for="exampleFormControlInput5" class="form-label">noof item</label>
                                 <input
                                     type="number"
                                     class="form-control"
@@ -145,7 +145,7 @@ const PostProduct = (props) => {
                             </div>
 
                             <div class="mb-3">
-                                <label for="exampleFormControlInput6" class="form-label">Featured</label>
+                                <label for="exampleFormControlInput6" class="form-label">featured</label>
                                 <input
                                     type={Boolean}
                                     class="form-control"
@@ -153,7 +153,7 @@ const PostProduct = (props) => {
                                     name="featured"
                                     value={data.featured}
                                     onChange={InputEvent}
-                                    placeholder="" />
+                                    placeholder="featured" />
                             </div>
 
                             <div class="mb-3">
@@ -165,13 +165,13 @@ const PostProduct = (props) => {
                                     name="image"
                                     value={data.image}
                                     onChange={InputEvent}
-                                    placeholder="" 
+                                    placeholder="image" 
                                 />
 
                             </div>
 
                             <div class="col-12 py-2">
-                                <center><button class="btn btn-outline-primary" type="submit">Submit</button></center>
+                                <button class="btn btn-outline-primary" type="submit">Submit form</button>
                             </div>
                         </form>
                     </div>

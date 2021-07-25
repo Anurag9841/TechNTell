@@ -11,9 +11,9 @@ const Home=()=>{
         <span></span>
         < ProductContextProvider>
         
-        <div className="container">
+       
         <Products/>
-        </div>
+        
         
         </ProductContextProvider>
         </>

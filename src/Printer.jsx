@@ -6,9 +6,9 @@ const Printer=()=>{
         <>
          <h1 className="top_product">Printer</h1>
         < ProductContext4Provider>
-        <div className="container">
+        
         <Product4/>
-        </div>
+        
         </ProductContext4Provider>
         </>
     

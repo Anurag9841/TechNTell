@@ -1,18 +1,16 @@
 import * as ActionTypes from './ActionTypes';
 
-export const productsReducer = (state={
+export const productReducer = (state={
     isLoading :false, 
     errMess: null,
     product:[]
 },action)=>{
     switch(action.type){
-        case ActionTypes.PRODUCTS_LOADING:
-            return{...state,isLoading: true}
         
         case (ActionTypes.PRODUCTS_FAILURE):
-            return {...state,isLoading: false, errMess:action.message,product:[]};
+            return {...state,isLoading: false, errMess:action.message,category:[]};
         
-        case(ActionTypes.ADD_PRODUCTS):
+        case(ActionTypes.ADD_PRODUCT):
             return{...state,isLoading:false,errMess:null,product:action.payload}
         default:
             return state;

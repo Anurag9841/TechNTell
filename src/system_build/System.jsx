@@ -242,7 +242,7 @@ const remove_obj = (param, indx) => {
     // })
     
     
-  }
+  
   
 }
   // variable for storing key for td

@@ -27,15 +27,12 @@ export class Register extends React.Component {
     event.preventDefault();
 
     if (this.validate()) {
-      console.log(this.state);
 
       let input = {};
 
       input["name"] = "";
 
       input["email"] = "";
-
-      input["password"] = "";
 
       this.setState({ input: input });
     }
@@ -53,11 +50,7 @@ export class Register extends React.Component {
 
       errors["name"] = "Please enter your name.";
     }
-    if (!input["password"]) {
-      isValid = false;
 
-      errors["password"] = "Please enter your password.";
-    }
     if (!input["email"]) {
       isValid = false;
 
@@ -97,10 +90,10 @@ export class Register extends React.Component {
                   <input
                     type="text"
                     name="name"
-                    placeholder="Enter name"
                     value={this.state.input.name}
                     onChange={this.handleChange}
-                    class="form-control"           
+                    class="form-control"
+                    placeholder="Enter name"
                     id="name"
                   />
 
@@ -113,10 +106,10 @@ export class Register extends React.Component {
                   <input
                     type="text"
                     name="email"
-                    placeholder="Enter email"
                     value={this.state.input.email}
                     onChange={this.handleChange}
                     class="form-control"
+                    placeholder="Enter email"
                     id="email"
                   />
 
@@ -129,25 +122,7 @@ export class Register extends React.Component {
                     type="password"
                     name="password"
                     placeholder="Enter Password"
-                    value={this.state.input.password}
-                    onChange={this.handleChange}
-                    class="form-control"           
-                    id="password"
-                  /> 
-                  <div className="text-danger">{this.state.errors.password}</div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Confirm Password:</label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Confirm Password"
-                    value={this.state.input.name}
-                    onChange={this.handleChange}
-                    class="form-control"           
-                    id="password"
                   />
-                  <div className="text-danger">{this.state.errors.password}</div>
                 </div>
                 <div className="footer">
                   <center><input type="submit" value="Register" className="btn" /></center>

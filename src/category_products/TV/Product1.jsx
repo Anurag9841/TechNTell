@@ -1,12 +1,11 @@
 import React,{useContext} from "react";
-import {ProductContext4} from "./ProductContext4"
-import {CartContext} from "./CartContext"
+import {ProductContext1} from "./ProductContext1"
+import {CartContext} from "../../CartContext"
 
-const Product4=()=>{
-    const {products}=useContext(ProductContext4);
+const Product1=()=>{
+    const {products}=useContext(ProductContext1);
     const {dispatch}=useContext(CartContext);
    
-
     return(
         <div className="products">
             {products.map((product)=>(
@@ -28,4 +27,4 @@ const Product4=()=>{
         </div>
     )
 }
-export default Product4;
+export default Product1;

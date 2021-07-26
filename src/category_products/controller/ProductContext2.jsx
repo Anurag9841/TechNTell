@@ -1,15 +1,15 @@
 import React,{createContext,useState} from "react";
-import console1 from "./img/console1.PNG";
-import console2  from "./img/Console2.PNG";
-import console3 from "./img/Console3.PNG";
-import controller1 from "./img/controller1.jpg";
-import controller2 from "./img/controller2.jpg";
-import controller3 from "./img/controller3.jpg";
-import conroller4 from "./img/conroller4.jpg";
-import GTA from "./img/GTA.jpg";
-import cricket from "./img/cricket.jpg";
-import fifa from "./img/fifa.jpg";
-import cod from "./img/cod.jpg";
+import console1 from "../img/console1.PNG";
+import console2  from "../img/Console2.PNG";
+import console3 from "../img/Console3.PNG";
+import controller1 from "../img/controller1.jpg";
+import controller2 from "../img/controller2.jpg";
+import controller3 from "../img/controller3.jpg";
+import conroller4 from "../img/conroller4.jpg";
+import GTA from "../img/GTA.jpg";
+import cricket from "../img/cricket.jpg";
+import fifa from "../img/fifa.jpg";
+import cod from "../img/cod.jpg";
 export const ProductContext2=createContext();
 const ProductContext2Provider=(props)=>{
     const [products]=useState([

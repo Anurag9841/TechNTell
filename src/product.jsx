@@ -25,35 +25,54 @@ const Products=(props)=>{
          }
     }
     return(
-        <>
-        <div className="products" >
+        // <>
+        // <div className="products" >
                        
-                {products.map((product)=>(
-                    <Card key={product._id} style={{ width: '22rem' }} >
-                    <CardImg top width="100%" height="70%" src={baseUrl+product.image} alt="Card image cap"  onClick={()=>handleClick(product)}/>
-                    <CardBody>
-                        <CardTitle tag="h5">{product.name}</CardTitle>
-                        <CardSubtitle tag="h5">Rs.{product.price}.00</CardSubtitle>
+        //         {products.map((product)=>(
+        //             <Card key={product._id} style={{ width: '22rem' }} >
+        //             <CardImg top width="100%" height="70%" src={baseUrl+product.image} alt="Card image cap"  onClick={()=>handleClick(product)}/>
+        //             <CardBody>
+        //                 <CardTitle tag="h5">{product.name}</CardTitle>
+        //                 <CardSubtitle tag="h5">Rs.{product.price}.00</CardSubtitle>
 
-                        {cartShow(product,auth)}
-                    </CardBody>
-                </Card>))}
-                {/* // <div className="product" key={product._id}>
-                //     <div className="product-img">
-                //         <img src={baseUrl+product.image} alt="not found" key={product._id} onClick={()=>handleClick(product)}/>
-                //     </div>
-                //     <div className="product-details">
-                //         <div className="product-name">{product.name}</div>
-                //         <div className="product-price">Rs.{product.price}.00</div>
-                //     </div>
+        //                 {cartShow(product,auth)}
+        //             </CardBody>
+        //         </Card>))}
+        //         {/* // <div className="product" key={product._id}>
+        //         //     <div className="product-img">
+        //         //         <img src={baseUrl+product.image} alt="not found" key={product._id} onClick={()=>handleClick(product)}/>
+        //         //     </div>
+        //         //     <div className="product-details">
+        //         //         <div className="product-name">{product.name}</div>
+        //         //         <div className="product-price">Rs.{product.price}.00</div>
+        //         //     </div>
                    
-                //     <div className="add-to-cart" onClick={()=>dispatch({type:'ADD_TO_CART',id:product._id,product})} > add to cart</div>
-                //     {product.status==='Hot'?<div className="hot">Hot</div>:""}
-                //     {product.status==='New'?<div className="new">New</div>:""}
-                // </div> */}
+        //         //     <div className="add-to-cart" onClick={()=>dispatch({type:'ADD_TO_CART',id:product._id,product})} > add to cart</div>
+        //         //     {product.status==='Hot'?<div className="hot">Hot</div>:""}
+        //         //     {product.status==='New'?<div className="new">New</div>:""}
+        //         // </div> */}
             
+        // </div>
+        // </>
+
+        <div className="products">
+            {products.map((product)=>(
+                <div className="product" key={product.id}>
+                    {console.log("product.image", product.image)}
+                    <div className="product-img">
+                        <img src={baseUrl+product.image} alt="not found"/>
+                    </div>
+                    <div className="product-details">
+                        <div className="product-name">{product.name}</div>
+                        <div className="product-price">Rs.{product.price}.00</div>
+                    </div>
+                   
+                    <div className="add-to-cart" onClick={()=>dispatch({type:'ADD_TO_CART',id:product.id,product})} > add to cart</div>
+                    {product.status==='Hot'?<div className="hot">Hot</div>:""}
+                    {product.status==='New'?<div className="new">New</div>:""}
+                </div>
+            ))}
         </div>
-        </>
     )
 }
 export default Products;

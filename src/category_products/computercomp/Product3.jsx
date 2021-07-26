@@ -1,9 +1,9 @@
 import React,{useContext} from "react";
-import {ProductContext2} from "./ProductContext2"
-import {CartContext} from "./CartContext"
+import {ProductContext3} from "./ProductContext3"
+import {CartContext} from "../../CartContext"
 
-const Product2=()=>{
-    const {products}=useContext(ProductContext2);
+const Product3=()=>{
+    const {products}=useContext(ProductContext3);
     const {dispatch}=useContext(CartContext);
    
 
@@ -28,4 +28,4 @@ const Product2=()=>{
         </div>
     )
 }
-export default Product2;
+export default Product3;

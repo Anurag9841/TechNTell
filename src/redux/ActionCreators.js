@@ -866,19 +866,11 @@ export const commentFailure = (errmsg)=>({
 })
 
 
-<<<<<<< HEAD
-export const getCompProducts = (index) => (dispatch) => {
-  dispatch(compProductsLoading());
-  
-  const bearer = localStorage.getItem('token');
-  return fetch(baseUrl+'components/'+index+'/products',{
-=======
 export const getCompProducts = () => (dispatch) => {
   dispatch(compProductsLoading());
   
   const bearer = localStorage.getItem('token');
   return fetch(baseUrl+'components/',{
->>>>>>> serverandUI
     headers: {
       'Content-Type':'application/json', 
       'Authroization':bearer

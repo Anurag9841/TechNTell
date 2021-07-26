@@ -1,6 +1,6 @@
 import {BrowserRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import Main from "./Main"
+import Main from "../Main"
 import React, { Component } from 'react'
 import {configureStore} from './redux/ConfigureStore';
 const store = configureStore();

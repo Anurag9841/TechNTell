@@ -23,7 +23,22 @@ import PostCategory from './postCategory'
 import PostProduct from './postProduct'
 import UpdateProduct from './updateProduct'
 import Order from './order';
-import Login from "./Login";
+
+import OurService from './OurService';
+
+import Signin from "./components/login/Signin";
+import Signup from "./components/login/Signup";
+
+
+// products
+import TV from "./category_products/TV/TV"
+import Phone from "./category_products/phone/Phone"
+import controller from "./category_products/controller/controller"
+import Printer from "./category_products/printer/Printer"
+import computercomp from "./category_products/computercomp/computercomp"
+
+//----
+
 import ViewProduct from "./viewProduct"
 import ShowProduct from './showProduct';
 import Register from './register'
@@ -75,7 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
     //deleteComment: ()
 
     // Component products
-    getCompProducts: () => dispatch(getCompProducts()) 
+    getCompProducts: () => dispatch(getCompProducts())
 }
 )
 class Main extends Component {
@@ -87,8 +102,8 @@ class Main extends Component {
         this.props.getComments();
         this.props.getOrders();
         this.props.getCompProducts();
+        console.log("this.props.products [main.jsx] ", this.props.products);
     }
-
     render() {
         return (
             <div>
@@ -108,31 +123,35 @@ class Main extends Component {
                             <Route exact path="/UpdateProduct" component={() => <UpdateProduct updateProduct={this.props.updateProduct}
                                 products={this.props.products} />}></Route>
             //////////////////////////
-            <Route  exact path="/contact"component={Contact}></Route>
-            
-            <Route  exact path="/signin"component={Signin}></Route>
-            <Route  exact path="/signup"component={Signup}></Route>
-            <Route  exact path="/ourservice"component={OurService}></Route>
+                            <Route exact path="/contact" component={Contact}></Route>
+                            <Route  exact path="/ourservice"component={OurService}></Route>
+                            
+                            <Route  exact path="/TV"component={TV}></Route>
+                            <Route  exact path="/phone"component={Phone}></Route>
+                            <Route  exact path="/controller"component={controller}></Route>
+                            <Route  exact path="/computer"component={computercomp}></Route>
+                            <Route  exact path="/printer"component={Printer}></Route>
+                            {/*
             <Route  exact path="/systembuilt"component={systembuild}></Route>
-            <Route  exact path="/phone"component={Phone}></Route>
-            <Route  exact path="/TV"component={TV}></Route>
-            <Route  exact path="/controller"component={controller}></Route>
-            <Route  exact path="/computer"component={computercomp}></Route>
-            <Route  exact path="/printer"component={Printer}></Route>
             <Route  exact path="/cart" component={Cart}></Route>
-            <Route exact path="/contact" component={Contact}></Route>
-                            <Route exact path="/login" component={
+        <Route exact path="/contact" component={Contact}></Route> */}
+                            
+
+                            <Route exact path="/signin" component={
                                 () =>
-                                    <Login auth={this.props.authState} authUser={this.props.authUser} logoutUser={this.props.logoutUser} />
+                                    <Signin auth={this.props.authState} authUser={this.props.authUser} logoutUser={this.props.logoutUser} />
 
                             }></Route>
-                            <Route exact path="/signup" component={() => <Register signup={this.props.signup} />}></Route>
+
+                            <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}></Route>
+
                             <Route exact path="/showProduct" component={(props) => <ShowProduct {...props} auth={this.props.authState} category={this.props.category} getcategory={this.props.getcategory} />}></Route>
+
                             <Route exact path="/viewProduct" component={(props) => <ViewProduct {...props} auth={this.props.authState} comments={this.props.comments} product={this.props.product} postComment={this.props.postComment} getProduct={this.props.getProduct} />}></Route>
                             <Route exact path="/cart" component={() => <Cart order={this.props.postOrder} />}></Route>
 
-                            <Route exact path="/systembuilt" component={() => <Systembuild getCompProducts={this.props.getCompProducts} compProducts={this.props.compProducts}/>} />
-                            <Route exact path="/show_component" component={() => <ComponentTable  compProducts={this.props.compProducts}/>} />
+                            <Route exact path="/systembuilt" component={() => <Systembuild getCompProducts={this.props.getCompProducts} compProducts={this.props.compProducts} />} />
+                            <Route exact path="/show_component" component={() => <ComponentTable compProducts={this.props.compProducts} />} />
                         </Switch>
                     </div>
                 </CartContextProvider>

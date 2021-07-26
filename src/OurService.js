@@ -1,9 +1,17 @@
 import React from "react"; 
 import { NavLink } from "react-router-dom"; 
-import rujan from "./img/customise.jpg";
-import luitel from "./img/safe.jpg";
-import returns from "./img/return.jpg";
-import open from "./img/open.jpg";
+
+// import rujan from "./img/customise.jpg";
+// import luitel from baseUrl+"img/safe.jpg";
+// import returns from baseUrl+"img/return.jpg";
+// import open from baseUrl+"img/open.jpg";
+import { baseUrl } from "./shared/baseUrl";
+
+const rujan = baseUrl+"images/our_service/customise.jpg";
+const luitel = baseUrl+"images/our_service/safe.jpg";
+const returns = baseUrl+"images/our_service/return.jpg";
+const open = baseUrl+"images/our_service/open.jpg";
+
 
 const OurService = () => {
     return (

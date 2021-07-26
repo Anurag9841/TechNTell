@@ -1,16 +1,16 @@
 import React,{createContext,useState} from "react";
-import LEDTV1 from "./img/LEDTV1.png";
-import LEDTV2  from "./img/LEDTV2.png";
-import  LEDTV3 from "./img/LEDTV3.png";
-import OLEDTV1 from "./img/OLEDTV1.png";
-import OLEDTV2 from "./img/OLEDTV2.png";
-import OLEDTV3 from "./img/OLEDTV3.png";
-import SmartTV1 from "./img/SmartTV1.png";
-import SmartTV2 from "./img/SmartTV2.png";
-import SmartTV3 from "./img/SmartTV3.png";
-import vivo from "./img/Vivo Smart Watch.png";
-import samsung from "./img/Samsung Smart Watch.png";
-import mi from "./img/MI Smart Watch.png";
+import LEDTV1 from "../img/LEDTV1.png";
+import LEDTV2  from "../img/LEDTV2.png";
+import  LEDTV3 from "../img/LEDTV3.png";
+import OLEDTV1 from "../img/OLEDTV1.png";
+import OLEDTV2 from "../img/OLEDTV2.png";
+import OLEDTV3 from "../img/OLEDTV3.png";
+import SmartTV1 from "../img/SmartTV1.png";
+import SmartTV2 from "../img/SmartTV2.png";
+import SmartTV3 from "../img/SmartTV3.png";
+import vivo from "../img/Vivo Smart Watch.png";
+import samsung from "../img/Samsung Smart Watch.png";
+import mi from "../img/MI Smart Watch.png";
 export const ProductContext1=createContext();
 const ProductContext1Provider=(props)=>{
     const [products]=useState([

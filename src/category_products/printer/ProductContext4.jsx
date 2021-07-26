@@ -1,22 +1,22 @@
 import React,{createContext,useState} from "react";
-import inteli2 from "./img/intel i2.jpg";
-import inteli3  from "./img/intel i3.jpg";
-import inteli7 from "./img/intel i7.jpg";
-import core2quad from "./img/core 2 quad.jpg";
-import cvn570M from "./img/cvn570 M.jpg";
-import asusmotherboard from "./img/asus motherboard.jpg";
-import eg41M from "./img/eg41M.jpg";
-import eh61M from "./img/eh61M.jpg";
-import igame from "./img/igame graphicCard.jpg";
-import msi from "./img/msi graphicCard.jpg";
-import nvidia from "./img/nvidia graphicCard.jpg";
-import amd from "./img/amd ryzen7.jpg";
-import cooler1 from "./img/laptop cooler.jpg";
-import cooler2 from "./img/notebook cooler.jpg";
-import casing1 from "./img/reddragon casing.jpg";
-import casing2 from "./img/thermal take casing.jpg";
-export const ProductContext3=createContext();
-const ProductContext3Provider=(props)=>{
+import inteli2 from "../img/intel i2.jpg";
+import inteli3  from "../img/intel i3.jpg";
+import inteli7 from "../img/intel i7.jpg";
+import core2quad from "../img/core 2 quad.jpg";
+import cvn570M from "../img/cvn570 M.jpg";
+import asusmotherboard from "../img/asus motherboard.jpg";
+import eg41M from "../img/eg41M.jpg";
+import eh61M from "../img/eh61M.jpg";
+import igame from "../img/igame graphicCard.jpg";
+import msi from "../img/msi graphicCard.jpg";
+import nvidia from "../img/nvidia graphicCard.jpg";
+import amd from "../img/amd ryzen7.jpg";
+import cooler1 from "../img/laptop cooler.jpg";
+import cooler2 from "../img/notebook cooler.jpg";
+import casing1 from "../img/reddragon casing.jpg";
+import casing2 from "../img/thermal take casing.jpg";
+export const ProductContext4=createContext();
+const ProductContext4Provider=(props)=>{
     const [products]=useState([
         {id:1,name:'intel i2 Processor' ,price:19999 ,image:inteli2,status:'Hot'},
         {id:2,name:'intel i3 Processor ' ,price:25000,image:inteli3,status:'New'},
@@ -37,9 +37,9 @@ const ProductContext3Provider=(props)=>{
     ])
 
       return(
-       <ProductContext3.Provider value={{products:[...products]}}>
+       <ProductContext4.Provider value={{products:[...products]}}>
          {props.children}
-       </ProductContext3.Provider>
+       </ProductContext4.Provider>
       )
 }
-export default ProductContext3Provider;
+export default ProductContext4Provider;

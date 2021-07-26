@@ -11,6 +11,7 @@ export class Register extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.registerUser = this.registerUser.bind(this);
   }
 
   handleChange(event) {
@@ -36,6 +37,8 @@ export class Register extends React.Component {
 
       this.setState({ input: input });
     }
+
+    
   }
 
   validate() {
@@ -75,7 +78,12 @@ export class Register extends React.Component {
 
     return isValid;
   }
-
+registerUser(){
+  let  input = this.state.input;
+  console.log("input", input);
+  this.props.signup(input.first_name,input.last_name,input.name,input.email,input.password)
+  alert("register clicked");
+}
   render() {
     return (
       <div>
@@ -84,6 +92,37 @@ export class Register extends React.Component {
           <div className="content">
             <div className="form">
               <form onSubmit={this.handleSubmit}>
+
+              {/* fname */}
+              <div class="form-group">
+                  <label for="first_name">First Name:</label>
+
+                  <input
+                    type="text"
+                    name="first_name"
+                    value={this.state.input.first_name}
+                    onChange={this.handleChange}
+                    class="form-control"
+                    placeholder="Enter First Name"
+                    id="first_name"
+                  />
+                </div>
+                {/* Last name */}
+                <div class="form-group">
+                  <label for="last_name">Last Name:</label>
+
+                  <input
+                    type="text"
+                    name="last_name"
+                    value={this.state.input.last_name}
+                    onChange={this.handleChange}
+                    class="form-control"
+                    placeholder="Enter Last Name"
+                    id="last_name"
+                  />
+
+                </div>
+
                 <div class="form-group">
                   <label for="name">Username:</label>
 
@@ -122,10 +161,11 @@ export class Register extends React.Component {
                     type="password"
                     name="password"
                     placeholder="Enter Password"
+                    onChange={this.handleChange}
                   />
                 </div>
                 <div className="footer">
-                  <center><input type="submit" value="Register" className="btn" /></center>
+                  <center><input type="submit" value="Register" className="btn" onClick={this.registerUser.bind(this)}/></center>
                 </div>
               </form>
             </div>

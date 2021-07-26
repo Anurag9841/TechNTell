@@ -17,12 +17,10 @@ const UpdateProduct = (props) =>{
     const InputEvent2 = (event) => {
         
         const { value } = event.target;
-        console.log(value)
         var product= 0
         for(var i=0;i<Products.length;i++){
             if(value===Products[i].name){product=Products[i]._id}
         }
-        console.log(product)
         data2.productId=product
     };
     const InputEvent = (event) => {
@@ -38,10 +36,8 @@ const UpdateProduct = (props) =>{
     };
 
     const formSubmit = (e) => {
-        console.log(data2.productname)
         props.updateProduct(data2.productId,data.productname, data.description,data.price,data.noofitem,data.image,data.featured)
         e.preventDefault();
-        console.log(data.price)
         alert(`Product Name is ${data2.productname}.product name is ${data.productname}.description is ${data.description}. price: ${data.price}`);
     };
     const makeItem=(X)=>{
@@ -121,7 +117,7 @@ const UpdateProduct = (props) =>{
                             </div>
 
                             <div className="col-12 py-2">
-                                <button className="btn btn-outline-primary" type="submit">Submit form</button>
+                                <button className="btn btn-outline-primary" type="submit">Update product</button>
                             </div>
                         </form>
                     </div>

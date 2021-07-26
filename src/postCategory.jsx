@@ -35,11 +35,11 @@ const PostCategory = (props) =>{
                 <div className="row">
                     <div className="col-md-6 col-10 mx-auto">
                         <form onSubmit={formSubmit}>
-                        <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Category Name</label>
+                        <div className="mb-3">
+                                <label for="exampleFormControlInput1" className="form-label">Category Name</label>
                                 <input
                                     type="string"
-                                    class="form-control"
+                                    className="form-control"
                                     id="exampleFormControlInput1"
                                     name="categoryname"
                                     value={data.categoryname}
@@ -47,8 +47,8 @@ const PostCategory = (props) =>{
                                     placeholder="enter category name" />
                             </div>
                             
-                            <div class="col-12 py-2">
-                                <button class="btn btn-outline-primary" type="submit">Submit form</button>
+                            <div className="col-12 py-2">
+                                <button className="btn btn-outline-primary" type="submit">Create</button>
                             </div>
                         </form>
                     </div>

@@ -1,20 +1,17 @@
 import React, { Component } from 'react'
-import { Form, FormGroup, Input, Label, Button, Row, Col } from 'react-bootstrap';
-
+import { Form,  Button} from 'react-bootstrap';
 
 class Login extends Component {
     
 constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
-
   }
 
   handleLogin(event) {
-    // console.log(this.username.value);
-    // console.log(this.password.value);
     this.props.authUser({ username: this.username.value, password: this.password.value });
     event.preventDefault();
+
   }
 
   render() {

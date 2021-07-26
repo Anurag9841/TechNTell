@@ -45,7 +45,7 @@ export const CartReducer=(state,action)=>{
                 case 'DELETE':
                     const filtered=shoppingCart.filter(product=>product.id !==action.id)
                     product=action.cart;
-                    updatedQty=qty-product.qty;
+                    updatedQty=qty-1;
                     updatedPrice=totalPrice-product.price*product.qty;
                     return{shoppingCart:[...filtered],totalPrice:updatedPrice,qty:updatedQty}
                     break;

@@ -8,37 +8,31 @@ const TableRow = (props) => {
         index: props.index,
         count: 0
     };
-
-
-
-    let price_obj = {
-        base: 0,
-        discount: 0,
-        tax: 0
-    };
-
-    let [priceState, setPriceState] = useState(() => price_obj);
+let prodClicked_received = props.prodClicked;
+const remove_prod = (e, prod) => {
     
+    e.preventDefault();
+    props.remove_obj(prod, props.index);
+    // console.log(prodClicked_received[props.index])
 
+    prodClicked_received[props.index]= prodClicked_received[props.index].filter((param) => {
+        return prod._id != param._id;
+    })
+
+    if (prodClicked_received[props.index].length==0)
+        delete prodClicked_received[props.index]
+         
+    localStorage.setItem("prodChosen", JSON.stringify(prodClicked_received));
+    props.setProdReceived(JSON.parse(localStorage.getItem("prodChosen")));
+}
+    
 
     return (
         <>
             {
-                props.prodClicked.map((prodClicked) => {
+                props.prodClicked[props.index].map((prodClicked) => {
                     counta++;
-                    useEffect(() => {
-                        setPriceState((preVal) => {
-                            return {
-                                ...preVal,
-                                base: preVal.base + prodClicked.price,
-                                discount: preVal.discount + prodClicked.discount,
-                                tax: preVal.tax + prodClicked.tax
-                            }
-                        })
-                    }, [prodClicked]);
-
-
-                    props.getPriceInfo(priceState);
+                    
                     return (
                         <tr key={counta}>
 
@@ -56,10 +50,12 @@ const TableRow = (props) => {
                             <td>{prodClicked.name}</td>
                             <td>{prodClicked.price}</td>
                             <td>{prodClicked.discount}</td>
-                            <td>{prodClicked.tax}</td>
-                            <td>{prodClicked.price +
+                            <td style={{width:"5%"}}>{prodClicked.tax}</td>
+                            <td style={{width:"5%"}}>{prodClicked.price +
                                 prodClicked.tax -
                                 prodClicked.discount}</td>
+                            
+                            <td><a href={""} onClick={(e) => remove_prod(e,prodClicked)}><i className="fas fa-trash-alt" /></a></td>
                         </tr>
                     )
                 })

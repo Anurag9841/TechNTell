@@ -3,7 +3,7 @@ import Banner from "../src/Banner"
 import ProductContextProvider from './ProductContext';
 import CartContextProvider from './CartContext';
 import Products from "./product";
-const Home=()=>{
+const Home=(props)=>{
     return(
         <>
         <Banner/>
@@ -11,8 +11,9 @@ const Home=()=>{
         <span></span>
         < ProductContextProvider>
         
-       
-        <Products/>
+        
+        <Products auth={props.auth} productsFeatured={props.productsFeatured}/>
+        
         
         
         </ProductContextProvider>

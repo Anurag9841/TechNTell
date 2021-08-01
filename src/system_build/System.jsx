@@ -7,51 +7,45 @@ import TableRow from "./TableRow";
 const TableData = (props) => {
 
   let price_obj = {
-    total_base: new Set(),
-    total_discount: new Set(),
-    total_tax: new Set()
+    total_base: [],
+    total_discount: [],
+    total_tax: []
   };
 
   let [priceState, setPriceState] = useState(() => price_obj);
 
 
+  let prodClicked_for_tableRow = (props.prodClicked.length == 0) ?
+   (
+     (localStorage.getItem("prodChosen") == null)?{}:JSON.parse(localStorage.getItem("prodChosen")) 
+    )
+   :props.prodClicked;
 
   function handleClick(val) {
 
-    // get component products
-    props.getCompProducts(val);
 
+    let specific_products_of_val = props.compProducts.compProducts.filter((val_obj) => {
+      return val_obj.categoryName == val;
+    })[0].products;
+
+    // get component products
     if (props.compProducts.compProducts.length != 0)
-      props.getData(props.compProducts.compProducts, val);
+      props.getData(specific_products_of_val, val);
     // send value of index here
   }
 
-  const getPriceInfo = (received_obj) => {
-    useEffect(() => {
-      setPriceState((preVal) => {
-        return {
-          ...preVal,
-          total_base: [...new Set([...preVal.total_base, received_obj.base])],
-          total_discount: [...new Set([...preVal.total_discount, received_obj.discount])],
-          total_tax: [...new Set([...preVal.total_tax, received_obj.tax])]
-        }
-      });
-    }, [received_obj])
-  }
 
-  console.log("priceState Total: ", priceState)
-  
+
+
   // get the total prices 
   let total_base_price = 0;
   let total_discount_price = 0;
   let total_tax_price = 0;
-  
-  priceState.total_base.forEach(val => total_base_price+=val)
-  priceState.total_discount.forEach(val => total_discount_price+=val)
-  priceState.total_tax.forEach(val => total_tax_price+=val)
-  
-  
-  const chosen_indices = Object.keys(props.prodClicked);
+
+
+
+
+  const chosen_indices = Object.keys(prodClicked_for_tableRow);
 
   let counta = 0;
 
@@ -68,8 +62,18 @@ const TableData = (props) => {
             {
               (() => {
                 if (checkChosen) {
+
+                  prodClicked_for_tableRow[index].map((prodClicked) => {
+
+                    price_obj["total_base"].push(prodClicked.price);
+                    price_obj["total_discount"].push(prodClicked.discount);
+                    price_obj["total_tax"].push(prodClicked.tax);
+
+                  });
+
                   return (
-                    <TableRow prodClicked={props.prodClicked[index]} index={index} getPriceInfo={getPriceInfo} />
+                    <TableRow prodClicked={prodClicked_for_tableRow} index={index} setProdReceived={props.setProdReceived} remove_obj={props.remove_obj}/>
+
                   );
                 }
 
@@ -89,8 +93,9 @@ const TableData = (props) => {
 
               <td>
                 <Button size="sm" onClick={() => handleClick(index)}>+ Click to add {index}</Button>
+                
               </td>
-              <td colSpan={4}></td>
+              <td colSpan={5}></td>
 
             </tr>
           </>
@@ -99,20 +104,26 @@ const TableData = (props) => {
 
       })
       }
+
+      {(() => {
+        price_obj.total_base.forEach(val => total_base_price += val)
+        price_obj.total_discount.forEach(val => total_discount_price += val)
+        price_obj.total_tax.forEach(val => total_tax_price += val)
+      })()}
       <tr>
         <td colSpan={4} rowSpan={3}></td>
         <td align='right'>Base Total:</td>
-        <td align='right'>Rs. {total_base_price}</td>
+        <td align='right' colSpan={2}>Rs. {total_base_price}</td>
       </tr>
       <tr>
 
         <td align='right'>Rebates:</td>
-        <td align='right'>- Rs. {total_discount_price}</td>
+        <td align='right' colSpan={2}>- Rs. {total_discount_price}</td>
       </tr>
       <tr>
 
         <td style={{ fontSize: 20 }} align='right'>Total:</td>
-        <td style={{ fontSize: 20 }} align='right'><b>Rs. {total_base_price + total_tax_price - total_discount_price}</b></td>
+        <td style={{ fontSize: 20 }} align='right' colSpan={2}><b>Rs. {total_base_price + total_tax_price - total_discount_price}</b></td>
       </tr>
     </>
 
@@ -123,7 +134,6 @@ const TableData = (props) => {
 
 const System = (props) => {
   const history = useHistory();
-
   // Colulmn names are Here
   const cols = ["Component", "Selection", "Base", "Promo", "Tax", "Price"];
 
@@ -212,10 +222,30 @@ const System = (props) => {
 
       }
     }
-  }, [history.location.state]);
+  }, [history.location.state, localStorage.getItem("prodChosen")]);
   //
-
-
+const remove_obj = (param, indx) => {
+  console.log("param:", param);
+  // if (param._id == history.location.state.prodClicked._id){
+    // history.location.state["prodClicked"] = {};
+    
+    // const temp = prodReceived[indx].filter(
+    //  (obj) => {
+    //    return obj._id != param._id
+    //  }
+    // );
+    
+    // setProdReceived(preVal => {
+    //    return {
+    //      ...preVal,
+    //      indx: [...temp]
+    //     }
+    // })
+    
+    
+  
+  
+}
   // variable for storing key for td
   let count = 0;
   return (
@@ -229,11 +259,12 @@ const System = (props) => {
                 return (<td key={count}>{col}</td>)
               })
             }
+            <td></td>
           </tr>
         </thead>
 
         <tbody>
-          <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} />
+          <TableData indices={indices} cols={cols} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} remove_obj={remove_obj} setProdReceived={setProdReceived}/>
 
         </tbody>
       </Table>

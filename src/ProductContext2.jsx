@@ -10,7 +10,10 @@ import GTA from "./img/GTA.jpg";
 import cricket from "./img/cricket.jpg";
 import fifa from "./img/fifa.jpg";
 import cod from "./img/cod.jpg";
+import { baseUrl } from "./shared/baseUrl";
+
 export const ProductContext2=createContext();
+
 const ProductContext2Provider=(props)=>{
     const [products]=useState([
         {id:1,name:' CONSOLE1' ,price:10000 ,image:console1,status:'Hot'},

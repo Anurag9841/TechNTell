@@ -9,7 +9,9 @@ import SmartTV3 from "./img/SmartTV3.png";
 import Vivo from "./img/Vivo Smart Watch.png";
 
  export const ProductContext=createContext();
+
 const ProductContextProvider=(props)=>{
+  console.log("props.productsFeatured [prodContext]: ", props.productsFeatured)
     const [products]=useState([
         {id:1,name:'GTA' ,price:1000 ,image:GTA,status:'Hot'},
         {id:2,name:'iphoneX' ,price:100000,image:iphone1,status:'New'},

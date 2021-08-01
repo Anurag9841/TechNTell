@@ -1,4 +1,6 @@
+
 export const CartReducer=(state,action)=>{
+
     const{shoppingCart,totalPrice,qty}=state;
     let product;
     let index;
@@ -6,7 +8,7 @@ export const CartReducer=(state,action)=>{
     let updatedQty;
     switch(action.type){
         case 'ADD_TO_CART':
-        const check=shoppingCart.find(product=>product.id===action.id);
+        const check=shoppingCart.find(product=>product._id===action.id);
         if(check)    {
             return state;
         }
@@ -24,7 +26,7 @@ export const CartReducer=(state,action)=>{
                 product.qty=product.qty+1;
                 updatedPrice=totalPrice+product.price;
                 updatedQty=qty+1;
-                index=shoppingCart.findIndex(cart=>cart.id===action.id);
+                index=shoppingCart.findIndex(cart=>cart._id===action.id);
                 shoppingCart[index]=product;
                 return{shoppingCart:[...shoppingCart],totalPrice:updatedPrice,qty: updatedQty}
             break;
@@ -34,7 +36,7 @@ export const CartReducer=(state,action)=>{
                 product.qty=product.qty-1;
                 updatedPrice=totalPrice-product.price;
                 updatedQty=qty-1;
-                index=shoppingCart.findIndex(cart=>cart.id===action.id);
+                index=shoppingCart.findIndex(cart=>cart._id===action.id);
                 shoppingCart[index]=product;
                 return {shoppingCart:[...shoppingCart],totalPrice:updatedPrice,qty:updatedQty}
                 }
@@ -43,7 +45,7 @@ export const CartReducer=(state,action)=>{
                 }
                 break;
                 case 'DELETE':
-                    const filtered=shoppingCart.filter(product=>product.id !==action.id)
+                    const filtered=shoppingCart.filter(product=>product._id !==action.id)
                     product=action.cart;
                     updatedQty=qty-product.qty;
                     updatedPrice=totalPrice-product.price*product.qty;

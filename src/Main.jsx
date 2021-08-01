@@ -15,103 +15,139 @@ import computercomp from "./computercomp"
 import Printer from "./Printer"
 import Cart from "./Cart"
 import CartContextProvider from './CartContext'
-import systembuild from './systembuild';
-import {authUser,getUser,logoutUser, getProducts, postProduct, getCategories, 
-    postCategory, getOrders, postOrder, deleteOrder, getOrderDetails, 
-    updateProduct, getcategory , getProduct, deleteProduct
-    ,delCategory,getproductsFromCategory,deleteproductsFromCategory
-    ,updateOrder} from './redux/ActionCreators';
+
+import Systembuild from './system_build/systembuild'
+import ComponentTable from "./system_build/ComponentTable";
+
+
+import {
+    authUser, getUser, logoutUser, getProducts, postProduct, getCategories,
+    postCategory, getOrders, postOrder, deleteOrder, getOrderDetails,
+    updateProduct, getcategory, getProduct, deleteProduct
+    , delCategory, getproductsFromCategory, deleteproductsFromCategory
+    , updateOrder,
+    signUp,
+    getComments,
+    postComment,
+    getCompProducts
+} from './redux/ActionCreators';
+
+import ShowProduct from './showProduct';
+
 import { connect } from 'react-redux'
 import PostCategory from './postCategory'
 import PostProduct from './postProduct'
 import UpdateProduct from './updateProduct'
-
 import Order from './order'
+
 
 
 const mapStateToProps = (state) => {
     return {
+        comments: state.comments,
+        product: state.product,
         authState: state.auth,
-        usersState: state.users, 
+        usersState: state.users,
         products: state.products,
+        categorys: state.categorys,
+        order: state.order,
+        orderDetailsState: state.orderDetails,
         category: state.category,
-        orderState: state.order,
-        orderDetailsState: state.orderDetails
+        compProducts: state.compProducts
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-        authUser: (creds) => dispatch(authUser(creds)), 
-        logoutUser: () => dispatch(logoutUser()),
-        getUser: () => dispatch(getUser()), 
-        //
-        getProducts: () => dispatch(getProducts()),
-        getProduct: (productId) => dispatch(getProduct(productId)),
-        postProduct:(categId,productName,description,unitPrice,unitsInStock,image,featured) => dispatch(postProduct(categId,productName,description,unitPrice,unitsInStock,image,featured)),
-        updateProduct:(productId,productName,description,unitPrice,unitsInStock,image,featured)=>dispatch(updateProduct(productId,productName,description,unitPrice,unitsInStock,image,featured)),
-        deleteProduct: (categId,productId)=>dispatch(deleteProduct(categId,productId)),
-        //
-        getCategories: () => dispatch(getCategories()),
-        getcategory: (categId)=>dispatch(getcategory(categId)),
-        delCategory: (categId)=>dispatch(delCategory(categId)),
-        getproductsFromCategory:(categId)=>dispatch(getproductsFromCategory(categId)),
-        deleteproductsFromCategory:(categId)=>dispatch(deleteproductsFromCategory(categId)),
-        postCategory: (categoryName) => dispatch(postCategory(categoryName)),
-        //
-        getOrders: () => dispatch(getOrders()),
-        postOrder: (productId,quantity, to_be_suppliedDate,shippedDate) => dispatch(postOrder(productId,quantity, to_be_suppliedDate,shippedDate)),
-        deleteOrder: (orderId) => dispatch(deleteOrder(orderId)),
-        updateOrder : (orderId,orderDetailsId,quantity, to_be_suppliedDate,shippedDate)=> dispatch( updateOrder(orderId,orderDetailsId,quantity, to_be_suppliedDate,shippedDate)),
-        getOrderDetails: ()=> dispatch(getOrderDetails())
-    }
+    authUser: (creds) => dispatch(authUser(creds)),
+    logoutUser: () => dispatch(logoutUser()),
+    getUser: () => dispatch(getUser()),
+    signup: (fname, lname, username, email, password) => dispatch(signUp(fname, lname, username, email, password)),
+    //
+    getProducts: () => dispatch(getProducts()),
+    getProduct: (productId) => dispatch(getProduct(productId)),
+    postProduct: (categId, productName, description, unitPrice, unitsInStock, image, featured) => dispatch(postProduct(categId, productName, description, unitPrice, unitsInStock, image, featured)),
+    updateProduct: (productId, productName, description, unitPrice, unitsInStock, image, featured) => dispatch(updateProduct(productId, productName, description, unitPrice, unitsInStock, image, featured)),
+    deleteProduct: (categId, productId) => dispatch(deleteProduct(categId, productId)),
+    //
+    getCategories: () => dispatch(getCategories()),
+    getcategory: (categId) => dispatch(getcategory(categId)),
+    delCategory: (categId) => dispatch(delCategory(categId)),
+    getproductsFromCategory: (categId) => dispatch(getproductsFromCategory(categId)),
+    deleteproductsFromCategory: (categId) => dispatch(deleteproductsFromCategory(categId)),
+    postCategory: (categoryName) => dispatch(postCategory(categoryName)),
+    //
+    getOrders: () => dispatch(getOrders()),
+    postOrder: (productId, quantity, totalPrice) => dispatch(postOrder(productId, quantity, totalPrice)),
+    deleteOrder: (orderId, orderDetailsId) => dispatch(deleteOrder(orderId, orderDetailsId)),
+    updateOrder: (orderId, orderDetailsId, quantity, to_be_suppliedDate, shippedDate) => dispatch(updateOrder(orderId, orderDetailsId, quantity, to_be_suppliedDate, shippedDate)),
+    getOrderDetails: (Id) => dispatch(getOrderDetails(Id)),
+    //
+    getComments: () => dispatch(getComments()),
+    postComment: (comment, rating, productId) => dispatch(postComment(comment, rating, productId)),
+    //deleteComment: ()
+
+    // Component products
+    getCompProducts: () => dispatch(getCompProducts())
+}
 )
-class Main extends Component{
-    componentDidMount(){
+class Main extends Component {
+    componentDidMount() {
         this.props.getUser();
         this.props.getProducts();
         this.props.getCategories();
-        this.props.getOrders();
         this.props.getOrderDetails();
+        this.props.getComments();
+        this.props.getOrders();
+        this.props.getCompProducts();
     }
-    
-    
 
-    render(){
-        return(
-       <div>
-       <CartContextProvider>
-       <Navbar/>
-       <div className="main">
-        <Switch>
-            <Route  exact path="/"component={Home}>
-          
-            </Route>
-            <Route exact path="/Order" component={()=><Order getProduct={this.props.getProduct} products={this.props.products} PostOrder={this.props.postOrder} />}></Route>
-            <Route exact path="/PostCategory" component={()=><PostCategory postCategory= {this.props.postCategory} />}></Route>
-            <Route exact path="/PostProduct" component={()=><PostProduct postProduct={this.props.postProduct}
-            category={this.props.category}/>}></Route>
-            <Route exact path="/UpdateProduct" component={()=><UpdateProduct updateProduct = {this.props.updateProduct}
-            products={this.props.products}/>}></Route>
+
+    render() {
+        return (
+            <div>
+                <CartContextProvider>
+
+                    <Navbar logout={this.props.logoutUser} user={this.props.usersState} auth={this.props.authState} product={this.props.product} user={this.props.usersState} getcategory={this.props.getcategory} category={this.props.category} categorys={this.props.categorys} />
+
+                    <div className="main">
+                        <Switch>
+                            <Route exact path="/" component={() => <Home auth={this.props.authState} productsFeatured={this.props.products.product.filter((prod) => prod.featured)} />}>
+                            </Route>
+                            
+                            <Route exact path="/Order" component={() => <Order getProduct={this.props.getProduct} products={this.props.products} PostOrder={this.props.postOrder} />}></Route>
+                            <Route exact path="/PostCategory" component={() => <PostCategory postCategory={this.props.postCategory} />}></Route>
+                            <Route exact path="/PostProduct" component={() => <PostProduct postProduct={this.props.postProduct}
+                                category={this.props.category} />}></Route>
+                            <Route exact path="/UpdateProduct" component={() => <UpdateProduct updateProduct={this.props.updateProduct}
+                                products={this.props.products} />}></Route>
             //////////////////////////
-            <Route  exact path="/contact"component={Contact}></Route>
-            
-            <Route  exact path="/signin"component={Signin}></Route>
-            <Route  exact path="/signup"component={Signup}></Route>
-            <Route  exact path="/ourservice"component={OurService}></Route>
-            <Route  exact path="/systembuilt"component={systembuild}></Route>
-            <Route  exact path="/phone"component={Phone}></Route>
-            <Route  exact path="/TV"component={TV}></Route>
-            <Route  exact path="/controller"component={controller}></Route>
-            <Route  exact path="/computer"component={computercomp}></Route>
-            <Route  exact path="/printer"component={Printer}></Route>
-            <Route  exact path="/cart" component={Cart}></Route>
+                            <Route exact path="/contact" component={Contact}></Route>
 
-        </Switch>
-        </div>
-    
-        </CartContextProvider>
-        </div>
-    )
-}
+                            <Route exact path="/signin" component={
+                                () =>
+                                    <Signin auth={this.props.authState} authUser={this.props.authUser} logoutUser={this.props.logoutUser} />
+
+                            }></Route>
+                            <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}></Route>
+
+                            <Route exact path="/showProduct" component={(props) => <ShowProduct {...props} auth={this.props.authState} category={this.props.category} getcategory={this.props.getcategory} />}></Route>
+
+                            <Route exact path="/ourservice" component={OurService}></Route>
+                            {/* <Route exact path="/phone" component={Phone}></Route>
+                            <Route exact path="/TV" component={TV}></Route>
+                            <Route exact path="/controller" component={controller}></Route>
+                            <Route exact path="/computer" component={computercomp}></Route>
+                            <Route exact path="/printer" component={Printer}></Route> */}
+                            <Route exact path="/cart" component={Cart}></Route>
+                            
+                            <Route exact path="/systembuilt" component={() => <Systembuild getCompProducts={this.props.getCompProducts} compProducts={this.props.compProducts} />} />
+                            <Route exact path="/show_component" component={() => <ComponentTable compProducts={this.props.compProducts} />} />
+                        </Switch>
+                    </div>
+
+                </CartContextProvider>
+            </div >
+        )
+    }
 
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

@@ -37,6 +37,7 @@ export class Login extends React.Component {
 
       this.setState({ input: input });
     }
+
   }
 
   validate() {
@@ -78,7 +79,7 @@ export class Login extends React.Component {
   }
 
   login() {
-    alert("Login will work here");
+    this.props.authUser({ username: this.state.input.email, password: this.state.input.password });
   }
   forgot() {
     this.setState({ forgot: true });
@@ -95,7 +96,7 @@ export class Login extends React.Component {
                 <div className="content">
                   <div className="form">
                     <div class="form-group">
-                      <label for="email">Email Address:</label>
+                      <label for="email">Username:</label>
 
                       <input
                         type="text"
@@ -103,7 +104,7 @@ export class Login extends React.Component {
                         value={this.state.input.email}
                         onChange={this.handleChange}
                         class="form-control"
-                        placeholder="Enter email"
+                        placeholder="Enter username"
                         id="email"
                       />
 
@@ -118,6 +119,7 @@ export class Login extends React.Component {
                         type="password"
                         name="password"
                         placeholder="Enter Password"
+                        onChange={this.handleChange}
                       />
                     </div>
                   </div>

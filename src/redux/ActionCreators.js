@@ -1,5 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
+import { useHistory } from "react-router-dom";
 
 export const usersRequest = () => (
   {
@@ -58,6 +59,7 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('prodChosen');
   localStorage.removeItem('token');
   localStorage.removeItem('creds');
+  
   dispatch(logoutSuccess());
 }
 
@@ -864,11 +866,11 @@ export const commentFailure = (errmsg)=>({
 })
 
 
-export const getCompProducts = (index) => (dispatch) => {
+export const getCompProducts = () => (dispatch) => {
   dispatch(compProductsLoading());
   
   const bearer = localStorage.getItem('token');
-  return fetch(baseUrl+'components/'+index+'/products',{
+  return fetch(baseUrl+'components/',{
     headers: {
       'Content-Type':'application/json', 
       'Authroization':bearer

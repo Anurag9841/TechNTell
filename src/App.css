@@ -25,7 +25,7 @@
 .navbar{
   background-color:#fff;
  height:60px;
- position:relative;
+ position: relative;
  top: 0;
  cursor: pointer;
  box-shadow:0 2px 4px 0 rgba(0,0,0,.2);
@@ -34,7 +34,6 @@
 
 .main{
   margin-top:30px;
-  
 }
 .navbar-brand{
   font-weight: 700;
@@ -47,11 +46,12 @@
   background-color:white;
   color:#f57224 !important;
   
+  
 }
 .navbar-nav{
   font-size: 20px;
   font-weight: 500;
-  
+  z-index: 500;
 }
 .shoppingcart i{
   display: inline-block;
@@ -77,7 +77,7 @@
 }
 header{
   width:90%;
-  background:url("./img/bg2.jpg");
+  background:url("http://localhost:3000/images/bg2.jpg");
   -webkit-background-size:cover;
   height:600px;
   margin-left: 75px;
@@ -85,6 +85,7 @@ header{
   line-height: 1px;
   background-size: cover;
   background-repeat: no-repeat;
+  
   /*display:flex;*/
   align-items: center;
   justify-content: center;
@@ -187,8 +188,11 @@ header{
 .product-details{
   padding: 1px ;
   padding-left: 10px;
-  padding-right: 100px;
+  padding-right: 10px;
   
+  width: 100%;
+  height: 150px;
+
   text-align: center;
   background: var(--white);
   border-left: 1px solid #fafafa;
@@ -230,6 +234,10 @@ header{
  text-align: center;
  font-size: 14px;
  cursor: pointer;
+
+ position: relative;
+ left: 20px;
+ 
  
 }
 .add-to-cart:hover{
@@ -460,3 +468,4 @@ color: #3e4555;
   font-weight: 20px;
   color: #f57224;
 }
+

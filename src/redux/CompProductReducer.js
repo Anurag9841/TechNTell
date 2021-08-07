@@ -15,6 +15,7 @@ export const CompProductReducer = (state = {
             }
         
         case (ActionTypes.COMPONENT_PRODUCTS_LOADING):
+            
             return {
                 ...state,
                 isLoading: true,

@@ -23,11 +23,12 @@ const TableData = (props) => {
 
   function handleClick(val) {
 
-
-    let specific_products_of_val = props.compProducts.compProducts.filter((val_obj) => {
-      return val_obj.categoryName == val;
-    })[0].products;
-
+    props.getCompProducts(val);
+    // let specific_products_of_val = props.compProducts.compProducts.filter((val_obj) => {
+    //   return val_obj.categoryName == val;
+    // })[0].products;
+    // props.getCompProducts(val);
+let specific_products_of_val = props.compProducts.compProducts.products;
     // get component products
     if (props.compProducts.compProducts.length != 0)
       props.getData(specific_products_of_val, val);
@@ -142,7 +143,7 @@ const System = (props) => {
 
 
   const getData = (data, index) => {
-    history.push('/show_component', { data, index: index })
+    history.push('/show_component', {data, index })
   }
 
   // State config
@@ -264,7 +265,7 @@ const remove_obj = (param, indx) => {
         </thead>
 
         <tbody>
-          <TableData indices={indices} cols={cols} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} remove_obj={remove_obj} setProdReceived={setProdReceived}/>
+          <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} remove_obj={remove_obj} setProdReceived={setProdReceived}/>
 
         </tbody>
       </Table>

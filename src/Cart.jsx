@@ -1,5 +1,6 @@
 import React,{useContext} from 'react'
 import {CartContext}from './CartContext'
+import Khalti from "./components/login/khalti/khalti"
 
 import {baseUrl} from './shared/baseUrl'
 const Cart=()=>{
@@ -25,6 +26,24 @@ const Cart=()=>{
                 ))
                 :<h1 >sorry your cart is currently empty</h1>}
             </div>
+            {shoppingCart.length > 0 ? <div className='cart-summary'>
+                <div className="summary">
+                    <h3>Cart Summary</h3>
+                    <div className="total-items">
+                        <div className="items">Total items:</div>
+                        <div className="items-count">{qty}</div>
+                    </div>
+                    <div className="total-price-section">
+                        <div className="just-title">Total Price:</div>
+                        <div className="items-price">Rs.{totalPrice}</div>
+                    </div>
+                   
+                </div>
+                 <div className="stripe-section">
+                        <Khalti/>
+                        </div>
+            </div> : ''}
+
         </div>
     )
 }

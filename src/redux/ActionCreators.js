@@ -866,11 +866,10 @@ export const commentFailure = (errmsg)=>({
 })
 
 
-export const getCompProducts = () => (dispatch) => {
+export const getCompProducts = (indx) => (dispatch) => {
   dispatch(compProductsLoading());
-  
   const bearer = localStorage.getItem('token');
-  return fetch(baseUrl+'components/',{
+  return fetch(baseUrl+'components/'+indx,{
     headers: {
       'Content-Type':'application/json', 
       'Authroization':bearer
@@ -878,7 +877,6 @@ export const getCompProducts = () => (dispatch) => {
     credentials:'same-origin'
   })
   .then(response => {
-    
     if(response.ok){
       
       return response;

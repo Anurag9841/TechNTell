@@ -7,7 +7,7 @@ const Systembuild = (props) => {
     return(
         <div className="container">
 
-            <System compProducts={props.compProducts}/>
+            <System getCompProducts={props.getCompProducts} compProducts={props.compProducts}/>
         </div>
     ) 
 

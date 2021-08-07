@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
     //deleteComment: ()
 
     // Component products
-    getCompProducts: () => dispatch(getCompProducts())
+    getCompProducts: (indx) => dispatch(getCompProducts(indx))
 }
 )
 class Main extends Component {
@@ -97,7 +97,7 @@ class Main extends Component {
         this.props.getOrderDetails();
         this.props.getComments();
         this.props.getOrders();
-        this.props.getCompProducts();
+        // this.props.getCompProducts();
     }
 
 
@@ -140,7 +140,7 @@ class Main extends Component {
                             <Route exact path="/cart" component={Cart}></Route>
                             
                             <Route exact path="/systembuilt" component={() => <Systembuild getCompProducts={this.props.getCompProducts} compProducts={this.props.compProducts} />} />
-                            <Route exact path="/show_component" component={() => <ComponentTable compProducts={this.props.compProducts} />} />
+                            <Route exact path="/show_component" component={() => <ComponentTable getCompProducts={this.props.getCompProducts} compProducts={this.props.compProducts} />} />
                         </Switch>
                     </div>
 

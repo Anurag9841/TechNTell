@@ -86,7 +86,7 @@ const Order= (props)=>{
                         <h1>Product Detail</h1>
                         <Container>
                             {/* {props.getProduct(data2.productId)} */}
-                            <RenderProducts products={props.products}/>
+                            {/* <RenderProducts products={props.products}/> */}
                         </Container>
                         <form onSubmit={formSubmit}>
                         <div className="mb-3">

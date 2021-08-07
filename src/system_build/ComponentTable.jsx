@@ -3,7 +3,7 @@ import { Table, Button } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 
 const ComponentTable = (props) => {
-
+    
     const config_head = (val) => {
 
         let temp = val.replace(/_/g, " ");
@@ -26,9 +26,18 @@ const ComponentTable = (props) => {
 
     let history = useHistory();
     const index = history.location.state.index;
+
+    
+
+
     let [prodList, setProd] = useState(() => {
         return history.location.state.data;
     });
+
+    // setProd(compProducts.compProducts.products);
+
+
+
     // To change the cols we got to cols we show
     const filterOutCol = (eachCol) => {
         return (!colsToRemove.includes(eachCol));
@@ -52,8 +61,8 @@ const ComponentTable = (props) => {
         );
 
         setProd([...newProd]);
-        console.log("newProd", newProd);
     }
+    
     if (prodList.length != 0) {
         let colsRaw = Object.keys(prodList[0]);
         let cols = colsRaw.filter(filterOutCol);
@@ -85,7 +94,6 @@ const ComponentTable = (props) => {
                         {/* get all the values printed in the table */}
                         {
                             prodList.map((prod) => { // iterate through each product
-                                console.log("prodList: ", prodList);
                                 cols = colsRaw.filter(filterOutCol);
                                 counta++;
                                 counta = counta % 5;

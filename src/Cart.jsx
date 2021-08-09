@@ -26,7 +26,7 @@ const Cart=()=>{
                 ))
                 :<h1 >sorry your cart is currently empty</h1>}
             </div>
-            {shoppingCart.length > 0 ? <div className='cart-summary'>
+            {shoppingCart.length > 0 ? <div className='cart-summary sticky-top'>
                 <div className="summary">
                     <h3>Cart Summary</h3>
                     <div className="total-items">

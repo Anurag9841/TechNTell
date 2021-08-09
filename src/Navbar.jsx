@@ -33,7 +33,7 @@ const Navbar = (props) => {
 
     if(props.auth.isAuthenticated && props.user.users.admin){
         return(
-        <nav >
+        <nav className="sticky-top" >
             <div className="main">
             <div className="container-fluid nav_bg">
                 <div className="row">
@@ -103,12 +103,13 @@ const Navbar = (props) => {
     
     else if(props.auth.isAuthenticated){
         return (
-            <nav >
+            <nav className="sticky-top" >
+
                 <div className="main">
                 <div className="container-fluid nav_bg">
                     <div className="row">
                         <div className="col-10 mx-auto">
-                        <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/viewProduct"></NavLink>
+                        {/* <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/viewProduct"></NavLink> */}
                             <nav className="navbar navbar-expand-lg navbar-light bg-light" data-spy="affix" data-offset-top="197">
                                 <div className="container-fluid">
                                     <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
@@ -162,13 +163,13 @@ const Navbar = (props) => {
         )}
     else{
         return(
-            <>
-            <nav>
+            
+            <nav className="sticky-top">
             <div className="main">
             <div className="container-fluid nav_bg">
                 <div className="row">
                     <div className="col-10 mx-auto">
-                    <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/viewProduct"></NavLink>
+                    {/* <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/viewProduct"></NavLink> */}
                         <nav className="navbar navbar-expand-lg navbar-light bg-light" data-spy="affix" data-offset-top="197">
                             <div className="container-fluid">
                                 <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
@@ -212,7 +213,7 @@ const Navbar = (props) => {
             </div>
             </div>
         </nav>
-            </>
+            
         )
     }
 }

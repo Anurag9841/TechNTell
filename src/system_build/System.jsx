@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Col, Row, Container } from "react-bootstrap";
 import { useHistory } from 'react-router-dom';
 import TableRow from "./TableRow";
 
@@ -16,10 +16,10 @@ const TableData = (props) => {
 
 
   let prodClicked_for_tableRow = (props.prodClicked.length == 0) ?
-   (
-     (localStorage.getItem("prodChosen") == null)?{}:JSON.parse(localStorage.getItem("prodChosen")) 
+    (
+      (localStorage.getItem("prodChosen") == null) ? {} : JSON.parse(localStorage.getItem("prodChosen"))
     )
-   :props.prodClicked;
+    : props.prodClicked;
 
   function handleClick(val) {
 
@@ -28,7 +28,7 @@ const TableData = (props) => {
     //   return val_obj.categoryName == val;
     // })[0].products;
     // props.getCompProducts(val);
-let specific_products_of_val = props.compProducts.compProducts.products;
+    let specific_products_of_val = props.compProducts.compProducts.products;
     // get component products
     if (props.compProducts.compProducts.length != 0)
       props.getData(specific_products_of_val, val);
@@ -73,7 +73,7 @@ let specific_products_of_val = props.compProducts.compProducts.products;
                   });
 
                   return (
-                    <TableRow prodClicked={prodClicked_for_tableRow} index={index} setProdReceived={props.setProdReceived} remove_obj={props.remove_obj}/>
+                    <TableRow prodClicked={prodClicked_for_tableRow} index={index} setProdReceived={props.setProdReceived} remove_obj={props.remove_obj} />
 
                   );
                 }
@@ -94,7 +94,7 @@ let specific_products_of_val = props.compProducts.compProducts.products;
 
               <td>
                 <Button size="sm" onClick={() => handleClick(index)}>+ Click to add {index}</Button>
-                
+
               </td>
               <td colSpan={5}></td>
 
@@ -143,7 +143,7 @@ const System = (props) => {
 
 
   const getData = (data, index) => {
-    history.push('/show_component', {data, index })
+    history.push('/show_component', { data, index })
   }
 
   // State config
@@ -225,33 +225,35 @@ const System = (props) => {
     }
   }, [history.location.state, localStorage.getItem("prodChosen")]);
   //
-const remove_obj = (param, indx) => {
-  console.log("param:", param);
-  // if (param._id == history.location.state.prodClicked._id){
+  const remove_obj = (param, indx) => {
+    console.log("param:", param);
+    // if (param._id == history.location.state.prodClicked._id){
     // history.location.state["prodClicked"] = {};
-    
+
     // const temp = prodReceived[indx].filter(
     //  (obj) => {
     //    return obj._id != param._id
     //  }
     // );
-    
+
     // setProdReceived(preVal => {
     //    return {
     //      ...preVal,
     //      indx: [...temp]
     //     }
     // })
-    
-    
-  
-  
-}
+
+
+
+
+  }
   // variable for storing key for td
   let count = 0;
   return (
-    <div>
-      <Table responsive="sm">
+
+    <div className="tables_div">
+
+      <Table className="system_table" responsive="sm">
         <thead>
           <tr>
             {
@@ -265,12 +267,29 @@ const remove_obj = (param, indx) => {
         </thead>
 
         <tbody>
-          <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} remove_obj={remove_obj} setProdReceived={setProdReceived}/>
+          <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} remove_obj={remove_obj} setProdReceived={setProdReceived} />
 
         </tbody>
       </Table>
 
-    </div>
+      <Table responsive="sm" className="sticky-top">
+        <tbody>
+          <tr>
+            <td align='right'>Base Total:</td>
+            <td align='right' colSpan={2}>Rs. total_base_price</td>
+          </tr>
+          <tr>
+            <td align='right'>Rebates:</td>
+            <td align='right' colSpan={2}>- Rs. total_discount_price</td>
+          </tr>
+          <tr>
+            <td style={{ fontSize: 20 }} align='right'>Total:</td>
+            <td style={{ fontSize: 20 }} align='right' colSpan={2}><b>Rs. total_base_price</b></td>
+          </tr>
+        </tbody>
+      </Table>
+      </div>
+    
   )
 }
 

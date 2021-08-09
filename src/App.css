@@ -527,3 +527,20 @@ color: #3e4555;
 
 }
 
+.tables_div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.sticky-top {
+  top: 80px; 
+}
+
+nav.sticky-top {
+  top: 0;
+}
+
+ul.dropdown-menu.show {
+  z-index: 2020;
+}

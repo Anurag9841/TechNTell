@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import { NavLink, useHistory } from "react-router-dom"
 import { CartContext } from "./CartContext"
 import styles from "./App.css"
+import { useRef } from 'react'
+import { useEffect } from 'react'
 const Navbar = (props) => {
     var i = 0;
     const { qty } = useContext(CartContext)
@@ -36,17 +38,33 @@ const Navbar = (props) => {
 
     let creds =(props.auth.isAuthenticated) ? JSON.parse(localStorage.getItem("creds")) : null;
     
+    let navbarRef = useRef();
+    useEffect(() => {
+        window.addEventListener(
+            "scroll", 
+            (e) => {
+                console.log(e.path[1].scrollY);
+                navbarRef.current.style.boxShadow = (e.path[1].scrollY>58) ? "0 2px 4px 5px rgba(0,0,0, .2)" :'none';
+            }
+        );
+    }, [])
+    
+    
+    
+
+
     if (props.auth.isAuthenticated && props.user.users.admin) {
+
         return (
 
-            <nav className="sticky-top" >
+            <nav className="sticky-top">
                 <div className="main">
                     <div className="container-fluid nav_bg">
                         <div className="row">
                             <div className="col-12 mx-auto abcd"  >
 
 
-                                <nav className="navbar navbar-expand-lg navbar-light " data-spy="affix" data-offset-top="197">
+                                <nav className="navbar navbar-expand-lg navbar-light " data-spy="affix" data-offset-top="197" ref={navbarRef}>
                                     <div className="container-fluid">
                                         <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
                                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,7 +139,7 @@ const Navbar = (props) => {
                         <div className="row">
                             <div className="col-12 mx-auto abcd">
                                 {/* <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/viewProduct"></NavLink> */}
-                                <nav className="navbar navbar-expand-lg navbar-light" data-spy="affix" data-offset-top="197">
+                                <nav className="navbar navbar-expand-lg navbar-light" data-spy="affix" data-offset-top="197" ref={navbarRef}>
                                     <div className="container-fluid">
                                         <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
                                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -186,7 +204,7 @@ const Navbar = (props) => {
                         <div className="row">
                             <div className="col-12 mx-auto abcd">
                                 {/* <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/viewProduct"></NavLink> */}
-                                <nav className="navbar navbar-expand-lg navbar-light" data-spy="affix" data-offset-top="197">
+                                <nav className="navbar navbar-expand-lg navbar-light" data-spy="affix" data-offset-top="197" ref={navbarRef}>
                                     <div className="container-fluid">
                                         <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
                                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -232,6 +250,8 @@ const Navbar = (props) => {
 
         )
     }
+
+
 }
 export default Navbar;
 

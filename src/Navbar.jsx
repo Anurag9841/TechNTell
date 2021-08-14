@@ -34,6 +34,8 @@ const Navbar = (props) => {
         }
     }
 
+    let creds =(props.auth.isAuthenticated) ? JSON.parse(localStorage.getItem("creds")) : null;
+    
     if (props.auth.isAuthenticated && props.user.users.admin) {
         return (
 
@@ -41,10 +43,10 @@ const Navbar = (props) => {
                 <div className="main">
                     <div className="container-fluid nav_bg">
                         <div className="row">
-                            <div className="col-12 mx-auto">
+                            <div className="col-12 mx-auto abcd"  >
 
 
-                                <nav className="navbar navbar-expand-lg navbar-light bg-light" data-spy="affix" data-offset-top="197">
+                                <nav className="navbar navbar-expand-lg navbar-light " data-spy="affix" data-offset-top="197">
                                     <div className="container-fluid">
                                         <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
                                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,6 +96,10 @@ const Navbar = (props) => {
                                                     <span className="shoppingcart"> <i className="fas fa-cart-plus"></i><span className="
                                       cartcount">{qty}</span> </span> </NavLink></li>
                                             </ul>
+                                            <div className="user-info">
+                                                <i className="fas fa-user-circle"></i>
+                                                <span> Hi, {creds.username} </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </nav>
@@ -113,9 +119,9 @@ const Navbar = (props) => {
                 <div className="main">
                     <div className="container-fluid nav_bg">
                         <div className="row">
-                            <div className="col-10 mx-auto">
+                            <div className="col-12 mx-auto abcd">
                                 {/* <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/viewProduct"></NavLink> */}
-                                <nav className="navbar navbar-expand-lg navbar-light bg-light" data-spy="affix" data-offset-top="197">
+                                <nav className="navbar navbar-expand-lg navbar-light" data-spy="affix" data-offset-top="197">
                                     <div className="container-fluid">
                                         <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
                                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -156,6 +162,10 @@ const Navbar = (props) => {
                                                     <span className="shoppingcart"> <i className="fas fa-cart-plus"></i><span className="
                                           cartcount">{qty}</span> </span> </NavLink></li>
                                             </ul>
+                                            <div className="user-info">
+                                                <i className="fas fa-user-circle"></i>
+                                                <span> Hi, {creds.username} </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </nav>
@@ -174,9 +184,9 @@ const Navbar = (props) => {
                 <div className="main">
                     <div className="container-fluid nav_bg">
                         <div className="row">
-                            <div className="col-10 mx-auto">
+                            <div className="col-12 mx-auto abcd">
                                 {/* <NavLink activeClassName='menu_active' className="nav-link active" aria-current="page" to="/viewProduct"></NavLink> */}
-                                <nav className="navbar navbar-expand-lg navbar-light bg-light" data-spy="affix" data-offset-top="197">
+                                <nav className="navbar navbar-expand-lg navbar-light" data-spy="affix" data-offset-top="197">
                                     <div className="container-fluid">
                                         <NavLink className="navbar-brand" to="/">Tech N Tell</NavLink>
                                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

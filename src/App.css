@@ -29,7 +29,8 @@
  position: relative;
  top: 0;
  cursor: pointer;
- box-shadow:0 2px 4px 0 rgba(0,0,0,.2);
+ 
+ /* box-shadow:0 2px 4px 0 rgba(0,0,0,.2); */
 
 }
 
@@ -549,4 +550,31 @@ ul.dropdown-menu.show {
   position: relative;
   display: flex;
 
+}
+
+.user-info {
+  margin-left: 10px;
+  font-size: 1.8em;
+  position: relative;
+
+  color: rgb(146, 134, 134);
+}
+
+.user-info > span {
+  box-sizing: border-box;
+  font-size: 0.65em;
+  background: rgb(146, 134, 134);
+  border-radius: 0.3em;
+  color: white;
+  padding: 2px; 
+  padding-right: 4px;
+  
+  position: relative;
+  top:-3px;
+  left:-2px;
+}
+
+.abcd {
+  padding:0;
+  background: white;
 }

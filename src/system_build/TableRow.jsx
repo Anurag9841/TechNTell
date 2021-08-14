@@ -64,5 +64,4 @@ const remove_prod = (e, prod) => {
     );
 
 }
-
 export default TableRow;

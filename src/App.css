@@ -544,3 +544,9 @@ nav.sticky-top {
 ul.dropdown-menu.show {
   z-index: 2020;
 }
+
+.sysBuild-page {
+  position: relative;
+  display: flex;
+
+}

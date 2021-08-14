@@ -12,7 +12,6 @@ let prodClicked_received = props.prodClicked;
 const remove_prod = (e, prod) => {
     
     e.preventDefault();
-    props.remove_obj(prod, props.index);
     // console.log(prodClicked_received[props.index])
 
     prodClicked_received[props.index]= prodClicked_received[props.index].filter((param) => {

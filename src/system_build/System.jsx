@@ -39,9 +39,9 @@ const TableData = (props) => {
 
 
   // get the total prices 
-  let total_base_price = 0;
-  let total_discount_price = 0;
-  let total_tax_price = 0;
+  var total_base_price = 0;
+  var total_discount_price = 0;
+  var total_tax_price = 0;
 
 
 
@@ -49,85 +49,107 @@ const TableData = (props) => {
   const chosen_indices = Object.keys(prodClicked_for_tableRow);
 
   let counta = 0;
-
+  let count = 0;
   return (
-    <>
-      {props.indices.map((index) => {
-
-        const checkChosen = chosen_indices.includes(index);
-        counta++;
-        return (
-          // only one index go here which is in the chosen prop
-          // the whole of the index goes here
-          <>
+    <div class="tables_div">
+      <Table responsive="sm">
+        <thead>
+          <tr>
             {
-              (() => {
-                if (checkChosen) {
+              props.cols.map((col) => {
+                count++;
+                return (<td key={count}>{col}</td>)
+              })
+            }
+            <td></td>
+          </tr>
+        </thead>
 
-                  prodClicked_for_tableRow[index].map((prodClicked) => {
+        <tbody>
 
-                    price_obj["total_base"].push(prodClicked.price);
-                    price_obj["total_discount"].push(prodClicked.discount);
-                    price_obj["total_tax"].push(prodClicked.tax);
+          <>
+            {props.indices.map((index) => {
 
-                  });
+              const checkChosen = chosen_indices.includes(index);
+              counta++;
+              return (
+                // only one index go here which is in the chosen prop
+                // the whole of the index goes here
+                <>
+                  {
+                    (() => {
+                      if (checkChosen) {
 
-                  return (
-                    <TableRow prodClicked={prodClicked_for_tableRow} index={index} setProdReceived={props.setProdReceived} remove_obj={props.remove_obj} />
+                        prodClicked_for_tableRow[index].map((prodClicked) => {
 
-                  );
-                }
+                          price_obj["total_base"].push(prodClicked.price);
+                          price_obj["total_discount"].push(prodClicked.discount);
+                          price_obj["total_tax"].push(prodClicked.tax);
 
-              })()
+                        });
+
+                        return (
+                          <TableRow prodClicked={prodClicked_for_tableRow} index={index} setProdReceived={props.setProdReceived} />
+
+                        );
+                      }
+
+                    })()
+                  }
+
+
+                  <tr>
+                    <th>
+                      {(() => {
+                        if (checkChosen)
+                          return (<></>)
+                        else
+                          return (<>{index}</>)
+                      })()}
+                    </th>
+
+                    <td>
+                      <Button size="sm" onClick={() => handleClick(index)}>+ Click to add {index}</Button>
+
+                    </td>
+                    <td colSpan={5}></td>
+
+                  </tr>
+                </>
+
+              )
+
+            })
             }
 
-
-            <tr>
-              <th>
-                {(() => {
-                  if (checkChosen)
-                    return (<></>)
-                  else
-                    return (<>{index}</>)
-                })()}
-              </th>
-
-              <td>
-                <Button size="sm" onClick={() => handleClick(index)}>+ Click to add {index}</Button>
-
-              </td>
-              <td colSpan={5}></td>
-
-            </tr>
+            {(() => {
+              price_obj.total_base.forEach(val => total_base_price += val)
+              price_obj.total_discount.forEach(val => total_discount_price += val)
+              price_obj.total_tax.forEach(val => total_tax_price += val)
+            })()}
           </>
+        </tbody>
+      </Table>
 
-        )
 
-      })
-      }
 
-      {(() => {
-        price_obj.total_base.forEach(val => total_base_price += val)
-        price_obj.total_discount.forEach(val => total_discount_price += val)
-        price_obj.total_tax.forEach(val => total_tax_price += val)
-      })()}
-      <tr>
-        <td colSpan={4} rowSpan={3}></td>
-        <td align='right'>Base Total:</td>
-        <td align='right' colSpan={2}>Rs. {total_base_price}</td>
-      </tr>
-      <tr>
-
-        <td align='right'>Rebates:</td>
-        <td align='right' colSpan={2}>- Rs. {total_discount_price}</td>
-      </tr>
-      <tr>
-
-        <td style={{ fontSize: 20 }} align='right'>Total:</td>
-        <td style={{ fontSize: 20 }} align='right' colSpan={2}><b>Rs. {total_base_price + total_tax_price - total_discount_price}</b></td>
-      </tr>
-    </>
-
+      <Table responsive="sm" className="sticky-top total_tables">
+        <tbody>
+          <tr>
+            <td align='right'>Base Total:</td>
+            <td align='right' colSpan={2}>Rs. {total_base_price}</td>
+          </tr>
+          <tr>
+            <td align='right'>Rebates:</td>
+            <td align='right' colSpan={2}>- Rs. {total_discount_price}</td>
+          </tr>
+          <tr>
+            <td style={{ fontSize: 20 }} align='right'>Total:</td>
+            <td style={{ fontSize: 20 }} align='right' colSpan={2}><b>Rs. {total_base_price + total_tax_price - total_discount_price}</b></td>
+          </tr>
+        </tbody>
+      </Table>
+    </div >
   )
 
 }
@@ -151,6 +173,14 @@ const System = (props) => {
 
   const prodChosen = localStorage.getItem("prodChosen");
   let init_obj = {};
+
+  let price_obj = {
+    total_base_price: 0,
+    total_discount_price: 0,
+    total_tax_price: 0
+
+  }
+
 
   const state_configure_for_change = (prodChosen_again) => {
 
@@ -225,71 +255,14 @@ const System = (props) => {
     }
   }, [history.location.state, localStorage.getItem("prodChosen")]);
   //
-  const remove_obj = (param, indx) => {
-    console.log("param:", param);
-    // if (param._id == history.location.state.prodClicked._id){
-    // history.location.state["prodClicked"] = {};
-
-    // const temp = prodReceived[indx].filter(
-    //  (obj) => {
-    //    return obj._id != param._id
-    //  }
-    // );
-
-    // setProdReceived(preVal => {
-    //    return {
-    //      ...preVal,
-    //      indx: [...temp]
-    //     }
-    // })
 
 
-
-
-  }
   // variable for storing key for td
   let count = 0;
   return (
 
-    <div className="tables_div">
+    <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived}  setProdReceived={setProdReceived} />
 
-      <Table className="system_table" responsive="sm">
-        <thead>
-          <tr>
-            {
-              cols.map((col) => {
-                count++;
-                return (<td key={count}>{col}</td>)
-              })
-            }
-            <td></td>
-          </tr>
-        </thead>
-
-        <tbody>
-          <TableData indices={indices} cols={cols} getCompProducts={props.getCompProducts} compProducts={props.compProducts} getData={getData} prodClicked={prodReceived} remove_obj={remove_obj} setProdReceived={setProdReceived} />
-
-        </tbody>
-      </Table>
-
-      <Table responsive="sm" className="sticky-top">
-        <tbody>
-          <tr>
-            <td align='right'>Base Total:</td>
-            <td align='right' colSpan={2}>Rs. total_base_price</td>
-          </tr>
-          <tr>
-            <td align='right'>Rebates:</td>
-            <td align='right' colSpan={2}>- Rs. total_discount_price</td>
-          </tr>
-          <tr>
-            <td style={{ fontSize: 20 }} align='right'>Total:</td>
-            <td style={{ fontSize: 20 }} align='right' colSpan={2}><b>Rs. total_base_price</b></td>
-          </tr>
-        </tbody>
-      </Table>
-      </div>
-    
   )
 }
 

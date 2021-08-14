@@ -126,7 +126,7 @@ export class Login extends React.Component {
                 </div>
                 <div className="footer">
                   <center>
-                    <input type="submit" value="Login" className="btn"  onClick={this.login.bind(this)}  />
+                    <input type="submit" value="Login" className="btn" onClick={this.login.bind(this)} />
                   </center>
                   <br></br>
                   <center>

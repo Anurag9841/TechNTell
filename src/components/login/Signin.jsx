@@ -37,6 +37,7 @@ export class Login extends React.Component {
 
       this.setState({ input: input });
     }
+
   }
 
   validate() {
@@ -78,7 +79,7 @@ export class Login extends React.Component {
   }
 
   login() {
-    alert("Login will work here");
+    this.props.authUser({ username: this.state.input.email, password: this.state.input.password });
   }
   forgot() {
     this.setState({ forgot: true });
@@ -89,13 +90,13 @@ export class Login extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           {this.state.forgot === false && (
-            <div>
+            <div className="login-details" style={{ marginTop: "50px" }}>
               <div className="base-container" ref={this.props.containerRef}>
-                <div className="header">Login</div>
+                <div className="header1">Login</div>
                 <div className="content">
                   <div className="form">
                     <div class="form-group">
-                      <label for="email">Email Address:</label>
+                      <label for="email">Username:</label>
 
                       <input
                         type="text"
@@ -103,7 +104,7 @@ export class Login extends React.Component {
                         value={this.state.input.email}
                         onChange={this.handleChange}
                         class="form-control"
-                        placeholder="Enter email"
+                        placeholder="Enter username"
                         id="email"
                       />
 
@@ -118,27 +119,31 @@ export class Login extends React.Component {
                         type="password"
                         name="password"
                         placeholder="Enter Password"
+                        onChange={this.handleChange}
                       />
                     </div>
                   </div>
                 </div>
                 <div className="footer">
                   <center>
-                    <input type="submit" value="Login" className="btn"  onClick={this.login.bind(this)}  />
+                    <input type="submit" value="Login" className="btn" onClick={this.login.bind(this)} />
                   </center>
                   <br></br>
                   <center>
-                    <a href="#" onClick={this.forgot.bind(this)}>
-                      Forgot Password?
-                    </a>
+                    <div className="forgot-password">
+                      <a href="#" onClick={this.forgot.bind(this)}>
+                        Forgot Password?
+                      </a>
+                    </div>
                   </center>
                 </div>
               </div>
             </div>
+            
           )}
-          {this.state.forgot === true && <ForgotPassword />}
+        {this.state.forgot === true && <ForgotPassword />}
         </form>
-      </div>
+      </div >
     );
   }
 }

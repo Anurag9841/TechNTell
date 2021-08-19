@@ -20,7 +20,7 @@ const Navbar = (props) => {
 
     // }
 
-
+sessionStorage.setItem("categories", categories);
 
     const rend = (X) => {
         history.push({ pathname: "/showProduct", state: X })
@@ -43,7 +43,7 @@ const Navbar = (props) => {
         window.addEventListener(
             "scroll", 
             (e) => {
-                console.log(e.path[1].scrollY);
+                
                 navbarRef.current.style.boxShadow = (e.path[1].scrollY>58) ? "0 2px 4px 5px rgba(0,0,0, .2)" :'none';
             }
         );

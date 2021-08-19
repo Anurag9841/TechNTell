@@ -46,7 +46,7 @@ const ComponentTable = (props) => {
     // After clicking the 'add' button execute: 
     const getProductClicked = (prodClicked, index) => {
 
-        history.push('/systembuilt', { prodClicked, indexClicked: index });
+        history.push('/systembuilt/components', { prodClicked, indexClicked: index });
     }
     let index_count = 0;
 

@@ -384,8 +384,8 @@ color: #3e4555;
 }
 .cart-image{
   display: inline-block;
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 100px;
   padding-top: 15px;
   
 }
@@ -394,16 +394,17 @@ color: #3e4555;
   height:100%;
 }
 .cart-product-name{
-  width: 150px;
-  padding:0 75px;
+  width: 200px;
+  padding:0 10px;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 12px;
+  text-align: center;
 }
 .cart-product-price{
  display:inline-block;
  width: 120px;
  text-align: center;
- padding:0 100px;
+ padding:0 10px;
  font-weight: bold;
  color: var(--mainColor);
 }
@@ -577,4 +578,50 @@ ul.dropdown-menu.show {
 .abcd {
   padding:0;
   background: white;
+}
+
+.container-systembuild {
+  /* background: red; */
+
+  display: grid;
+  grid-template-columns: 2fr 5fr 5fr 2fr;
+  column-gap: 25px;
+
+}
+
+.container-of-components {
+  background: rgb(227, 224, 211);
+  /* grid-row:1 / 2; */
+  grid-column: 2 / 3;
+  min-width: 250px;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  border-radius: 5px;
+}
+
+.container-of-collections {
+  
+  grid-column: 3 / 4;
+  margin-right:5px;
+  display: flex;
+  flex-wrap: wrap;
+  background: rgb(227, 224, 211);
+  border-radius: 5px;
+}
+
+.desktop-card {
+  display: block;
+  margin: 30px;
+}
+
+.columns-combo-name:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.cards-collection {
+  display: flex;
 }

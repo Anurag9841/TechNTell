@@ -17,6 +17,8 @@ import Cart from "./Cart"
 import CartContextProvider from './CartContext'
 
 import Systembuild from './system_build/systembuild'
+import System from './system_build/System'
+
 import ComponentTable from "./system_build/ComponentTable";
 
 
@@ -29,7 +31,9 @@ import {
     signUp,
     getComments,
     postComment,
-    getCompProducts
+    getCompProducts,
+    postCollection,
+    getCollections,
 } from './redux/ActionCreators';
 
 import ShowProduct from './showProduct';
@@ -53,7 +57,8 @@ const mapStateToProps = (state) => {
         order: state.order,
         orderDetailsState: state.orderDetails,
         category: state.category,
-        compProducts: state.compProducts
+        compProducts: state.compProducts,
+        pcAndCustomCollections: state.pcAndCustomCollections
     }
 }
 const mapDispatchToProps = (dispatch) => ({
@@ -86,7 +91,11 @@ const mapDispatchToProps = (dispatch) => ({
     //deleteComment: ()
 
     // Component products
-    getCompProducts: (indx) => dispatch(getCompProducts(indx))
+    getCompProducts: (indx) => dispatch(getCompProducts(indx)),
+
+    postCollection: (collectionName, collectionDescription, prodChosen, collectionType, columnsComboName, columnsComboDescription, columnsChosen) => dispatch(postCollection(collectionName, collectionDescription, prodChosen, collectionType, columnsComboName, columnsComboDescription, columnsChosen)),
+
+    getCollections: () => dispatch(getCollections()),
 }
 )
 class Main extends Component {
@@ -97,6 +106,7 @@ class Main extends Component {
         this.props.getOrderDetails();
         this.props.getComments();
         this.props.getOrders();
+        this.props.getCollections();
         // this.props.getCompProducts();
     }
 
@@ -112,7 +122,7 @@ class Main extends Component {
                         <Switch>
                             <Route exact path="/" component={() => <Home auth={this.props.authState} productsFeatured={this.props.products.product.filter((prod) => prod.featured)} />}>
                             </Route>
-                            
+
                             <Route exact path="/Order" component={() => <Order getProduct={this.props.getProduct} products={this.props.products} PostOrder={this.props.postOrder} />}></Route>
                             <Route exact path="/PostCategory" component={() => <PostCategory postCategory={this.props.postCategory} />}></Route>
                             <Route exact path="/PostProduct" component={() => <PostProduct postProduct={this.props.postProduct}
@@ -138,8 +148,25 @@ class Main extends Component {
                             <Route exact path="/computer" component={computercomp}></Route>
                             <Route exact path="/printer" component={Printer}></Route> */}
                             <Route exact path="/cart" component={Cart}></Route>
-                            
-                            <Route exact path="/systembuilt" component={() => <Systembuild getCompProducts={this.props.getCompProducts} compProducts={this.props.compProducts} />} />
+
+                            <Route exact path="/systembuilt" component={() =>
+                                <Systembuild
+                                    getCompProducts={this.props.getCompProducts}
+                                    compProducts={this.props.compProducts}
+                                    getCollections={this.props.getCollections}
+                                    pcAndCustomCollections={this.props.pcAndCustomCollections}
+                                    postCollection={this.props.postCollection}
+
+                                />} />
+
+                            <Route exact path="/systembuilt/components" component={() =>
+                                <System
+                                    getCompProducts={this.props.getCompProducts}
+                                    compProducts={this.props.compProducts}
+                                    categorys={this.props.categorys}
+                                    postCollection={this.props.postCollection}
+                                />} />
+
                             <Route exact path="/show_component" component={() => <ComponentTable getCompProducts={this.props.getCompProducts} compProducts={this.props.compProducts} />} />
                         </Switch>
                     </div>

@@ -6,7 +6,6 @@ const Products=(props)=>{
     // const {products}=useContext(ProductContext);
     const {dispatch}=useContext(CartContext);
     const products = props.productsFeatured;
-console.log("props.productsFeatured [product]: ", props.productsFeatured, props)
     return(
         <div className="products">
             {products.map((product)=>(

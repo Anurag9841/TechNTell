@@ -1,3 +1,3 @@
 # TechNTell
 
-This is the database file for MongoDB.
+This is the MongoDB Database file for MongoDB.
